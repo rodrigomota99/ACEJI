@@ -7,13 +7,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #1a5276;
-            --secondary: #e74c3c;
-            --accent: #f39c12;
-            --light: #ecf0f1;
-            --dark: #2c3e50;
+            --primary: #1E8449; /* Verde da atlética */
+            --secondary: #F1C40F; /* Amarelo da atlética */
+            --accent: #E74C3C; /* Vermelho da atlética */
+            --light: #ECF0F1;
+            --dark: #2C3E50;
             --text: #333333;
-            --success: #27ae60;
+            --success: #27AE60;
         }
         
         * {
@@ -27,24 +27,24 @@
             background-color: #f5f5f5;
             color: var(--text);
             line-height: 1.6;
+            padding: 20px;
         }
         
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
         
         header {
-            background: linear-gradient(135deg, var(--primary), var(--dark));
+            background: linear-gradient(135deg, var(--primary), #145A32);
             color: white;
             text-align: center;
-            padding: 30px 0;
-            border-radius: 8px 8px 0 0;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px 20px;
             position: relative;
-            overflow: hidden;
         }
         
         .logo-container {
@@ -57,23 +57,25 @@
         .logo-img {
             width: 150px;
             height: 150px;
-            background-color: white;
             border-radius: 50%;
+            margin-bottom: 15px;
+            border: 5px solid var(--secondary);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 15px;
-            border: 5px solid var(--accent);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            background: white;
         }
         
-        .logo-img i {
-            font-size: 60px;
-            color: var(--primary);
+        .logo-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
         
         .logo-aceji {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             font-weight: bold;
             color: white;
             text-transform: uppercase;
@@ -96,18 +98,16 @@
             border-radius: 4px;
             margin-top: 15px;
             font-size: 0.9rem;
+            display: inline-block;
         }
         
         .form-container {
-            background-color: white;
             padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         
         .section-title {
             color: var(--primary);
-            border-bottom: 2px solid var(--accent);
+            border-bottom: 2px solid var(--secondary);
             padding-bottom: 10px;
             margin: 25px 0 15px;
         }
@@ -152,7 +152,7 @@
         }
         
         .product-image {
-            height: 150px;
+            height: 180px;
             background: linear-gradient(45deg, var(--light), #f5f5f5);
             margin-bottom: 10px;
             display: flex;
@@ -165,9 +165,10 @@
             overflow: hidden;
         }
         
-        .product-image i {
-            font-size: 40px;
-            color: var(--primary);
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
         .product-title {
@@ -188,7 +189,7 @@
         }
         
         .btn-submit {
-            background-color: var(--success);
+            background-color: var(--primary);
             color: white;
             border: none;
             padding: 15px 30px;
@@ -203,31 +204,27 @@
         }
         
         .btn-submit:hover {
-            background-color: #219652;
+            background-color: #145A32;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
         footer {
             text-align: center;
-            margin-top: 30px;
-            color: #777;
-            font-size: 0.9rem;
             padding: 20px;
             background-color: var(--dark);
             color: white;
-            border-radius: 0 0 8px 8px;
         }
         
         .required {
-            color: var(--secondary);
+            color: var(--accent);
         }
         
         .instructions {
             background-color: #fff8e1;
             padding: 15px;
             border-radius: 4px;
-            border-left: 4px solid var(--accent);
+            border-left: 4px solid var(--secondary);
             margin: 20px 0;
             font-size: 0.9rem;
         }
@@ -238,17 +235,17 @@
             }
             
             .logo-aceji {
-                font-size: 2.2rem;
+                font-size: 2rem;
+            }
+            
+            .form-container {
+                padding: 20px;
             }
         }
         
         @media (max-width: 480px) {
             .product-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .form-container {
-                padding: 20px;
             }
             
             .logo-aceji {
@@ -258,6 +255,10 @@
             .logo-subtitle {
                 font-size: 0.9rem;
             }
+            
+            body {
+                padding: 10px;
+            }
         }
     </style>
 </head>
@@ -266,7 +267,7 @@
         <header>
             <div class="logo-container">
                 <div class="logo-img">
-                    <i class="fas fa-tshirt"></i>
+                    <img src="https://raw.githubusercontent.com/rodrigomota99/main/LOGO%20ACEJI.png" alt="Logo ACEJI">
                 </div>
                 <div class="logo-aceji">ACEJI</div>
                 <div class="logo-subtitle">Formulário de Compra de Uniformes de Jogo</div>
@@ -275,11 +276,10 @@
         </header>
         
         <div class="form-container">
-            <div class="instructions">
-                <i class="fas fa-info-circle"></i> Para adicionar as imagens reais dos produtos, substitua os placeholders pelos URLs das imagens quando disponíveis.
-            </div>
-            
-            <form id="uniformOrderForm">
+            <form action="https://formsubmit.co/seu-email@exemplo.com" method="POST">
+                <input type="hidden" name="_subject" value="Novo pedido de uniformes ACEJI">
+                <input type="hidden" name="_template" value="table">
+                
                 <h2 class="section-title">Dados Pessoais</h2>
                 
                 <div class="form-group">
@@ -301,22 +301,22 @@
                 <div class="product-grid">
                     <div class="product-card">
                         <div class="product-image">
-                            <i class="fas fa-tshirt"></i>
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/main/Design%20sem%20nome%20(3).png" alt="Uniforme de Linha">
                         </div>
                         <div class="product-title">Camisa Titular</div>
                         <div class="product-price">R$ 89,90</div>
                         <label for="qty_titular">Quantidade:</label>
-                        <input type="number" id="qty_titular" class="quantity" name="qty_titular" min="0" value="0">
+                        <input type="number" id="qty_titular" class="quantity" name="Camisa Titular - Quantidade" min="0" value="0">
                     </div>
                     
                     <div class="product-card">
                         <div class="product-image">
-                            <i class="fas fa-tshirt"></i>
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/main/Design%20sem%20nome%20(3).png" alt="Uniforme de Linha">
                         </div>
                         <div class="product-title">Camisa Reserva</div>
                         <div class="product-price">R$ 89,90</div>
                         <label for="qty_reserva">Quantidade:</label>
-                        <input type="number" id="qty_reserva" class="quantity" name="qty_reserva" min="0" value="0">
+                        <input type="number" id="qty_reserva" class="quantity" name="Camisa Reserva - Quantidade" min="0" value="0">
                     </div>
                 </div>
                 
@@ -324,80 +324,80 @@
                 <div class="product-grid">
                     <div class="product-card">
                         <div class="product-image">
-                            <i class="fas fa-tshirt"></i>
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/main/2.png" alt="Uniforme de Goleiro Verde">
                         </div>
-                        <div class="product-title">Uniforme Goleiro 1</div>
+                        <div class="product-title">Uniforme Goleiro Verde</div>
                         <div class="product-price">R$ 99,90</div>
                         <label for="qty_goleiro1">Quantidade:</label>
-                        <input type="number" id="qty_goleiro1" class="quantity" name="qty_goleiro1" min="0" value="0">
+                        <input type="number" id="qty_goleiro1" class="quantity" name="Uniforme Goleiro Verde - Quantidade" min="0" value="0">
                     </div>
                     
                     <div class="product-card">
                         <div class="product-image">
-                            <i class="fas fa-tshirt"></i>
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/main/3.png" alt="Uniforme de Goleiro Vermelho">
                         </div>
-                        <div class="product-title">Uniforme Goleiro 2</div>
+                        <div class="product-title">Uniforme Goleiro Vermelho</div>
                         <div class="product-price">R$ 99,90</div>
                         <label for="qty_goleiro2">Quantidade:</label>
-                        <input type="number" id="qty_goleiro2" class="quantity" name="qty_goleiro2" min="0" value="0">
+                        <input type="number" id="qty_goleiro2" class="quantity" name="Uniforme Goleiro Vermelho - Quantidade" min="0" value="0">
                     </div>
                 </div>
                 
                 <h2 class="section-title">Meiões</h2>
                 <div class="product-grid">
                     <div class="product-card">
-                        <div class="product-image">
-                            <i class="fas fa-socks"></i>
+                        <div class="product-image" style="background: linear-gradient(45deg, var(--primary), #145A32); color: white;">
+                            <i class="fas fa-socks" style="font-size: 50px;"></i>
                         </div>
                         <div class="product-title">Meião Titular</div>
                         <div class="product-price">R$ 29,90</div>
                         <label for="qty_meiao_titular">Quantidade:</label>
-                        <input type="number" id="qty_meiao_titular" class="quantity" name="qty_meiao_titular" min="0" value="0">
+                        <input type="number" id="qty_meiao_titular" class="quantity" name="Meião Titular - Quantidade" min="0" value="0">
                     </div>
                     
                     <div class="product-card">
-                        <div class="product-image">
-                            <i class="fas fa-socks"></i>
+                        <div class="product-image" style="background: linear-gradient(45deg, var(--accent), #C0392B); color: white;">
+                            <i class="fas fa-socks" style="font-size: 50px;"></i>
                         </div>
                         <div class="product-title">Meião Reserva</div>
                         <div class="product-price">R$ 29,90</div>
                         <label for="qty_meiao_reserva">Quantidade:</label>
-                        <input type="number" id="qty_meiao_reserva" class="quantity" name="qty_meiao_reserva" min="0" value="0">
+                        <input type="number" id="qty_meiao_reserva" class="quantity" name="Meião Reserva - Quantidade" min="0" value="0">
                     </div>
                 </div>
                 
                 <h2 class="section-title">Bermudas</h2>
                 <div class="product-grid">
                     <div class="product-card">
-                        <div class="product-image">
-                            <i class="fas fa-vest"></i>
+                        <div class="product-image" style="background: linear-gradient(45deg, var(--primary), #145A32); color: white;">
+                            <i class="fas fa-vest" style="font-size: 50px;"></i>
                         </div>
                         <div class="product-title">Bermuda Titular</div>
                         <div class="product-price">R$ 49,90</div>
                         <label for="qty_bermuda_titular">Quantidade:</label>
-                        <input type="number" id="qty_bermuda_titular" class="quantity" name="qty_bermuda_titular" min="0" value="0">
+                        <input type="number" id="qty_bermuda_titular" class="quantity" name="Bermuda Titular - Quantidade" min="0" value="0">
                     </div>
                     
                     <div class="product-card">
-                        <div class="product-image">
-                            <i class="fas fa-vest"></i>
+                        <div class="product-image" style="background: linear-gradient(45deg, #2C3E50, #1A2530); color: white;">
+                            <i class="fas fa-vest" style="font-size: 50px;"></i>
                         </div>
                         <div class="product-title">Bermuda Reserva</div>
                         <div class="product-price">R$ 49,90</div>
                         <label for="qty_bermuda_reserva">Quantidade:</label>
-                        <input type="number" id="qty_bermuda_reserva" class="quantity" name="qty_bermuda_reserva" min="0" value="0">
+                        <input type="number" id="qty_bermuda_reserva" class="quantity" name="Bermuda Reserva - Quantidade" min="0" value="0">
                     </div>
                 </div>
                 
                 <h2 class="section-title">Tamanhos e Observações</h2>
                 <div class="form-group">
                     <label for="sizes">Tamanhos necessários (especificar quantidades por tamanho):</label>
-                    <textarea id="sizes" name="sizes" rows="3" placeholder="Ex: 2 unidades P, 3 unidades M..."></textarea>
+                    <textarea id="sizes" name="Tamanhos necessários" rows="3" placeholder="Ex: 2 unidades P, 3 unidades M..."></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label for="notes">Observações ou solicitações especiais:</label>
-                    <textarea id="notes" name="notes" rows="3" placeholder="Ex: personalização de nome/número..."></textarea>
+                    <textarea id="notes" name="Observações" rows="3" placeholder="Ex: personalização de nome/número..."></textarea>
                 </div>
                 
                 <button type="submit" class="btn-submit">Finalizar Pedido</button>
@@ -410,42 +410,40 @@
     </div>
 
     <script>
-        document.getElementById('uniformOrderForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // Adicione este script para calcular o total em tempo real
+        document.addEventListener('DOMContentLoaded', function() {
+            const quantityInputs = document.querySelectorAll('.quantity');
             
-            // Validação básica
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
+            quantityInputs.forEach(input => {
+                input.addEventListener('change', calculateTotal);
+                input.addEventListener('input', calculateTotal);
+            });
             
-            if (!name || !email || !phone) {
-                alert('Por favor, preencha todos os campos obrigatórios.');
-                return;
+            function calculateTotal() {
+                let total = 0;
+                const prices = {
+                    titular: 89.90,
+                    reserva: 89.90,
+                    goleiro1: 99.90,
+                    goleiro2: 99.90,
+                    meiao_titular: 29.90,
+                    meiao_reserva: 29.90,
+                    bermuda_titular: 49.90,
+                    bermuda_reserva: 49.90
+                };
+                
+                for (const [key, price] of Object.entries(prices)) {
+                    const quantity = parseInt(document.getElementById(`qty_${key}`).value) || 0;
+                    total += quantity * price;
+                }
+                
+                // Atualizar o texto do botão com o total
+                const submitBtn = document.querySelector('.btn-submit');
+                submitBtn.innerHTML = `Finalizar Pedido - Total: R$ ${total.toFixed(2)}`;
             }
             
-            // Calcular total
-            let total = 0;
-            const prices = {
-                titular: 89.90,
-                reserva: 89.90,
-                goleiro1: 99.90,
-                goleiro2: 99.90,
-                meiao_titular: 29.90,
-                meiao_reserva: 29.90,
-                bermuda_titular: 49.90,
-                bermuda_reserva: 49.90
-            };
-            
-            for (const [key, price] of Object.entries(prices)) {
-                const quantity = parseInt(document.getElementById(`qty_${key}`).value) || 0;
-                total += quantity * price;
-            }
-            
-            // Simulação de envio
-            alert(`Pedido enviado com sucesso! Valor total: R$ ${total.toFixed(2)}\nEm breve entraremos em contato para finalizar a compra.`);
-            
-            // Limpar formulário
-            this.reset();
+            // Calcular o total inicial
+            calculateTotal();
         });
     </script>
 </body>
