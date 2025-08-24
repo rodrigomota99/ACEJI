@@ -279,6 +279,49 @@
             color: #bbb;
         }
         
+        /* Página de confirmação */
+        .confirmation-page {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .confirmation-icon {
+            font-size: 80px;
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+        
+        .confirmation-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .confirmation-message {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .btn-back {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+        
+        .btn-back:hover {
+            background-color: #145A32;
+        }
+        
         @media (max-width: 768px) {
             .product-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -294,6 +337,10 @@
             
             .product-image-container {
                 height: 180px;
+            }
+            
+            .confirmation-title {
+                font-size: 2rem;
             }
         }
         
@@ -321,6 +368,14 @@
             .modal-content {
                 max-width: 95%;
             }
+            
+            .confirmation-title {
+                font-size: 1.8rem;
+            }
+            
+            .confirmation-message {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -337,11 +392,8 @@
             <div class="logo-text">A.A.A.CULTURAL E ESPORTIVA | IFSC JOINVILLE</div>
         </header>
         
-        <div class="form-container">
-            <form action="https://formsubmit.co/pedidosaceji@gmail.com" method="POST">
-                <input type="hidden" name="_subject" value="Novo pedido de uniformes ACEJI">
-                <input type="hidden" name="_template" value="table">
-                
+        <div class="form-container" id="form-section">
+            <form id="uniformOrderForm">
                 <h2 class="section-title">Dados Pessoais</h2>
                 
                 <div class="form-group">
@@ -407,8 +459,8 @@
                 <h2 class="section-title">Meião</h2>
                 <div class="product-grid">
                     <div class="product-card">
-                        <div class="product-image-container" onclick="openModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/UNIFORME%202526%20(1).png')">
-                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/UNIFORME%202526%20(1).png" alt="Meião" class="product-image">
+                        <div class="product-image-container" onclick="openModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Mei%C3%A3o.png')">
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Mei%C3%A3o.png" alt="Meião" class="product-image">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus"></i>
                             </div>
@@ -423,8 +475,8 @@
                 <h2 class="section-title">Bermuda</h2>
                 <div class="product-grid">
                     <div class="product-card">
-                        <div class="product-image-container" onclick="openModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/UNIFORME%202526%20(2).png')">
-                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/UNIFORME%202526%20(2).png" alt="Bermuda" class="product-image">
+                        <div class="product-image-container" onclick="openModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Bermuda.png')">
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Bermuda.png" alt="Bermuda" class="product-image">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus"></i>
                             </div>
@@ -449,6 +501,20 @@
                 
                 <button type="submit" class="btn-submit">Finalizar Pedido</button>
             </form>
+        </div>
+        
+        <!-- Página de Confirmação -->
+        <div class="confirmation-page" id="confirmation-section">
+            <div class="confirmation-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2 class="confirmation-title">Pedido Realizado com Sucesso!</h2>
+            <div class="confirmation-message">
+                <p>Parabéns! Seu pedido foi recebido com sucesso.</p>
+                <p>Em breve nossa equipe entrará em contato para confirmar os detalhes do seu pedido e fornecer as informações para pagamento.</p>
+                <p>Agradecemos pela preferência e confiança na ACEJI!</p>
+            </div>
+            <button class="btn-back" onclick="backToForm()">Fazer Novo Pedido</button>
         </div>
         
         <footer>
@@ -494,6 +560,42 @@
             
             // Calcular o total inicial
             calculateTotal();
+            
+            // Configurar o envio do formulário
+            document.getElementById('uniformOrderForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validação básica
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                
+                if (!name || !email || !phone) {
+                    alert('Por favor, preencha todos os campos obrigatórios.');
+                    return;
+                }
+                
+                // Enviar dados para o FormSubmit
+                const formData = new FormData(this);
+                
+                fetch('https://formsubmit.co/pedidosaceji@gmail.com', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Mostrar página de confirmação
+                        document.getElementById('form-section').style.display = 'none';
+                        document.getElementById('confirmation-section').style.display = 'block';
+                    } else {
+                        alert('Ocorreu um erro ao enviar o pedido. Por favor, tente novamente.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Ocorreu um erro ao enviar o pedido. Por favor, tente novamente.');
+                });
+            });
         });
         
         // Funções para o modal de imagem
@@ -504,6 +606,14 @@
         
         function closeModal() {
             document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Função para voltar ao formulário
+        function backToForm() {
+            document.getElementById('confirmation-section').style.display = 'none';
+            document.getElementById('form-section').style.display = 'block';
+            document.getElementById('uniformOrderForm').reset();
+            calculateTotal();
         }
         
         // Fechar o modal ao clicar fora da imagem
