@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACEJI - Uniformes de Jogo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         :root {
             --primary: #1E8449; /* Verde da atlética */
@@ -244,23 +245,6 @@
             color: var(--accent);
         }
         
-        .email-confirmation {
-            background-color: #e8f5e9;
-            padding: 15px;
-            border-radius: 4px;
-            border-left: 4px solid var(--success);
-            margin: 20px 0;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-        }
-        
-        .email-confirmation i {
-            color: var(--success);
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-        
         /* Modal de visualização de imagem */
         .modal {
             display: none;
@@ -340,6 +324,27 @@
             background-color: #145A32;
         }
         
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
         @media (max-width: 768px) {
             .product-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -411,11 +416,6 @@
         </header>
         
         <div class="form-container" id="form-section">
-            <div class="email-confirmation">
-                <i class="fas fa-envelope"></i>
-                <div>Seu pedido será enviado para: <strong>pedidosaceji@gmail.com</strong></div>
-            </div>
-            
             <form id="uniformOrderForm">
                 <h2 class="section-title">Dados Pessoais</h2>
                 
@@ -446,7 +446,7 @@
                         <div class="product-title">Camisa de Linha</div>
                         <div class="product-price">R$ 89,90</div>
                         <label for="qty_linha">Quantidade:</label>
-                        <input type="number" id="qty_linha" class="quantity" name="Camisa de Linha - Quantidade" min="0" value="0">
+                        <input type="number" id="qty_linha" class="quantity" name="qty_linha" min="0" value="0">
                     </div>
                 </div>
                 
@@ -462,7 +462,7 @@
                         <div class="product-title">Goleiro/Líbero Verde</div>
                         <div class="product-price">R$ 99,90</div>
                         <label for="qty_goleiro_verde">Quantidade:</label>
-                        <input type="number" id="qty_goleiro_verde" class="quantity" name="Goleiro/Líbero Verde - Quantidade" min="0" value="0">
+                        <input type="number" id="qty_goleiro_verde" class="quantity" name="qty_goleiro_verde" min="0" value="0">
                     </div>
                     
                     <div class="product-card">
@@ -475,7 +475,7 @@
                         <div class="product-title">Goleiro/Líbero Rosa</div>
                         <div class="product-price">R$ 99,90</div>
                         <label for="qty_goleiro_rosa">Quantidade:</label>
-                        <input type="number" id="qty_goleiro_rosa" class="quantity" name="Goleiro/Líbero Rosa - Quantidade" min="0" value="0">
+                        <input type="number" id="qty_goleiro_rosa" class="quantity" name="qty_goleiro_rosa" min="0" value="0">
                     </div>
                 </div>
                 
@@ -491,7 +491,7 @@
                         <div class="product-title">Meião</div>
                         <div class="product-price">R$ 29,90</div>
                         <label for="qty_meiao">Quantidade:</label>
-                        <input type="number" id="qty_meiao" class="quantity" name="Meião - Quantidade" min="0" value="0">
+                        <input type="number" id="qty_meiao" class="quantity" name="qty_meiao" min="0" value="0">
                     </div>
                 </div>
                 
@@ -507,19 +507,24 @@
                         <div class="product-title">Bermuda</div>
                         <div class="product-price">R$ 49,90</div>
                         <label for="qty_bermuda">Quantidade:</label>
-                        <input type="number" id="qty_bermuda" class="quantity" name="Bermuda - Quantidade" min="0" value="0">
+                        <input type="number" id="qty_bermuda" class="quantity" name="qty_bermuda" min="0" value="0">
                     </div>
                 </div>
                 
                 <h2 class="section-title">Tamanhos e Observações</h2>
                 <div class="form-group">
                     <label for="sizes">Tamanhos necessários (especificar quantidades por tamanho):</label>
-                    <textarea id="sizes" name="Tamanhos necessários" rows="3" placeholder="Ex: 2 unidades P, 3 unidades M..."></textarea>
+                    <textarea id="sizes" name="sizes" rows="3" placeholder="Ex: 2 unidades P, 3 unidades M..."></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label for="notes">Observações ou solicitações especiais:</label>
-                    <textarea id="notes" name="Observações" rows="3" placeholder="Ex: personalização de nome/número..."></textarea>
+                    <textarea id="notes" name="notes" rows="3" placeholder="Ex: personalização de nome/número..."></textarea>
+                </div>
+                
+                <div class="loading" id="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Enviando pedido...</p>
                 </div>
                 
                 <button type="submit" class="btn-submit">Finalizar Pedido</button>
@@ -535,7 +540,6 @@
             <div class="confirmation-message">
                 <p>Parabéns! Seu pedido foi recebido com sucesso.</p>
                 <p>Em breve nossa equipe entrará em contato através do e-mail ou telefone fornecido para confirmar os detalhes do seu pedido e fornecer as informações para pagamento.</p>
-                <p><strong>Seu pedido foi enviado para: pedidosaceji@gmail.com</strong></p>
                 <p>Agradecemos pela preferência e confiança na ACEJI!</p>
             </div>
             <button class="btn-back" onclick="backToForm()">Fazer Novo Pedido</button>
@@ -553,6 +557,9 @@
     </div>
 
     <script>
+        // Inicializar EmailJS com suas chaves
+        emailjs.init("PbKWnd03pD7Hbf3kl");
+        
         // Adicione este script para calcular o total em tempo real
         document.addEventListener('DOMContentLoaded', function() {
             const quantityInputs = document.querySelectorAll('.quantity');
@@ -599,26 +606,40 @@
                     return;
                 }
                 
-                // Enviar dados para o FormSubmit
-                const formData = new FormData(this);
+                // Mostrar loading
+                document.getElementById('loading').style.display = 'block';
+                document.querySelector('.btn-submit').disabled = true;
                 
-                fetch('https://formsubmit.co/pedidosaceji@gmail.com', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    if (response.ok) {
+                // Preparar dados do pedido
+                const formData = {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    qty_linha: document.getElementById('qty_linha').value || 0,
+                    qty_goleiro_verde: document.getElementById('qty_goleiro_verde').value || 0,
+                    qty_goleiro_rosa: document.getElementById('qty_goleiro_rosa').value || 0,
+                    qty_meiao: document.getElementById('qty_meiao').value || 0,
+                    qty_bermuda: document.getElementById('qty_bermuda').value || 0,
+                    sizes: document.getElementById('sizes').value,
+                    notes: document.getElementById('notes').value,
+                    total: document.querySelector('.btn-submit').innerText.replace('Finalizar Pedido - Total: R$ ', ''),
+                    subject: "Novo Pedido de Uniforme ACEJI"
+                };
+                
+                // Enviar email usando EmailJS
+                emailjs.send('service_bc810o4', 'template_rhqd71m', formData)
+                    .then(function(response) {
+                        console.log('SUCCESS!', response.status, response.text);
                         // Mostrar página de confirmação
                         document.getElementById('form-section').style.display = 'none';
                         document.getElementById('confirmation-section').style.display = 'block';
-                    } else {
-                        alert('Ocorreu um erro ao enviar o pedido. Por favor, tente novamente.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Ocorreu um erro ao enviar o pedido. Por favor, tente novamente.');
-                });
+                        document.getElementById('loading').style.display = 'none';
+                    }, function(error) {
+                        console.log('FAILED...', error);
+                        alert('Ocorreu um erro ao enviar o pedido. Por favor, tente novamente ou entre em contato conosco diretamente.');
+                        document.getElementById('loading').style.display = 'none';
+                        document.querySelector('.btn-submit').disabled = false;
+                    });
             });
         });
         
