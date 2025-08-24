@@ -139,6 +139,7 @@
             padding: 15px;
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
+            background: white;
         }
         
         .product-card:hover {
@@ -150,7 +151,7 @@
         .product-image-container {
             position: relative;
             height: 200px;
-            background: linear-gradient(45deg, var(--light), #f5f5f5);
+            background: white;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
@@ -241,6 +242,23 @@
         
         .required {
             color: var(--accent);
+        }
+        
+        .email-confirmation {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 4px solid var(--success);
+            margin: 20px 0;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .email-confirmation i {
+            color: var(--success);
+            margin-right: 10px;
+            font-size: 1.2rem;
         }
         
         /* Modal de visualização de imagem */
@@ -393,6 +411,11 @@
         </header>
         
         <div class="form-container" id="form-section">
+            <div class="email-confirmation">
+                <i class="fas fa-envelope"></i>
+                <div>Seu pedido será enviado para: <strong>pedidosaceji@gmail.com</strong></div>
+            </div>
+            
             <form id="uniformOrderForm">
                 <h2 class="section-title">Dados Pessoais</h2>
                 
@@ -511,7 +534,8 @@
             <h2 class="confirmation-title">Pedido Realizado com Sucesso!</h2>
             <div class="confirmation-message">
                 <p>Parabéns! Seu pedido foi recebido com sucesso.</p>
-                <p>Em breve nossa equipe entrará em contato para confirmar os detalhes do seu pedido e fornecer as informações para pagamento.</p>
+                <p>Em breve nossa equipe entrará em contato através do e-mail ou telefone fornecido para confirmar os detalhes do seu pedido e fornecer as informações para pagamento.</p>
+                <p><strong>Seu pedido foi enviado para: pedidosaceji@gmail.com</strong></p>
                 <p>Agradecemos pela preferência e confiança na ACEJI!</p>
             </div>
             <button class="btn-back" onclick="backToForm()">Fazer Novo Pedido</button>
