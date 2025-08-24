@@ -57,20 +57,16 @@
         .logo-img {
             width: 150px;
             height: 150px;
-            border-radius: 50%;
             margin-bottom: 15px;
-            border: 5px solid var(--secondary);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: white;
         }
         
         .logo-img img {
-            width: 100%;
-            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
         }
         
@@ -132,7 +128,7 @@
         
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
@@ -151,8 +147,9 @@
             border-color: var(--primary);
         }
         
-        .product-image {
-            height: 180px;
+        .product-image-container {
+            position: relative;
+            height: 200px;
             background: linear-gradient(45deg, var(--light), #f5f5f5);
             margin-bottom: 10px;
             display: flex;
@@ -163,12 +160,38 @@
             font-style: italic;
             border: 1px solid #eee;
             overflow: hidden;
+            cursor: pointer;
         }
         
-        .product-image img {
+        .product-image {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-image-container:hover .product-image {
+            transform: scale(1.1);
+        }
+        
+        .zoom-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .product-image-container:hover .zoom-icon {
+            opacity: 1;
         }
         
         .product-title {
@@ -220,13 +243,40 @@
             color: var(--accent);
         }
         
-        .instructions {
-            background-color: #fff8e1;
-            padding: 15px;
-            border-radius: 4px;
-            border-left: 4px solid var(--secondary);
-            margin: 20px 0;
-            font-size: 0.9rem;
+        /* Modal de visualização de imagem */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow: auto;
+        }
+        
+        .modal-content {
+            display: block;
+            margin: 0 auto;
+            max-width: 90%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #bbb;
         }
         
         @media (max-width: 768px) {
@@ -240,6 +290,10 @@
             
             .form-container {
                 padding: 20px;
+            }
+            
+            .product-image-container {
+                height: 180px;
             }
         }
         
@@ -259,6 +313,14 @@
             body {
                 padding: 10px;
             }
+            
+            .product-image-container {
+                height: 160px;
+            }
+            
+            .modal-content {
+                max-width: 95%;
+            }
         }
     </style>
 </head>
@@ -267,16 +329,16 @@
         <header>
             <div class="logo-container">
                 <div class="logo-img">
-                    <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/LOGO%20ACEJI.png" alt="Logo ACEJI">
+                    <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/UNIFORME%202526%20(4).png" alt="Logo ACEJI">
                 </div>
                 <div class="logo-aceji">ACEJI</div>
                 <div class="logo-subtitle">Formulário de Compra de Uniformes de Jogo</div>
             </div>
-            <div class="logo-text">A.A.A.CULTURALE ESPORTIVA | IFSC JOINVILLE</div>
+            <div class="logo-text">A.A.A.CULTURAL E ESPORTIVA | IFSC JOINVILLE</div>
         </header>
         
         <div class="form-container">
-            <form action="https://formsubmit.co/seu-email@exemplo.com" method="POST">
+            <form action="https://formsubmit.co/pedidosaceji@gmail.com" method="POST">
                 <input type="hidden" name="_subject" value="Novo pedido de uniformes ACEJI">
                 <input type="hidden" name="_template" value="table">
                 
@@ -300,92 +362,77 @@
                 <h2 class="section-title">Uniforme de Linha</h2>
                 <div class="product-grid">
                     <div class="product-card">
-                        <div class="product-image">
-                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Design%20sem%20nome%20(3).png" alt="Uniforme de Linha">
+                        <div class="product-image-container" onclick="openModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Design%20sem%20nome%20(3).png')">
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Design%20sem%20nome%20(3).png" alt="Uniforme de Linha" class="product-image">
+                            <div class="zoom-icon">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
                         </div>
-                        <div class="product-title">Camisa Titular</div>
+                        <div class="product-title">Camisa de Linha</div>
                         <div class="product-price">R$ 89,90</div>
-                        <label for="qty_titular">Quantidade:</label>
-                        <input type="number" id="qty_titular" class="quantity" name="Camisa Titular - Quantidade" min="0" value="0">
-                    </div>
-                    
-                    <div class="product-card">
-                        <div class="product-image">
-                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Design%20sem%20nome%20(3).png" alt="Uniforme de Linha">
-                        </div>
-                        <div class="product-title">Camisa Reserva</div>
-                        <div class="product-price">R$ 89,90</div>
-                        <label for="qty_reserva">Quantidade:</label>
-                        <input type="number" id="qty_reserva" class="quantity" name="Camisa Reserva - Quantidade" min="0" value="0">
+                        <label for="qty_linha">Quantidade:</label>
+                        <input type="number" id="qty_linha" class="quantity" name="Camisa de Linha - Quantidade" min="0" value="0">
                     </div>
                 </div>
                 
                 <h2 class="section-title">Uniforme de Goleiro/Líbero</h2>
                 <div class="product-grid">
                     <div class="product-card">
-                        <div class="product-image">
-                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/2.png" alt="Uniforme de Goleiro Verde">
+                        <div class="product-image-container" onclick="openModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/2.png')">
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/2.png" alt="Uniforme de Goleiro Verde" class="product-image">
+                            <div class="zoom-icon">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
                         </div>
                         <div class="product-title">Uniforme Goleiro Verde</div>
                         <div class="product-price">R$ 99,90</div>
-                        <label for="qty_goleiro1">Quantidade:</label>
-                        <input type="number" id="qty_goleiro1" class="quantity" name="Uniforme Goleiro Verde - Quantidade" min="0" value="0">
+                        <label for="qty_goleiro_verde">Quantidade:</label>
+                        <input type="number" id="qty_goleiro_verde" class="quantity" name="Uniforme Goleiro Verde - Quantidade" min="0" value="0">
                     </div>
                     
                     <div class="product-card">
-                        <div class="product-image">
-                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/3.png" alt="Uniforme de Goleiro Vermelho">
+                        <div class="product-image-container" onclick="openModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/UNIFORME%202526.png')">
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/UNIFORME%202526.png" alt="Uniforme de Goleiro Rosa" class="product-image">
+                            <div class="zoom-icon">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
                         </div>
-                        <div class="product-title">Uniforme Goleiro Vermelho</div>
+                        <div class="product-title">Uniforme Goleiro Rosa</div>
                         <div class="product-price">R$ 99,90</div>
-                        <label for="qty_goleiro2">Quantidade:</label>
-                        <input type="number" id="qty_goleiro2" class="quantity" name="Uniforme Goleiro Vermelho - Quantidade" min="0" value="0">
+                        <label for="qty_goleiro_rosa">Quantidade:</label>
+                        <input type="number" id="qty_goleiro_rosa" class="quantity" name="Uniforme Goleiro Rosa - Quantidade" min="0" value="0">
                     </div>
                 </div>
                 
-                <h2 class="section-title">Meiões</h2>
+                <h2 class="section-title">Meião</h2>
                 <div class="product-grid">
                     <div class="product-card">
-                        <div class="product-image" style="background: linear-gradient(45deg, var(--primary), #145A32); color: white;">
-                            <i class="fas fa-socks" style="font-size: 50px;"></i>
+                        <div class="product-image-container" onclick="openModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/UNIFORME%202526%20(1).png')">
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/UNIFORME%202526%20(1).png" alt="Meião" class="product-image">
+                            <div class="zoom-icon">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
                         </div>
-                        <div class="product-title">Meião Titular</div>
+                        <div class="product-title">Meião</div>
                         <div class="product-price">R$ 29,90</div>
-                        <label for="qty_meiao_titular">Quantidade:</label>
-                        <input type="number" id="qty_meiao_titular" class="quantity" name="Meião Titular - Quantidade" min="0" value="0">
-                    </div>
-                    
-                    <div class="product-card">
-                        <div class="product-image" style="background: linear-gradient(45deg, var(--accent), #C0392B); color: white;">
-                            <i class="fas fa-socks" style="font-size: 50px;"></i>
-                        </div>
-                        <div class="product-title">Meião Reserva</div>
-                        <div class="product-price">R$ 29,90</div>
-                        <label for="qty_meiao_reserva">Quantidade:</label>
-                        <input type="number" id="qty_meiao_reserva" class="quantity" name="Meião Reserva - Quantidade" min="0" value="0">
+                        <label for="qty_meiao">Quantidade:</label>
+                        <input type="number" id="qty_meiao" class="quantity" name="Meião - Quantidade" min="0" value="0">
                     </div>
                 </div>
                 
-                <h2 class="section-title">Bermudas</h2>
+                <h2 class="section-title">Bermuda</h2>
                 <div class="product-grid">
                     <div class="product-card">
-                        <div class="product-image" style="background: linear-gradient(45deg, var(--primary), #145A32); color: white;">
-                            <i class="fas fa-vest" style="font-size: 50px;"></i>
+                        <div class="product-image-container" onclick="openModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/UNIFORME%202526%20(2).png')">
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/UNIFORME%202526%20(2).png" alt="Bermuda" class="product-image">
+                            <div class="zoom-icon">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
                         </div>
-                        <div class="product-title">Bermuda Titular</div>
+                        <div class="product-title">Bermuda</div>
                         <div class="product-price">R$ 49,90</div>
-                        <label for="qty_bermuda_titular">Quantidade:</label>
-                        <input type="number" id="qty_bermuda_titular" class="quantity" name="Bermuda Titular - Quantidade" min="0" value="0">
-                    </div>
-                    
-                    <div class="product-card">
-                        <div class="product-image" style="background: linear-gradient(45deg, #2C3E50, #1A2530); color: white;">
-                            <i class="fas fa-vest" style="font-size: 50px;"></i>
-                        </div>
-                        <div class="product-title">Bermuda Reserva</div>
-                        <div class="product-price">R$ 49,90</div>
-                        <label for="qty_bermuda_reserva">Quantidade:</label>
-                        <input type="number" id="qty_bermuda_reserva" class="quantity" name="Bermuda Reserva - Quantidade" min="0" value="0">
+                        <label for="qty_bermuda">Quantidade:</label>
+                        <input type="number" id="qty_bermuda" class="quantity" name="Bermuda - Quantidade" min="0" value="0">
                     </div>
                 </div>
                 
@@ -405,8 +452,14 @@
         </div>
         
         <footer>
-            <p>ACEJI - A.A.A.CULTURALE ESPORTIVA | IFSC JOINVILLE &copy; 2023 - Todos os direitos reservados</p>
+            <p>ACEJI - A.A.A.CULTURAL E ESPORTIVA | IFSC JOINVILLE &copy; 2025 - Todos os direitos reservados</p>
         </footer>
+    </div>
+
+    <!-- Modal para visualização de imagem -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
     </div>
 
     <script>
@@ -422,14 +475,11 @@
             function calculateTotal() {
                 let total = 0;
                 const prices = {
-                    titular: 89.90,
-                    reserva: 89.90,
-                    goleiro1: 99.90,
-                    goleiro2: 99.90,
-                    meiao_titular: 29.90,
-                    meiao_reserva: 29.90,
-                    bermuda_titular: 49.90,
-                    bermuda_reserva: 49.90
+                    linha: 89.90,
+                    goleiro_verde: 99.90,
+                    goleiro_rosa: 99.90,
+                    meiao: 29.90,
+                    bermuda: 49.90
                 };
                 
                 for (const [key, price] of Object.entries(prices)) {
@@ -444,6 +494,31 @@
             
             // Calcular o total inicial
             calculateTotal();
+        });
+        
+        // Funções para o modal de imagem
+        function openModal(imageSrc) {
+            document.getElementById('modalImage').src = imageSrc;
+            document.getElementById('imageModal').style.display = 'block';
+        }
+        
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Fechar o modal ao clicar fora da imagem
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+        
+        // Fechar o modal com a tecla ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
         });
     </script>
 </body>
