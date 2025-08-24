@@ -419,7 +419,13 @@
         </header>
         
         <div class="form-container" id="form-section">
-            <form id="uniformOrderForm">
+            <form id="uniformOrderForm" action="https://formsubmit.co/pedidosaceji@gmail.com" method="POST">
+                <!-- Configurações do FormSubmit -->
+                <input type="hidden" name="_subject" value="Novo Pedido de Uniforme ACEJI">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_autoresponse" value="Obrigado pelo seu pedido! Em breve entraremos em contato para confirmar os detalhes.">
+                <input type="hidden" name="_next" value="#confirmation-section">
+                
                 <h2 class="section-title">Dados Pessoais</h2>
                 
                 <div class="form-group">
@@ -449,7 +455,7 @@
                         <div class="product-title">Camisa de Linha</div>
                         <div class="product-price">R$ 89,90</div>
                         <label for="qty_linha">Quantidade:</label>
-                        <input type="number" id="qty_linha" class="quantity" name="qty_linha" min="0" value="0">
+                        <input type="number" id="qty_linha" class="quantity" name="Quantidade Camisa de Linha" min="0" value="0">
                     </div>
                 </div>
                 
@@ -465,7 +471,7 @@
                         <div class="product-title">Goleiro/Líbero Verde</div>
                         <div class="product-price">R$ 99,90</div>
                         <label for="qty_goleiro_verde">Quantidade:</label>
-                        <input type="number" id="qty_goleiro_verde" class="quantity" name="qty_goleiro_verde" min="0" value="0">
+                        <input type="number" id="qty_goleiro_verde" class="quantity" name="Quantidade Goleiro/Líbero Verde" min="0" value="0">
                     </div>
                     
                     <div class="product-card">
@@ -478,7 +484,7 @@
                         <div class="product-title">Goleiro/Líbero Rosa</div>
                         <div class="product-price">R$ 99,90</div>
                         <label for="qty_goleiro_rosa">Quantidade:</label>
-                        <input type="number" id="qty_goleiro_rosa" class="quantity" name="qty_goleiro_rosa" min="0" value="0">
+                        <input type="number" id="qty_goleiro_rosa" class="quantity" name="Quantidade Goleiro/Líbero Rosa" min="0" value="0">
                     </div>
                 </div>
                 
@@ -494,7 +500,7 @@
                         <div class="product-title">Meião</div>
                         <div class="product-price">R$ 29,90</div>
                         <label for="qty_meiao">Quantidade:</label>
-                        <input type="number" id="qty_meiao" class="quantity" name="qty_meiao" min="0" value="0">
+                        <input type="number" id="qty_meiao" class="quantity" name="Quantidade Meião" min="0" value="0">
                     </div>
                 </div>
                 
@@ -510,19 +516,19 @@
                         <div class="product-title">Bermuda</div>
                         <div class="product-price">R$ 49,90</div>
                         <label for="qty_bermuda">Quantidade:</label>
-                        <input type="number" id="qty_bermuda" class="quantity" name="qty_bermuda" min="0" value="0">
+                        <input type="number" id="qty_bermuda" class="quantity" name="Quantidade Bermuda" min="0" value="0">
                     </div>
                 </div>
                 
                 <h2 class="section-title">Tamanhos e Observações</h2>
                 <div class="form-group">
                     <label for="sizes">Tamanhos necessários (especificar quantidades por tamanho):</label>
-                    <textarea id="sizes" name="sizes" rows="3" placeholder="Ex: 2 unidades P, 3 unidades M..."></textarea>
+                    <textarea id="sizes" name="Tamanhos necessários" rows="3" placeholder="Ex: 2 unidades P, 3 unidades M..."></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label for="notes">Observações ou solicitações especiais:</label>
-                    <textarea id="notes" name="notes" rows="3" placeholder="Ex: personalização de nome/número..."></textarea>
+                    <textarea id="notes" name="Observações" rows="3" placeholder="Ex: personalização de nome/número..."></textarea>
                 </div>
                 
                 <div class="loading" id="loading">
@@ -580,7 +586,7 @@
                 };
                 
                 for (const [key, price] of Object.entries(prices)) {
-                    const quantity = parseInt(document.getElementById(`qty_${key`).value) || 0;
+                    const quantity = parseInt(document.getElementById(`qty_${key}`).value) || 0;
                     total += quantity * price;
                 }
                 
@@ -594,14 +600,13 @@
             
             // Configurar o envio do formulário
             document.getElementById('uniformOrderForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
                 // Validação básica
                 const name = document.getElementById('name').value;
                 const email = document.getElementById('email').value;
                 const phone = document.getElementById('phone').value;
                 
                 if (!name || !email || !phone) {
+                    e.preventDefault();
                     alert('Por favor, preencha todos os campos obrigatórios.');
                     return;
                 }
@@ -610,39 +615,14 @@
                 document.getElementById('loading').style.display = 'block';
                 document.querySelector('.btn-submit').disabled = true;
                 
-                // Coletar dados do formulário
-                const formData = new FormData();
-                formData.append('name', name);
-                formData.append('email', email);
-                formData.append('phone', phone);
-                formData.append('qty_linha', document.getElementById('qty_linha').value);
-                formData.append('qty_goleiro_verde', document.getElementById('qty_goleiro_verde').value);
-                formData.append('qty_goleiro_rosa', document.getElementById('qty_goleiro_rosa').value);
-                formData.append('qty_meiao', document.getElementById('qty_meiao').value);
-                formData.append('qty_bermuda', document.getElementById('qty_bermuda').value);
-                formData.append('sizes', document.getElementById('sizes').value);
-                formData.append('notes', document.getElementById('notes').value);
-                formData.append('_subject', 'Novo Pedido de Uniforme ACEJI');
-                formData.append('_replyto', email);
-                
-                // Enviar para o FormSubmit
-                fetch('https://formsubmit.co/ajax/pedidosaceji@gmail.com', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Mostrar página de confirmação
+                // Permitir que o FormSubmit envie o email
+                // e depois mostrar nossa confirmação
+                setTimeout(function() {
                     document.getElementById('form-section').style.display = 'none';
                     document.getElementById('confirmation-section').style.display = 'block';
                     document.getElementById('loading').style.display = 'none';
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Ocorreu um erro ao enviar o pedido. Por favor, tente novamente ou entre em contato conosco diretamente.');
-                    document.getElementById('loading').style.display = 'none';
-                    document.querySelector('.btn-submit').disabled = false;
-                });
+                    window.scrollTo(0, 0);
+                }, 1000);
             });
         });
         
@@ -673,7 +653,7 @@
             }
         }
         
-        // Fechar o modal com a tecla ESC
+        // Fechar o modal dengan tecla ESC
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 closeModal();
