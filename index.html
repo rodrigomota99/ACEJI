@@ -14,6 +14,8 @@
             --dark: #2C3E50;
             --text: #333333;
             --success: #27AE60;
+            --instagram: #E1306C;
+            --whatsapp: #25D366;
         }
         
         * {
@@ -327,6 +329,48 @@
             background-color: #145A32;
         }
         
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-social {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .btn-social:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-instagram {
+            background-color: var(--instagram);
+        }
+        
+        .btn-instagram:hover {
+            background-color: #c13584;
+        }
+        
+        .btn-whatsapp {
+            background-color: var(--whatsapp);
+        }
+        
+        .btn-whatsapp:hover {
+            background-color: #128C7E;
+        }
+        
         .loading {
             display: none;
             text-align: center;
@@ -367,6 +411,16 @@
             
             .confirmation-title {
                 font-size: 2rem;
+            }
+            
+            .social-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-social {
+                width: 100%;
+                max-width: 250px;
             }
         }
         
@@ -552,7 +606,19 @@
                 <p>Em breve nossa equipe entrará em contato através do e-mail ou telefone fornecido para confirmar os detalhes do seu pedido e fornecer as informações para pagamento.</p>
                 <p><strong>Obrigado por escolher a ACEJI!</strong></p>
             </div>
-            <button class="btn-back" onclick="backToForm()">Fazer Novo Pedido</button>
+            
+            <div class="social-buttons">
+                <a href="https://www.instagram.com/acejiatletica/" target="_blank" class="btn-social btn-instagram">
+                    <i class="fab fa-instagram"></i>
+                    Insta da ACEJI
+                </a>
+                <a href="https://chat.whatsapp.com/Ks3hktil063FHygwoFVP7G" target="_blank" class="btn-social btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    Grupo do Ninho
+                </a>
+            </div>
+            
+            <button class="btn-back" onclick="location.reload()">Fazer Novo Pedido</button>
         </div>
         
         <footer>
@@ -674,24 +740,6 @@
         
         function closeModal() {
             document.getElementById('imageModal').style.display = 'none';
-        }
-        
-        // Função para voltar ao formulário
-        function backToForm() {
-            document.getElementById('confirmation-section').style.display = 'none';
-            document.getElementById('form-section').style.display = 'block';
-            document.getElementById('uniformOrderForm').reset();
-            
-            // Recalcular total
-            const quantityInputs = document.querySelectorAll('.quantity');
-            quantityInputs.forEach(input => {
-                input.value = 0;
-            });
-            
-            const submitBtn = document.querySelector('.btn-submit');
-            submitBtn.innerHTML = 'Finalizar Pedido';
-            
-            window.scrollTo(0, 0);
         }
         
         // Fechar o modal ao clicar fora da imagem
