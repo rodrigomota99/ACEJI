@@ -163,7 +163,6 @@
             font-style: italic;
             border: 1px solid #eee;
             overflow: hidden;
-            cursor: pointer;
         }
         
         .product-image {
@@ -171,9 +170,10 @@
             height: 100%;
             object-fit: contain;
             transition: transform 0.5s ease;
+            cursor: pointer;
         }
         
-        .product-image-container:hover .product-image {
+        .product-image:hover {
             transform: scale(1.1);
         }
         
@@ -191,6 +191,8 @@
             justify-content: center;
             opacity: 0;
             transition: opacity 0.3s;
+            cursor: pointer;
+            z-index: 5;
         }
         
         .product-image-container:hover .zoom-icon {
@@ -548,8 +550,8 @@
                 <div class="product-grid">
                     <div class="product-card">
                         <div class="product-image-container" id="container-linha">
-                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Linha.png" alt="Uniforme de Linha" class="product-image" id="image-linha">
-                            <div class="zoom-icon" onclick="openModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Linha.png')">
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Linha.png" alt="Uniforme de Linha" class="product-image" id="image-linha" onclick="openModalCurrentImage('linha')">
+                            <div class="zoom-icon" onclick="openModalCurrentImage('linha')">
                                 <i class="fas fa-search-plus"></i>
                             </div>
                             <div class="flip-icon" onclick="flipImage('linha')">
@@ -575,8 +577,8 @@
                 <div class="product-grid">
                     <div class="product-card">
                         <div class="product-image-container" id="container-verde">
-                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Verde.png" alt="Uniforme de Goleiro/Líbero Verde" class="product-image" id="image-verde">
-                            <div class="zoom-icon" onclick="openModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Verde.png')">
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Verde.png" alt="Uniforme de Goleiro/Líbero Verde" class="product-image" id="image-verde" onclick="openModalCurrentImage('verde')">
+                            <div class="zoom-icon" onclick="openModalCurrentImage('verde')">
                                 <i class="fas fa-search-plus"></i>
                             </div>
                             <div class="flip-icon" onclick="flipImage('verde')">
@@ -599,8 +601,8 @@
                     
                     <div class="product-card">
                         <div class="product-image-container" id="container-rosa">
-                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Rosa.png" alt="Uniforme de Goleiro/Líbero Rosa" class="product-image" id="image-rosa">
-                            <div class="zoom-icon" onclick="openModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Rosa.png')">
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Rosa.png" alt="Uniforme de Goleiro/Líbero Rosa" class="product-image" id="image-rosa" onclick="openModalCurrentImage('rosa')">
+                            <div class="zoom-icon" onclick="openModalCurrentImage('rosa')">
                                 <i class="fas fa-search-plus"></i>
                             </div>
                             <div class="flip-icon" onclick="flipImage('rosa')">
@@ -818,6 +820,12 @@
             document.getElementById('imageModal').style.display = 'block';
         }
         
+        function openModalCurrentImage(type) {
+            const image = document.getElementById(`image-${type}`);
+            document.getElementById('modalImage').src = image.src;
+            document.getElementById('imageModal').style.display = 'block';
+        }
+        
         function closeModal() {
             document.getElementById('imageModal').style.display = 'none';
         }
@@ -846,6 +854,9 @@
                     image.src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Rosa.png';
                 }
             }
+            
+            // Parar a propagação do evento para não interferir com outros cliques
+            event.stopPropagation();
         }
         
         function showFront(type) {
