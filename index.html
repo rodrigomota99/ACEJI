@@ -197,6 +197,28 @@
             opacity: 1;
         }
         
+        .flip-icon {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .product-image-container:hover .flip-icon {
+            opacity: 1;
+        }
+        
         .product-title {
             font-weight: bold;
             margin-bottom: 5px;
@@ -387,6 +409,30 @@
             margin: 0 auto;
         }
         
+        .flip-navigation {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            gap: 10px;
+        }
+        
+        .flip-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .flip-btn:hover {
+            background-color: #145A32;
+        }
+        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -501,11 +547,22 @@
                 <h2 class="section-title">Uniforme de Linha</h2>
                 <div class="product-grid">
                     <div class="product-card">
-                        <div class="product-image-container" onclick="openModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Linha.png')">
-                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Linha.png" alt="Uniforme de Linha" class="product-image">
-                            <div class="zoom-icon">
+                        <div class="product-image-container" id="container-linha">
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Linha.png" alt="Uniforme de Linha" class="product-image" id="image-linha">
+                            <div class="zoom-icon" onclick="openModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Linha.png')">
                                 <i class="fas fa-search-plus"></i>
                             </div>
+                            <div class="flip-icon" onclick="flipImage('linha')">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                        </div>
+                        <div class="flip-navigation">
+                            <button type="button" class="flip-btn" onclick="showFront('linha')">
+                                <i class="fas fa-arrow-left"></i> Frente
+                            </button>
+                            <button type="button" class="flip-btn" onclick="showBack('linha')">
+                                Verso <i class="fas fa-arrow-right"></i>
+                            </button>
                         </div>
                         <div class="product-title">Camisa de Linha</div>
                         <div class="product-price">R$ 65,00</div>
@@ -517,11 +574,22 @@
                 <h2 class="section-title">Uniforme de Goleiro/Líbero</h2>
                 <div class="product-grid">
                     <div class="product-card">
-                        <div class="product-image-container" onclick="openModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Verde.png')">
-                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Verde.png" alt="Uniforme de Goleiro/Líbero Verde" class="product-image">
-                            <div class="zoom-icon">
+                        <div class="product-image-container" id="container-verde">
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Verde.png" alt="Uniforme de Goleiro/Líbero Verde" class="product-image" id="image-verde">
+                            <div class="zoom-icon" onclick="openModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Verde.png')">
                                 <i class="fas fa-search-plus"></i>
                             </div>
+                            <div class="flip-icon" onclick="flipImage('verde')">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                        </div>
+                        <div class="flip-navigation">
+                            <button type="button" class="flip-btn" onclick="showFront('verde')">
+                                <i class="fas fa-arrow-left"></i> Frente
+                            </button>
+                            <button type="button" class="flip-btn" onclick="showBack('verde')">
+                                Verso <i class="fas fa-arrow-right"></i>
+                            </button>
                         </div>
                         <div class="product-title">Goleiro/Líbero Verde</div>
                         <div class="product-price">R$ 65,00</div>
@@ -530,11 +598,22 @@
                     </div>
                     
                     <div class="product-card">
-                        <div class="product-image-container" onclick="openModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Rosa.png')">
-                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Rosa.png" alt="Uniforme de Goleiro/Líbero Rosa" class="product-image">
-                            <div class="zoom-icon">
+                        <div class="product-image-container" id="container-rosa">
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Rosa.png" alt="Uniforme de Goleiro/Líbero Rosa" class="product-image" id="image-rosa">
+                            <div class="zoom-icon" onclick="openModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Rosa.png')">
                                 <i class="fas fa-search-plus"></i>
                             </div>
+                            <div class="flip-icon" onclick="flipImage('rosa')">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                        </div>
+                        <div class="flip-navigation">
+                            <button type="button" class="flip-btn" onclick="showFront('rosa')">
+                                <i class="fas fa-arrow-left"></i> Frente
+                            </button>
+                            <button type="button" class="flip-btn" onclick="showBack('rosa')">
+                                Verso <i class="fas fa-arrow-right"></i>
+                            </button>
                         </div>
                         <div class="product-title">Goleiro/Líbero Rosa</div>
                         <div class="product-price">R$ 65,00</div>
@@ -602,7 +681,7 @@
             </div>
             <h2 class="confirmation-title">Pedido Realizado com Sucesso!</h2>
             <div class="confirmation-message">
-                <p>Parabéns! Seu pedido foi recebido com sucesso.</p>
+                <p>Parabéns! Seu pedido foi recebido dengan sucesso.</p>
                 <p>Em breve nossa equipe entrará em contato através do e-mail ou telefone fornecido para confirmar os detalhes do seu pedido e fornecer as informações para pagamento.</p>
                 <p><strong>Obrigado por escolher a ACEJI!</strong></p>
             </div>
@@ -741,6 +820,52 @@
         
         function closeModal() {
             document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Funções para alternar entre frente e verso
+        function flipImage(type) {
+            const image = document.getElementById(`image-${type}`);
+            const currentSrc = image.src;
+            
+            if (currentSrc.includes('Imagens-Site-Uniforme')) {
+                // Mostrar verso
+                if (type === 'linha') {
+                    image.src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Linha%20Tr%C3%A1s.png';
+                } else if (type === 'verde') {
+                    image.src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Verde%20Tr%C3%A1s.png';
+                } else if (type === 'rosa') {
+                    image.src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Rosa%20Tr%C3%A1s.png';
+                }
+            } else {
+                // Mostrar frente
+                if (type === 'linha') {
+                    image.src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Linha.png';
+                } else if (type === 'verde') {
+                    image.src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Verde.png';
+                } else if (type === 'rosa') {
+                    image.src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Rosa.png';
+                }
+            }
+        }
+        
+        function showFront(type) {
+            if (type === 'linha') {
+                document.getElementById('image-linha').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Linha.png';
+            } else if (type === 'verde') {
+                document.getElementById('image-verde').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Verde.png';
+            } else if (type === 'rosa') {
+                document.getElementById('image-rosa').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Rosa.png';
+            }
+        }
+        
+        function showBack(type) {
+            if (type === 'linha') {
+                document.getElementById('image-linha').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Linha%20Tr%C3%A1s.png';
+            } else if (type === 'verde') {
+                document.getElementById('image-verde').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Verde%20Tr%C3%A1s.png';
+            } else if (type === 'rosa') {
+                document.getElementById('image-rosa').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Rosa%20Tr%C3%A1s.png';
+            }
         }
         
         // Fechar o modal ao clicar fora da imagem
