@@ -508,7 +508,7 @@
                             </div>
                         </div>
                         <div class="product-title">Camisa de Linha</div>
-                        <div class="product-price">R$ 89,90</div>
+                        <div class="product-price">R$ 65,00</div>
                         <label for="qty_linha">Quantidade:</label>
                         <input type="number" id="qty_linha" class="quantity" name="Quantidade Camisa de Linha" min="0" value="0">
                     </div>
@@ -524,7 +524,7 @@
                             </div>
                         </div>
                         <div class="product-title">Goleiro/Líbero Verde</div>
-                        <div class="product-price">R$ 99,90</div>
+                        <div class="product-price">R$ 65,00</div>
                         <label for="qty_goleiro_verde">Quantidade:</label>
                         <input type="number" id="qty_goleiro_verde" class="quantity" name="Quantidade Goleiro/Líbero Verde" min="0" value="0">
                     </div>
@@ -537,7 +537,7 @@
                             </div>
                         </div>
                         <div class="product-title">Goleiro/Líbero Rosa</div>
-                        <div class="product-price">R$ 99,90</div>
+                        <div class="product-price">R$ 65,00</div>
                         <label for="qty_goleiro_rosa">Quantidade:</label>
                         <input type="number" id="qty_goleiro_rosa" class="quantity" name="Quantidade Goleiro/Líbero Rosa" min="0" value="0">
                     </div>
@@ -553,7 +553,7 @@
                             </div>
                         </div>
                         <div class="product-title">Meião</div>
-                        <div class="product-price">R$ 29,90</div>
+                        <div class="product-price">R$ 30,00</div>
                         <label for="qty_meiao">Quantidade:</label>
                         <input type="number" id="qty_meiao" class="quantity" name="Quantidade Meião" min="0" value="0">
                     </div>
@@ -569,7 +569,7 @@
                             </div>
                         </div>
                         <div class="product-title">Bermuda</div>
-                        <div class="product-price">R$ 49,90</div>
+                        <div class="product-price">R$ 35,00</div>
                         <label for="qty_bermuda">Quantidade:</label>
                         <input type="number" id="qty_bermuda" class="quantity" name="Quantidade Bermuda" min="0" value="0">
                     </div>
@@ -577,8 +577,8 @@
                 
                 <h2 class="section-title">Tamanhos e Observações</h2>
                 <div class="form-group">
-                    <label for="sizes">Tamanhos necessários (especificar quantidades por tamanho):</label>
-                    <textarea id="sizes" name="Tamanhos necessários" rows="3" placeholder="Ex: 2 unidades Camisa Goleiro/Líbero M, 1 unidade Camisa de Linha G..."></textarea>
+                    <label for="sizes">Tamanhos necessários (especificar quantidades por tamanho) <span class="required">*</span></label>
+                    <textarea id="sizes" name="Tamanhos necessários" rows="3" placeholder="Ex: 2 unidades Camisa Goleiro/Líbero M, 1 unidade Camisa de Linha G..." required></textarea>
                 </div>
                 
                 <div class="form-group">
@@ -645,11 +645,11 @@
             function calculateTotal() {
                 let total = 0;
                 const prices = {
-                    linha: 89.90,
-                    goleiro_verde: 99.90,
-                    goleiro_rosa: 99.90,
-                    meiao: 29.90,
-                    bermuda: 49.90
+                    linha: 65.00,
+                    goleiro_verde: 65.00,
+                    goleiro_rosa: 65.00,
+                    meiao: 30.00,
+                    bermuda: 35.00
                 };
                 
                 for (const [key, price] of Object.entries(prices)) {
@@ -671,8 +671,9 @@
                 const name = document.getElementById('name').value;
                 const email = document.getElementById('email').value;
                 const phone = document.getElementById('phone').value;
+                const sizes = document.getElementById('sizes').value;
                 
-                if (!name || !email || !phone) {
+                if (!name || !email || !phone || !sizes) {
                     e.preventDefault();
                     alert('Por favor, preencha todos os campos obrigatórios.');
                     return;
