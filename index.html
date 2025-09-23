@@ -435,6 +435,43 @@
             background-color: #145A32;
         }
         
+        /* Estilo para o botão de enviar para WhatsApp */
+        .btn-whatsapp-confirm {
+            background-color: var(--whatsapp);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-whatsapp-confirm:hover {
+            background-color: #128C7E;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .whatsapp-section {
+            background-color: #f0f8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid var(--whatsapp);
+        }
+        
+        .whatsapp-title {
+            color: var(--whatsapp);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -688,6 +725,17 @@
                 <p><strong>Obrigado por escolher a ACEJI!</strong></p>
             </div>
             
+            <!-- Seção para enviar para WhatsApp -->
+            <div class="whatsapp-section">
+                <h3 class="whatsapp-title">Enviar Pedido para WhatsApp</h3>
+                <p>Clique no botão abaixo para enviar os detalhes do seu pedido diretamente para o WhatsApp da ACEJI.</p>
+                <p><small>Você poderá anexar o comprovante de pagamento na conversa.</small></p>
+                <button class="btn-whatsapp-confirm" id="whatsappButton">
+                    <i class="fab fa-whatsapp"></i>
+                    Enviar Pedido para WhatsApp
+                </button>
+            </div>
+            
             <div class="social-buttons">
                 <a href="https://www.instagram.com/acejiatletica/" target="_blank" class="btn-social btn-instagram">
                     <i class="fab fa-instagram"></i>
@@ -801,6 +849,9 @@
                         document.getElementById('confirmation-section').style.display = 'block';
                         document.getElementById('loading').style.display = 'none';
                         window.scrollTo(0, 0);
+                        
+                        // Configurar o botão do WhatsApp
+                        setupWhatsAppButton();
                     } else {
                         throw new Error('Erro no envio do formulário');
                     }
@@ -812,6 +863,90 @@
                     document.querySelector('.btn-submit').disabled = false;
                 });
             });
+            
+            // Função para configurar o botão do WhatsApp
+            function setupWhatsAppButton() {
+                document.getElementById('whatsappButton').addEventListener('click', function() {
+                    // Coletar dados do formulário
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const phone = document.getElementById('phone').value;
+                    
+                    const quantities = {
+                        linha: parseInt(document.getElementById('qty_linha').value) || 0,
+                        goleiro_verde: parseInt(document.getElementById('qty_goleiro_verde').value) || 0,
+                        goleiro_rosa: parseInt(document.getElementById('qty_goleiro_rosa').value) || 0,
+                        meiao: parseInt(document.getElementById('qty_meiao').value) || 0,
+                        bermuda: parseInt(document.getElementById('qty_bermuda').value) || 0
+                    };
+                    
+                    const sizes = document.getElementById('sizes').value;
+                    const notes = document.getElementById('notes').value;
+                    
+                    // Calcular total
+                    const prices = {
+                        linha: 65.00,
+                        goleiro_verde: 65.00,
+                        goleiro_rosa: 65.00,
+                        meiao: 30.00,
+                        bermuda: 35.00
+                    };
+                    
+                    let total = 0;
+                    for (const [key, price] of Object.entries(prices)) {
+                        total += quantities[key] * price;
+                    }
+                    
+                    // Criar mensagem para WhatsApp
+                    let message = `Olá ACEJI! Gostaria de confirmar meu pedido de uniformes:%0A%0A`;
+                    
+                    message += `*Dados Pessoais:*%0A`;
+                    message += `Nome: ${name}%0A`;
+                    message += `E-mail: ${email}%0A`;
+                    message += `Telefone: ${phone}%0A%0A`;
+                    
+                    message += `*Itens do Pedido:*%0A`;
+                    
+                    if (quantities.linha > 0) {
+                        message += `• Camisa de Linha: ${quantities.linha} unidade(s) - R$ ${(quantities.linha * 65).toFixed(2)}%0A`;
+                    }
+                    
+                    if (quantities.goleiro_verde > 0) {
+                        message += `• Goleiro/Líbero Verde: ${quantities.goleiro_verde} unidade(s) - R$ ${(quantities.goleiro_verde * 65).toFixed(2)}%0A`;
+                    }
+                    
+                    if (quantities.goleiro_rosa > 0) {
+                        message += `• Goleiro/Líbero Rosa: ${quantities.goleiro_rosa} unidade(s) - R$ ${(quantities.goleiro_rosa * 65).toFixed(2)}%0A`;
+                    }
+                    
+                    if (quantities.meiao > 0) {
+                        message += `• Meião: ${quantities.meiao} unidade(s) - R$ ${(quantities.meiao * 30).toFixed(2)}%0A`;
+                    }
+                    
+                    if (quantities.bermuda > 0) {
+                        message += `• Bermuda: ${quantities.bermuda} unidade(s) - R$ ${(quantities.bermuda * 35).toFixed(2)}%0A`;
+                    }
+                    
+                    message += `%0A*Total do Pedido: R$ ${total.toFixed(2)}*%0A%0A`;
+                    
+                    message += `*Tamanhos Solicitados:*%0A${sizes}%0A%0A`;
+                    
+                    if (notes) {
+                        message += `*Observações:*%0A${notes}%0A%0A`;
+                    }
+                    
+                    message += `Este pedido foi realizado através do formulário online.`;
+                    
+                    // Número do WhatsApp (47996664597)
+                    const whatsappNumber = '5547996664597'; // Código do Brasil (55) + DDD (47) + número
+                    
+                    // URL do WhatsApp
+                    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+                    
+                    // Abrir WhatsApp
+                    window.open(whatsappUrl, '_blank');
+                });
+            }
         });
         
         // Funções para o modal de imagem
@@ -823,76 +958,4 @@
         function openModalCurrentImage(type) {
             const image = document.getElementById(`image-${type}`);
             document.getElementById('modalImage').src = image.src;
-            document.getElementById('imageModal').style.display = 'block';
-        }
-        
-        function closeModal() {
-            document.getElementById('imageModal').style.display = 'none';
-        }
-        
-        // Funções para alternar entre frente e verso
-        function flipImage(type) {
-            const image = document.getElementById(`image-${type}`);
-            const currentSrc = image.src;
-            
-            if (currentSrc.includes('Imagens-Site-Uniforme')) {
-                // Mostrar verso
-                if (type === 'linha') {
-                    image.src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Linha%20Tr%C3%A1s.png';
-                } else if (type === 'verde') {
-                    image.src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Verde%20Tr%C3%A1s.png';
-                } else if (type === 'rosa') {
-                    image.src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Rosa%20Tr%C3%A1s.png';
-                }
-            } else {
-                // Mostrar frente
-                if (type === 'linha') {
-                    image.src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Linha.png';
-                } else if (type === 'verde') {
-                    image.src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Verde.png';
-                } else if (type === 'rosa') {
-                    image.src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Rosa.png';
-                }
-            }
-            
-            // Parar a propagação do evento para não interferir com outros cliques
-            event.stopPropagation();
-        }
-        
-        function showFront(type) {
-            if (type === 'linha') {
-                document.getElementById('image-linha').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Linha.png';
-            } else if (type === 'verde') {
-                document.getElementById('image-verde').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Verde.png';
-            } else if (type === 'rosa') {
-                document.getElementById('image-rosa').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Rosa.png';
-            }
-        }
-        
-        function showBack(type) {
-            if (type === 'linha') {
-                document.getElementById('image-linha').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Linha%20Tr%C3%A1s.png';
-            } else if (type === 'verde') {
-                document.getElementById('image-verde').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Verde%20Tr%C3%A1s.png';
-            } else if (type === 'rosa') {
-                document.getElementById('image-rosa').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Rosa%20Tr%C3%A1s.png';
-            }
-        }
-        
-        // Fechar o modal ao clicar fora da imagem
-        window.onclick = function(event) {
-            const modal = document.getElementById('imageModal');
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
-        
-        // Fechar o modal dengan tecla ESC
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeModal();
-            }
-        });
-    </script>
-</body>
-</html>
+            document.getElementById('imageModal').style.display = 'block
