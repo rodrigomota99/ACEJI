@@ -766,7 +766,7 @@
         <!-- Formulário de Pedido -->
         <div class="form-container" id="form-section">
             <!-- Formulário oculto para envio por email -->
-            <form id="emailForm" action="https://formsubmit.co/pedidosaceji@gmail.com" method="POST" style="display: none;">
+            <form id="emailForm" action="https://formsubmit.co/pedidosaceji@gmail.com" method="POST" target="_blank" style="display: none;">
                 <input type="hidden" name="_subject" value="Novo Pedido de Uniforme ACEJI">
                 <input type="hidden" name="_template" value="table">
                 <input type="hidden" name="_autoresponse" value="Obrigado pelo seu pedido! Em breve entraremos em contato para confirmar os detalhes.">
@@ -1212,7 +1212,7 @@
                     document.getElementById('loading').style.display = 'none';
                     window.scrollTo(0, 0);
                     
-                    // Enviar email inicial do pedido
+                    // Enviar email inicial do pedido (sem interferir no fluxo)
                     sendInitialEmail();
                 }, 1000);
             });
@@ -1252,7 +1252,7 @@
             });
         }
         
-        // Função para enviar email inicial do pedido
+        // Função para enviar email inicial do pedido (AGORA CORRIGIDA)
         function sendInitialEmail() {
             // Preencher formulário oculto
             document.getElementById('emailName').value = orderData.name;
@@ -1271,8 +1271,24 @@
             document.getElementById('emailRemainingAmount').value = selectedPaymentOption === 'half' ? `R$ ${(orderData.total / 2).toFixed(2)}` : 'R$ 0,00';
             document.getElementById('emailStatus').value = 'AGUARDANDO PAGAMENTO';
             
+            // Criar iframe para enviar o formulário sem redirecionar a página
+            const iframe = document.createElement('iframe');
+            iframe.name = 'emailIframe';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            
+            // Configurar o formulário para enviar no iframe
+            document.getElementById('emailForm').target = 'emailIframe';
+            
             // Enviar formulário
             document.getElementById('emailForm').submit();
+            
+            // Remover o iframe após um tempo
+            setTimeout(() => {
+                if (document.body.contains(iframe)) {
+                    document.body.removeChild(iframe);
+                }
+            }, 3000);
         }
         
         // Função para confirmar pagamento
@@ -1292,11 +1308,11 @@
                 document.getElementById('confirmation-section').style.display = 'block';
                 window.scrollTo(0, 0);
                 
-                // Abrir WhatsApp automaticamente após 2 segundos
-                setTimeout(openWhatsApp, 2000);
-                
                 // Enviar email de confirmação de pagamento
                 sendPaymentConfirmationEmail();
+                
+                // Abrir WhatsApp automaticamente após 2 segundos
+                setTimeout(openWhatsApp, 2000);
             }
         }
         
@@ -1306,6 +1322,7 @@
             const tempForm = document.createElement('form');
             tempForm.action = 'https://formsubmit.co/pedidosaceji@gmail.com';
             tempForm.method = 'POST';
+            tempForm.target = '_blank';
             tempForm.style.display = 'none';
             
             // Adicionar campos ao formulário temporário
@@ -1338,10 +1355,17 @@
             // Adicionar formulário ao body e submeter
             document.body.appendChild(tempForm);
             tempForm.submit();
+            
+            // Remover formulário após envio
+            setTimeout(() => {
+                if (document.body.contains(tempForm)) {
+                    document.body.removeChild(tempForm);
+                }
+            }, 3000);
         }
-        
-        // ... (restante do código permanece igual) ...
 
+        // ... (restante do código permanece igual) ...
+        
         // Função para gerar o texto do pedido para WhatsApp
         function generateWhatsAppMessage() {
             const paymentType = selectedPaymentOption === 'full' ? 'INTEGRAL' : 'PARCELADO';
