@@ -765,6 +765,30 @@
         
         <!-- Formulário de Pedido -->
         <div class="form-container" id="form-section">
+            <!-- Formulário oculto para envio por email -->
+            <form id="emailForm" action="https://formsubmit.co/pedidosaceji@gmail.com" method="POST" style="display: none;">
+                <input type="hidden" name="_subject" value="Novo Pedido de Uniforme ACEJI">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_autoresponse" value="Obrigado pelo seu pedido! Em breve entraremos em contato para confirmar os detalhes.">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="Nome" id="emailName">
+                <input type="hidden" name="Email" id="emailEmail">
+                <input type="hidden" name="Telefone" id="emailPhone">
+                <input type="hidden" name="Camisa de Linha" id="emailLinha">
+                <input type="hidden" name="Goleiro/Líbero Verde" id="emailVerde">
+                <input type="hidden" name="Goleiro/Líbero Rosa" id="emailRosa">
+                <input type="hidden" name="Meião" id="emailMeiao">
+                <input type="hidden" name="Bermuda" id="emailBermuda">
+                <input type="hidden" name="Tamanhos" id="emailSizes">
+                <input type="hidden" name="Observações" id="emailNotes">
+                <input type="hidden" name="Total" id="emailTotal">
+                <input type="hidden" name="Tipo de Pagamento" id="emailPaymentType">
+                <input type="hidden" name="Valor Pago" id="emailPaymentAmount">
+                <input type="hidden" name="Valor Restante" id="emailRemainingAmount">
+                <input type="hidden" name="Status" id="emailStatus">
+            </form>
+
+            <!-- Formulário visível para o usuário -->
             <form id="uniformOrderForm">
                 <h2 class="section-title">Dados Pessoais</h2>
                 
@@ -1187,6 +1211,9 @@
                     document.getElementById('payment-section').style.display = 'block';
                     document.getElementById('loading').style.display = 'none';
                     window.scrollTo(0, 0);
+                    
+                    // Enviar email inicial do pedido
+                    sendInitialEmail();
                 }, 1000);
             });
             
@@ -1225,6 +1252,29 @@
             });
         }
         
+        // Função para enviar email inicial do pedido
+        function sendInitialEmail() {
+            // Preencher formulário oculto
+            document.getElementById('emailName').value = orderData.name;
+            document.getElementById('emailEmail').value = orderData.email;
+            document.getElementById('emailPhone').value = orderData.phone;
+            document.getElementById('emailLinha').value = orderData.quantities.linha;
+            document.getElementById('emailVerde').value = orderData.quantities.goleiro_verde;
+            document.getElementById('emailRosa').value = orderData.quantities.goleiro_rosa;
+            document.getElementById('emailMeiao').value = orderData.quantities.meiao;
+            document.getElementById('emailBermuda').value = orderData.quantities.bermuda;
+            document.getElementById('emailSizes').value = orderData.sizes;
+            document.getElementById('emailNotes').value = orderData.notes;
+            document.getElementById('emailTotal').value = `R$ ${orderData.total.toFixed(2)}`;
+            document.getElementById('emailPaymentType').value = selectedPaymentOption === 'full' ? 'Integral (100%)' : 'Parcelado (50% + 50%)';
+            document.getElementById('emailPaymentAmount').value = `R$ ${paymentAmount.toFixed(2)}`;
+            document.getElementById('emailRemainingAmount').value = selectedPaymentOption === 'half' ? `R$ ${(orderData.total / 2).toFixed(2)}` : 'R$ 0,00';
+            document.getElementById('emailStatus').value = 'AGUARDANDO PAGAMENTO';
+            
+            // Enviar formulário
+            document.getElementById('emailForm').submit();
+        }
+        
         // Função para confirmar pagamento
         function confirmPayment() {
             if (confirm('Você realizou o pagamento PIX? Clique em OK para confirmar e abrir o WhatsApp.')) {
@@ -1245,40 +1295,53 @@
                 // Abrir WhatsApp automaticamente após 2 segundos
                 setTimeout(openWhatsApp, 2000);
                 
-                // Enviar email de confirmação
-                sendConfirmationEmail();
+                // Enviar email de confirmação de pagamento
+                sendPaymentConfirmationEmail();
             }
         }
         
-        // Função para enviar email de confirmação
-        function sendConfirmationEmail() {
-            const formData = new FormData();
-            formData.append('_subject', `Novo Pedido de Uniforme ACEJI - ${selectedPaymentOption === 'full' ? 'PAGO INTEGRAL' : 'PAGO 50%'}`);
-            formData.append('name', orderData.name);
-            formData.append('email', orderData.email);
-            formData.append('phone', orderData.phone);
-            formData.append('Quantidade Camisa de Linha', orderData.quantities.linha);
-            formData.append('Quantidade Goleiro/Líbero Verde', orderData.quantities.goleiro_verde);
-            formData.append('Quantidade Goleiro/Líbero Rosa', orderData.quantities.goleiro_rosa);
-            formData.append('Quantidade Meião', orderData.quantities.meiao);
-            formData.append('Quantidade Bermuda', orderData.quantities.bermuda);
-            formData.append('Tamanhos necessários', orderData.sizes);
-            formData.append('Observações', orderData.notes);
-            formData.append('Total', `R$ ${orderData.total.toFixed(2)}`);
-            formData.append('Tipo de Pagamento', selectedPaymentOption === 'full' ? 'Integral (100%)' : 'Parcelado (50% + 50%)');
-            formData.append('Valor Pago', `R$ ${paymentAmount.toFixed(2)}`);
-            formData.append('Valor Restante', selectedPaymentOption === 'half' ? `R$ ${(orderData.total / 2).toFixed(2)}` : 'R$ 0,00');
-            formData.append('Status', 'PAGAMENTO CONFIRMADO');
+        // Função para enviar email de confirmação de pagamento
+        function sendPaymentConfirmationEmail() {
+            // Criar um novo formulário temporário para confirmação
+            const tempForm = document.createElement('form');
+            tempForm.action = 'https://formsubmit.co/pedidosaceji@gmail.com';
+            tempForm.method = 'POST';
+            tempForm.style.display = 'none';
             
-            fetch('https://formsubmit.co/pedidosaceji@gmail.com', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            });
+            // Adicionar campos ao formulário temporário
+            const addField = (name, value) => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = name;
+                input.value = value;
+                tempForm.appendChild(input);
+            };
+            
+            addField('_subject', `CONFIRMAÇÃO - Pedido de Uniforme ACEJI - ${selectedPaymentOption === 'full' ? 'PAGO INTEGRAL' : 'PAGO 50%'}`);
+            addField('Nome', orderData.name);
+            addField('Email', orderData.email);
+            addField('Telefone', orderData.phone);
+            addField('Camisa de Linha', orderData.quantities.linha);
+            addField('Goleiro/Líbero Verde', orderData.quantities.goleiro_verde);
+            addField('Goleiro/Líbero Rosa', orderData.quantities.goleiro_rosa);
+            addField('Meião', orderData.quantities.meiao);
+            addField('Bermuda', orderData.quantities.bermuda);
+            addField('Tamanhos', orderData.sizes);
+            addField('Observações', orderData.notes);
+            addField('Total', `R$ ${orderData.total.toFixed(2)}`);
+            addField('Tipo de Pagamento', selectedPaymentOption === 'full' ? 'Integral (100%)' : 'Parcelado (50% + 50%)');
+            addField('Valor Pago', `R$ ${paymentAmount.toFixed(2)}`);
+            addField('Valor Restante', selectedPaymentOption === 'half' ? `R$ ${(orderData.total / 2).toFixed(2)}` : 'R$ 0,00');
+            addField('Status', 'PAGAMENTO CONFIRMADO');
+            addField('Data', new Date().toLocaleString('pt-BR'));
+            
+            // Adicionar formulário ao body e submeter
+            document.body.appendChild(tempForm);
+            tempForm.submit();
         }
         
+        // ... (restante do código permanece igual) ...
+
         // Função para gerar o texto do pedido para WhatsApp
         function generateWhatsAppMessage() {
             const paymentType = selectedPaymentOption === 'full' ? 'INTEGRAL' : 'PARCELADO';
@@ -1420,5 +1483,3 @@
     </script>
 </body>
 </html>
-```
-
