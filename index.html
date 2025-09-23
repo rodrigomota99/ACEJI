@@ -16,6 +16,7 @@
             --success: #27AE60;
             --instagram: #E1306C;
             --whatsapp: #25D366;
+            --pix: #32BCAD;
         }
         
         * {
@@ -306,7 +307,134 @@
             color: #bbb;
         }
         
-        /* Página de confirmação */
+        /* Página de Pagamento PIX */
+        .payment-page {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .payment-icon {
+            font-size: 80px;
+            color: var(--pix);
+            margin-bottom: 20px;
+        }
+        
+        .payment-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .payment-message {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            background-color: #f0f8ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--pix);
+        }
+        
+        .pix-container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--pix);
+        }
+        
+        .qrcode-image {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .qrcode-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .pix-key {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px dashed var(--pix);
+        }
+        
+        .pix-key-code {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--dark);
+            margin: 10px 0;
+            word-break: break-all;
+        }
+        
+        .copy-btn {
+            background-color: var(--pix);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .copy-btn:hover {
+            background-color: #2aa899;
+        }
+        
+        .payment-amount {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+        
+        .payment-steps {
+            text-align: left;
+            max-width: 500px;
+            margin: 30px auto;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .payment-steps ol {
+            margin-left: 20px;
+        }
+        
+        .payment-steps li {
+            margin-bottom: 10px;
+        }
+        
+        .btn-confirm-payment {
+            background-color: var(--success);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        .btn-confirm-payment:hover {
+            background-color: #219653;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Página de Confirmação */
         .confirmation-page {
             display: none;
             text-align: center;
@@ -435,46 +563,17 @@
             background-color: #145A32;
         }
         
-        .whatsapp-section {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #f9f9f9;
+        .whatsapp-info {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f8f0;
             border-radius: 8px;
             border-left: 4px solid var(--whatsapp);
         }
         
-        .whatsapp-title {
+        .whatsapp-info h3 {
             color: var(--whatsapp);
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-        }
-        
-        .btn-whatsapp-order {
-            background-color: var(--whatsapp);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 4px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 10px;
-            text-decoration: none;
-        }
-        
-        .btn-whatsapp-order:hover {
-            background-color: #128C7E;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        .whatsapp-info {
-            font-size: 0.9rem;
-            color: #666;
-            margin-top: 10px;
+            margin-bottom: 10px;
         }
         
         @keyframes spin {
@@ -499,7 +598,7 @@
                 height: 180px;
             }
             
-            .confirmation-title {
+            .payment-title, .confirmation-title {
                 font-size: 2rem;
             }
             
@@ -511,6 +610,11 @@
             .btn-social {
                 width: 100%;
                 max-width: 250px;
+            }
+            
+            .qrcode-image {
+                width: 200px;
+                height: 200px;
             }
         }
         
@@ -539,11 +643,20 @@
                 max-width: 95%;
             }
             
-            .confirmation-title {
+            .payment-title, .confirmation-title {
                 font-size: 1.8rem;
             }
             
-            .confirmation-message {
+            .payment-message, .confirmation-message {
+                font-size: 1rem;
+            }
+            
+            .qrcode-image {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .pix-key-code {
                 font-size: 1rem;
             }
         }
@@ -562,15 +675,9 @@
             <div class="logo-text">A.A.A.CULTURAL E ESPORTIVA | IFSC JOINVILLE</div>
         </header>
         
+        <!-- Formulário de Pedido -->
         <div class="form-container" id="form-section">
-            <form id="uniformOrderForm" action="https://formsubmit.co/pedidosaceji@gmail.com" method="POST" target="_self">
-                <!-- Configurações do FormSubmit -->
-                <input type="hidden" name="_subject" value="Novo Pedido de Uniforme ACEJI">
-                <input type="hidden" name="_template" value="table">
-                <input type="hidden" name="_autoresponse" value="Obrigado pelo seu pedido! Em breve entraremos em contato para confirmar os detalhes.">
-                <input type="hidden" name="_next" value="#confirmation-section">
-                <input type="hidden" name="_captcha" value="false">
-                
+            <form id="uniformOrderForm">
                 <h2 class="section-title">Dados Pessoais</h2>
                 
                 <div class="form-group">
@@ -611,7 +718,7 @@
                         <div class="product-title">Camisa de Linha</div>
                         <div class="product-price">R$ 65,00</div>
                         <label for="qty_linha">Quantidade:</label>
-                        <input type="number" id="qty_linha" class="quantity" name="Quantidade Camisa de Linha" min="0" value="0">
+                        <input type="number" id="qty_linha" class="quantity" name="qty_linha" min="0" value="0">
                     </div>
                 </div>
                 
@@ -638,7 +745,7 @@
                         <div class="product-title">Goleiro/Líbero Verde</div>
                         <div class="product-price">R$ 65,00</div>
                         <label for="qty_goleiro_verde">Quantidade:</label>
-                        <input type="number" id="qty_goleiro_verde" class="quantity" name="Quantidade Goleiro/Líbero Verde" min="0" value="0">
+                        <input type="number" id="qty_goleiro_verde" class="quantity" name="qty_goleiro_verde" min="0" value="0">
                     </div>
                     
                     <div class="product-card">
@@ -662,7 +769,7 @@
                         <div class="product-title">Goleiro/Líbero Rosa</div>
                         <div class="product-price">R$ 65,00</div>
                         <label for="qty_goleiro_rosa">Quantidade:</label>
-                        <input type="number" id="qty_goleiro_rosa" class="quantity" name="Quantidade Goleiro/Líbero Rosa" min="0" value="0">
+                        <input type="number" id="qty_goleiro_rosa" class="quantity" name="qty_goleiro_rosa" min="0" value="0">
                     </div>
                 </div>
                 
@@ -678,7 +785,7 @@
                         <div class="product-title">Meião</div>
                         <div class="product-price">R$ 30,00</div>
                         <label for="qty_meiao">Quantidade:</label>
-                        <input type="number" id="qty_meiao" class="quantity" name="Quantidade Meião" min="0" value="0">
+                        <input type="number" id="qty_meiao" class="quantity" name="qty_meiao" min="0" value="0">
                     </div>
                 </div>
                 
@@ -694,28 +801,71 @@
                         <div class="product-title">Bermuda</div>
                         <div class="product-price">R$ 35,00</div>
                         <label for="qty_bermuda">Quantidade:</label>
-                        <input type="number" id="qty_bermuda" class="quantity" name="Quantidade Bermuda" min="0" value="0">
+                        <input type="number" id="qty_bermuda" class="quantity" name="qty_bermuda" min="0" value="0">
                     </div>
                 </div>
                 
                 <h2 class="section-title">Tamanhos e Observações</h2>
                 <div class="form-group">
                     <label for="sizes">Tamanhos necessários (especificar quantidades por tamanho) <span class="required">*</span></label>
-                    <textarea id="sizes" name="Tamanhos necessários" rows="3" placeholder="Ex: 2 unidades Camisa Goleiro/Líbero M, 1 unidade Camisa de Linha G..." required></textarea>
+                    <textarea id="sizes" name="sizes" rows="3" placeholder="Ex: 2 unidades Camisa Goleiro/Líbero M, 1 unidade Camisa de Linha G..." required></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label for="notes">Observações ou solicitações especiais:</label>
-                    <textarea id="notes" name="Observações" rows="3" placeholder="Ex: Personalização de nome 'Silva' e número '10' na Camisa de Linha..."></textarea>
+                    <textarea id="notes" name="notes" rows="3" placeholder="Ex: Personalização de nome 'Silva' e número '10' na Camisa de Linha..."></textarea>
                 </div>
                 
                 <div class="loading" id="loading">
                     <div class="loading-spinner"></div>
-                    <p>Enviando pedido...</p>
+                    <p>Processando pedido...</p>
                 </div>
                 
-                <button type="submit" class="btn-submit">Finalizar Pedido</button>
+                <button type="submit" class="btn-submit">Finalizar Pedido e Ir para Pagamento</button>
             </form>
+        </div>
+        
+        <!-- Página de Pagamento PIX -->
+        <div class="payment-page" id="payment-section">
+            <div class="payment-icon">
+                <i class="fas fa-qrcode"></i>
+            </div>
+            <h2 class="payment-title">Pagamento via PIX</h2>
+            <div class="payment-message">
+                <p>Seu pedido foi processado com sucesso! Realize o pagamento via PIX para confirmar seu pedido.</p>
+                <p><strong>Valor total: <span id="payment-total">R$ 0,00</span></strong></p>
+            </div>
+            
+            <div class="pix-container">
+                <div class="qrcode-image">
+                    <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/image.png" alt="QR Code PIX">
+                </div>
+                
+                <div class="pix-key">
+                    <h3>Chave PIX (Copie e Cole)</h3>
+                    <div class="pix-key-code" id="pix-key">atleticaaceji@gmail.com</div>
+                    <button class="copy-btn" onclick="copyPixKey()">
+                        <i class="fas fa-copy"></i> Copiar Chave PIX
+                    </button>
+                </div>
+                
+                <div class="payment-amount" id="payment-amount-display">R$ 0,00</div>
+            </div>
+            
+            <div class="payment-steps">
+                <h3>Como pagar:</h3>
+                <ol>
+                    <li>Abra seu aplicativo de banco</li>
+                    <li>Selecione a opção PIX</li>
+                    <li>Escaneie o QR Code ou cole a chave PIX</li>
+                    <li>Confirme o valor e realize o pagamento</li>
+                    <li>Volte aqui e clique em "Confirmar Pagamento"</li>
+                </ol>
+            </div>
+            
+            <button class="btn-confirm-payment" onclick="confirmPayment()">
+                <i class="fas fa-check-circle"></i> Confirmar Pagamento
+            </button>
         </div>
         
         <!-- Página de Confirmação -->
@@ -723,22 +873,17 @@
             <div class="confirmation-icon">
                 <i class="fas fa-check-circle"></i>
             </div>
-            <h2 class="confirmation-title">Pedido Realizado com Sucesso!</h2>
+            <h2 class="confirmation-title">Pagamento Confirmado!</h2>
             <div class="confirmation-message">
-                <p>Parabéns! Seu pedido foi recebido dengan sucesso.</p>
-                <p>Em breve nossa equipe entrará em contato através do e-mail ou telefone fornecido para confirmar os detalhes do seu pedido e fornecer as informações para pagamento.</p>
+                <p>Parabéns! Seu pedido foi confirmado com sucesso.</p>
+                <p>O WhatsApp abrirá automaticamente com os detalhes do seu pedido. Por favor, anexe o comprovante de pagamento e envie a mensagem.</p>
                 <p><strong>Obrigado por escolher a ACEJI!</strong></p>
             </div>
             
-            <!-- Nova seção para envio via WhatsApp -->
-            <div class="whatsapp-section">
-                <h3 class="whatsapp-title">Enviar Pedido via WhatsApp</h3>
-                <p>Clique no botão abaixo para enviar os detalhes do seu pedido diretamente para nosso WhatsApp e anexar o comprovante de pagamento:</p>
-                <button class="btn-whatsapp-order" id="whatsappBtn">
-                    <i class="fab fa-whatsapp"></i>
-                    Enviar Pedido para WhatsApp
-                </button>
-                <p class="whatsapp-info">Isso abrirá o WhatsApp com uma mensagem pré-preparada contendo todos os detalhes do seu pedido.</p>
+            <div class="whatsapp-info">
+                <h3>📱 WhatsApp Aberto Automaticamente</h3>
+                <p>Se o WhatsApp não abriu automaticamente, <a href="#" id="manualWhatsappLink">clique aqui para abrir manualmente</a>.</p>
+                <p>Por favor, anexe o comprovante de pagamento antes de enviar a mensagem.</p>
             </div>
             
             <div class="social-buttons">
@@ -767,6 +912,10 @@
     </div>
 
     <script>
+        // Variáveis globais para armazenar dados do pedido
+        let orderData = {};
+        let orderTotal = 0;
+
         // Adicione este script para calcular o total em tempo real
         document.addEventListener('DOMContentLoaded', function() {
             const quantityInputs = document.querySelectorAll('.quantity');
@@ -777,7 +926,7 @@
             });
             
             function calculateTotal() {
-                let total = 0;
+                orderTotal = 0;
                 const prices = {
                     linha: 65.00,
                     goleiro_verde: 65.00,
@@ -788,12 +937,12 @@
                 
                 for (const [key, price] of Object.entries(prices)) {
                     const quantity = parseInt(document.getElementById(`qty_${key}`).value) || 0;
-                    total += quantity * price;
+                    orderTotal += quantity * price;
                 }
                 
                 // Atualizar o texto do botão com o total
                 const submitBtn = document.querySelector('.btn-submit');
-                submitBtn.innerHTML = `Finalizar Pedido - Total: R$ ${total.toFixed(2)}`;
+                submitBtn.innerHTML = `Finalizar Pedido e Ir para Pagamento - Total: R$ ${orderTotal.toFixed(2)}`;
             }
             
             // Calcular o total inicial
@@ -801,6 +950,8 @@
             
             // Configurar o envio do formulário
             document.getElementById('uniformOrderForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
                 // Validação básica
                 const name = document.getElementById('name').value;
                 const email = document.getElementById('email').value;
@@ -808,7 +959,6 @@
                 const sizes = document.getElementById('sizes').value;
                 
                 if (!name || !email || !phone || !sizes) {
-                    e.preventDefault();
                     alert('Por favor, preencha todos os campos obrigatórios.');
                     return;
                 }
@@ -824,8 +974,13 @@
                 });
                 
                 if (!hasProduct) {
-                    e.preventDefault();
                     alert('Por favor, selecione pelo menos um produto.');
+                    return;
+                }
+                
+                // Verificar se o total é maior que zero
+                if (orderTotal <= 0) {
+                    alert('O valor total do pedido deve ser maior que zero.');
                     return;
                 }
                 
@@ -833,42 +988,153 @@
                 document.getElementById('loading').style.display = 'block';
                 document.querySelector('.btn-submit').disabled = true;
                 
-                // Usar AJAX para enviar o formulário e evitar redirecionamento
-                e.preventDefault();
-                
                 // Coletar dados do formulário
-                const formData = new FormData(this);
+                orderData = {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    sizes: sizes,
+                    notes: document.getElementById('notes').value,
+                    quantities: {
+                        linha: parseInt(document.getElementById('qty_linha').value) || 0,
+                        goleiro_verde: parseInt(document.getElementById('qty_goleiro_verde').value) || 0,
+                        goleiro_rosa: parseInt(document.getElementById('qty_goleiro_rosa').value) || 0,
+                        meiao: parseInt(document.getElementById('qty_meiao').value) || 0,
+                        bermuda: parseInt(document.getElementById('qty_bermuda').value) || 0
+                    },
+                    total: orderTotal
+                };
                 
-                // Enviar dados via fetch
-                fetch(this.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        // Mostrar página de confirmação
-                        document.getElementById('form-section').style.display = 'none';
-                        document.getElementById('confirmation-section').style.display = 'block';
-                        document.getElementById('loading').style.display = 'none';
-                        window.scrollTo(0, 0);
-                    } else {
-                        throw new Error('Erro no envio do formulário');
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro:', error);
-                    alert('Ocorreu um erro ao enviar o formulário. Por favor, tente novamente.');
+                // Simular processamento
+                setTimeout(function() {
+                    // Atualizar valores na página de pagamento
+                    document.getElementById('payment-total').textContent = `R$ ${orderTotal.toFixed(2)}`;
+                    document.getElementById('payment-amount-display').textContent = `R$ ${orderTotal.toFixed(2)}`;
+                    
+                    // Mostrar página de pagamento
+                    document.getElementById('form-section').style.display = 'none';
+                    document.getElementById('payment-section').style.display = 'block';
                     document.getElementById('loading').style.display = 'none';
-                    document.querySelector('.btn-submit').disabled = false;
-                });
+                    window.scrollTo(0, 0);
+                }, 1000);
             });
             
-            // Adicionar evento ao botão do WhatsApp na página de confirmação
-            document.getElementById('whatsappBtn').addEventListener('click', openWhatsApp);
+            // Adicionar evento ao link manual do WhatsApp
+            document.getElementById('manualWhatsappLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                openWhatsApp();
+            });
         });
+        
+        // Função para copiar chave PIX
+        function copyPixKey() {
+            const pixKey = document.getElementById('pix-key').textContent;
+            navigator.clipboard.writeText(pixKey).then(function() {
+                alert('Chave PIX copiada para a área de transferência!');
+            }).catch(function(err) {
+                console.error('Erro ao copiar chave PIX: ', err);
+                alert('Erro ao copiar chave PIX. Por favor, copie manualmente.');
+            });
+        }
+        
+        // Função para confirmar pagamento
+        function confirmPayment() {
+            if (confirm('Você realizou o pagamento PIX? Clique em OK para confirmar e abrir o WhatsApp.')) {
+                // Mostrar página de confirmação
+                document.getElementById('payment-section').style.display = 'none';
+                document.getElementById('confirmation-section').style.display = 'block';
+                window.scrollTo(0, 0);
+                
+                // Abrir WhatsApp automaticamente após 2 segundos
+                setTimeout(openWhatsApp, 2000);
+                
+                // Enviar email de confirmação (opcional)
+                sendConfirmationEmail();
+            }
+        }
+        
+        // Função para enviar email de confirmação
+        function sendConfirmationEmail() {
+            const formData = new FormData();
+            formData.append('_subject', 'Novo Pedido de Uniforme ACEJI - PAGO');
+            formData.append('name', orderData.name);
+            formData.append('email', orderData.email);
+            formData.append('phone', orderData.phone);
+            formData.append('Quantidade Camisa de Linha', orderData.quantities.linha);
+            formData.append('Quantidade Goleiro/Líbero Verde', orderData.quantities.goleiro_verde);
+            formData.append('Quantidade Goleiro/Líbero Rosa', orderData.quantities.goleiro_rosa);
+            formData.append('Quantidade Meião', orderData.quantities.meiao);
+            formData.append('Quantidade Bermuda', orderData.quantities.bermuda);
+            formData.append('Tamanhos necessários', orderData.sizes);
+            formData.append('Observações', orderData.notes);
+            formData.append('Total', `R$ ${orderData.total.toFixed(2)}`);
+            formData.append('Status', 'PAGO CONFIRMADO');
+            
+            fetch('https://formsubmit.co/pedidosaceji@gmail.com', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+        }
+        
+        // Função para gerar o texto do pedido para WhatsApp
+        function generateWhatsAppMessage() {
+            let message = `*PEDIDO UNIFORME ACEJI - PAGO*%0A%0A`;
+            message += `*✅ Pagamento Confirmado*%0A%0A`;
+            message += `*Dados do Cliente:*%0A`;
+            message += `👤 Nome: ${orderData.name}%0A`;
+            message += `📧 E-mail: ${orderData.email}%0A`;
+            message += `📞 Telefone: ${orderData.phone}%0A%0A`;
+            
+            message += `*Itens do Pedido:*%0A`;
+            
+            if (orderData.quantities.linha > 0) {
+                message += `🏐 Camisa de Linha: ${orderData.quantities.linha} unidade(s) - R$ ${(orderData.quantities.linha * 65).toFixed(2)}%0A`;
+            }
+            
+            if (orderData.quantities.goleiro_verde > 0) {
+                message += `🧤 Goleiro/Líbero Verde: ${orderData.quantities.goleiro_verde} unidade(s) - R$ ${(orderData.quantities.goleiro_verde * 65).toFixed(2)}%0A`;
+            }
+            
+            if (orderData.quantities.goleiro_rosa > 0) {
+                message += `🧤 Goleiro/Líbero Rosa: ${orderData.quantities.goleiro_rosa} unidade(s) - R$ ${(orderData.quantities.goleiro_rosa * 65).toFixed(2)}%0A`;
+            }
+            
+            if (orderData.quantities.meiao > 0) {
+                message += `🧦 Meião: ${orderData.quantities.meiao} unidade(s) - R$ ${(orderData.quantities.meiao * 30).toFixed(2)}%0A`;
+            }
+            
+            if (orderData.quantities.bermuda > 0) {
+                message += `🩳 Bermuda: ${orderData.quantities.bermuda} unidade(s) - R$ ${(orderData.quantities.bermuda * 35).toFixed(2)}%0A`;
+            }
+            
+            message += `%0A*💰 Total Pago: R$ ${orderData.total.toFixed(2)}*%0A%0A`;
+            
+            message += `*📏 Tamanhos Solicitados:*%0A${orderData.sizes}%0A%0A`;
+            
+            if (orderData.notes) {
+                message += `*📝 Observações:*%0A${orderData.notes}%0A%0A`;
+            }
+            
+            message += `_Pedido pago e confirmado através do site_%0A`;
+            message += `_Por favor, anexe o comprovante de pagamento abaixo_`;
+            
+            return message;
+        }
+        
+        // Função para abrir WhatsApp com a mensagem do pedido
+        function openWhatsApp() {
+            const phoneNumber = "5547996664597"; // Número com código do país (55 = Brasil)
+            const message = generateWhatsAppMessage();
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+            
+            // Abrir em nova aba
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // ... (restante das funções do modal e flip de imagens permanecem iguais) ...
         
         // Funções para o modal de imagem
         function openModal(imageSrc) {
@@ -911,7 +1177,6 @@
                 }
             }
             
-            // Parar a propagação do evento para não interferir com outros cliques
             event.stopPropagation();
         }
         
@@ -935,80 +1200,6 @@
             }
         }
         
-        // Função para gerar o texto do pedido para WhatsApp
-        function generateWhatsAppMessage() {
-            // Coletar dados do formulário
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const sizes = document.getElementById('sizes').value;
-            const notes = document.getElementById('notes').value;
-            
-            // Coletar quantidades
-            const qtyLinha = parseInt(document.getElementById('qty_linha').value) || 0;
-            const qtyGoleiroVerde = parseInt(document.getElementById('qty_goleiro_verde').value) || 0;
-            const qtyGoleiroRosa = parseInt(document.getElementById('qty_goleiro_rosa').value) || 0;
-            const qtyMeiao = parseInt(document.getElementById('qty_meiao').value) || 0;
-            const qtyBermuda = parseInt(document.getElementById('qty_bermuda').value) || 0;
-            
-            // Calcular totais
-            const totalLinha = qtyLinha * 65;
-            const totalGoleiroVerde = qtyGoleiroVerde * 65;
-            const totalGoleiroRosa = qtyGoleiroRosa * 65;
-            const totalMeiao = qtyMeiao * 30;
-            const totalBermuda = qtyBermuda * 35;
-            const totalGeral = totalLinha + totalGoleiroVerde + totalGoleiroRosa + totalMeiao + totalBermuda;
-            
-            // Construir mensagem
-            let message = `*PEDIDO UNIFORME ACEJI*%0A%0A`;
-            message += `*Dados do Cliente:*%0A`;
-            message += `Nome: ${name}%0A`;
-            message += `E-mail: ${email}%0A`;
-            message += `Telefone: ${phone}%0A%0A`;
-            
-            message += `*Itens do Pedido:*%0A`;
-            
-            if (qtyLinha > 0) {
-                message += `🏐 Camisa de Linha: ${qtyLinha} unidade(s) - R$ ${totalLinha.toFixed(2)}%0A`;
-            }
-            
-            if (qtyGoleiroVerde > 0) {
-                message += `🧤 Goleiro/Líbero Verde: ${qtyGoleiroVerde} unidade(s) - R$ ${totalGoleiroVerde.toFixed(2)}%0A`;
-            }
-            
-            if (qtyGoleiroRosa > 0) {
-                message += `🧤 Goleiro/Líbero Rosa: ${qtyGoleiroRosa} unidade(s) - R$ ${totalGoleiroRosa.toFixed(2)}%0A`;
-            }
-            
-            if (qtyMeiao > 0) {
-                message += `🧦 Meião: ${qtyMeiao} unidade(s) - R$ ${totalMeiao.toFixed(2)}%0A`;
-            }
-            
-            if (qtyBermuda > 0) {
-                message += `🩳 Bermuda: ${qtyBermuda} unidade(s) - R$ ${totalBermuda.toFixed(2)}%0A`;
-            }
-            
-            message += `%0A*Total do Pedido: R$ ${totalGeral.toFixed(2)}*%0A%0A`;
-            
-            message += `*Tamanhos Solicitados:*%0A${sizes}%0A%0A`;
-            
-            if (notes) {
-                message += `*Observações:*%0A${notes}%0A%0A`;
-            }
-            
-            message += `_Pedido enviado através do formulário online_`;
-            
-            return message;
-        }
-        
-        // Função para abrir WhatsApp com a mensagem do pedido
-        function openWhatsApp() {
-            const phoneNumber = "5547996664597"; // Número com código do país
-            const message = generateWhatsAppMessage();
-            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
-            window.open(whatsappUrl, '_blank');
-        }
-        
         // Fechar o modal ao clicar fora da imagem
         window.onclick = function(event) {
             const modal = document.getElementById('imageModal');
@@ -1017,7 +1208,7 @@
             }
         }
         
-        // Fechar o modal dengan tecla ESC
+        // Fechar o modal com tecla ESC
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 closeModal();
