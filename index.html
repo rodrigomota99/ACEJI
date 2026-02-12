@@ -1,3 +1,12 @@
+Aqui está o código atualizado conforme suas solicitações.
+
+**Alterações realizadas:**
+
+1. **Remoção de Produtos:** As seções e lógicas referentes a "Bermuda" e "Meião" foram totalmente removidas do HTML e do JavaScript (cálculos, e-mails e WhatsApp).
+2. **Atualização de Imagens:** As imagens de "Frente" e "Verso" (Costas) para a Camisa de Linha e os uniformes de Goleiro (Verde e Rosa) foram atualizadas com os novos links do GitHub fornecidos.
+3. **Ajuste na Lógica de Visualização:** As funções de virar a imagem (`flipImage`, `showFront`, `showBack`) foram reescritas para funcionar perfeitamente com os novos nomes de arquivo (`...Frente.png` e `...Costas.png`).
+
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -763,7 +772,6 @@
             <div class="logo-text">A.A.A.CULTURAL E ESPORTIVA | IFSC JOINVILLE</div>
         </header>
         
-        <!-- Formulário de Pedido -->
         <div class="form-container" id="form-section">
             <form id="uniformOrderForm">
                 <h2 class="section-title">Dados Pessoais</h2>
@@ -787,7 +795,7 @@
                 <div class="product-grid">
                     <div class="product-card">
                         <div class="product-image-container" id="container-linha">
-                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Linha.png" alt="Uniforme de Linha" class="product-image" id="image-linha" onclick="openModalCurrentImage('linha')">
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%201%20Frente.png" alt="Uniforme de Linha" class="product-image" id="image-linha" onclick="openModalCurrentImage('linha')">
                             <div class="zoom-icon" onclick="openModalCurrentImage('linha')">
                                 <i class="fas fa-search-plus"></i>
                             </div>
@@ -814,7 +822,7 @@
                 <div class="product-grid">
                     <div class="product-card">
                         <div class="product-image-container" id="container-verde">
-                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Verde.png" alt="Uniforme de Goleiro/Líbero Verde" class="product-image" id="image-verde" onclick="openModalCurrentImage('verde')">
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%20Verde%20Frente.png" alt="Uniforme de Goleiro/Líbero Verde" class="product-image" id="image-verde" onclick="openModalCurrentImage('verde')">
                             <div class="zoom-icon" onclick="openModalCurrentImage('verde')">
                                 <i class="fas fa-search-plus"></i>
                             </div>
@@ -838,7 +846,7 @@
                     
                     <div class="product-card">
                         <div class="product-image-container" id="container-rosa">
-                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Rosa.png" alt="Uniforme de Goleiro/Líbero Rosa" class="product-image" id="image-rosa" onclick="openModalCurrentImage('rosa')">
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%20Rosa%20Frente.png" alt="Uniforme de Goleiro/Líbero Rosa" class="product-image" id="image-rosa" onclick="openModalCurrentImage('rosa')">
                             <div class="zoom-icon" onclick="openModalCurrentImage('rosa')">
                                 <i class="fas fa-search-plus"></i>
                             </div>
@@ -858,38 +866,6 @@
                         <div class="product-price">R$ 65,00</div>
                         <label for="qty_goleiro_rosa">Quantidade:</label>
                         <input type="number" id="qty_goleiro_rosa" class="quantity" name="qty_goleiro_rosa" min="0" value="0">
-                    </div>
-                </div>
-                
-                <h2 class="section-title">Meião</h2>
-                <div class="product-grid">
-                    <div class="product-card">
-                        <div class="product-image-container" onclick="openModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Mei%C3%A3o.png')">
-                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Mei%C3%A3o.png" alt="Meião" class="product-image">
-                            <div class="zoom-icon">
-                                <i class="fas fa-search-plus"></i>
-                            </div>
-                        </div>
-                        <div class="product-title">Meião</div>
-                        <div class="product-price">R$ 30,00</div>
-                        <label for="qty_meiao">Quantidade:</label>
-                        <input type="number" id="qty_meiao" class="quantity" name="qty_meiao" min="0" value="0">
-                    </div>
-                </div>
-                
-                <h2 class="section-title">Bermuda</h2>
-                <div class="product-grid">
-                    <div class="product-card">
-                        <div class="product-image-container" onclick="openModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Bermuda.png')">
-                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Bermuda.png" alt="Bermuda" class="product-image">
-                            <div class="zoom-icon">
-                                <i class="fas fa-search-plus"></i>
-                            </div>
-                        </div>
-                        <div class="product-title">Bermuda</div>
-                        <div class="product-price">R$ 35,00</div>
-                        <label for="qty_bermuda">Quantidade:</label>
-                        <input type="number" id="qty_bermuda" class="quantity" name="qty_bermuda" min="0" value="0">
                     </div>
                 </div>
                 
@@ -946,7 +922,6 @@
             </form>
         </div>
         
-        <!-- Página de Pagamento PIX -->
         <div class="payment-page" id="payment-section">
             <div class="payment-icon">
                 <i class="fas fa-qrcode"></i>
@@ -1001,7 +976,6 @@
             </button>
         </div>
         
-        <!-- Página de Confirmação -->
         <div class="confirmation-page" id="confirmation-section">
             <div class="confirmation-icon">
                 <i class="fas fa-check-circle"></i>
@@ -1039,7 +1013,6 @@
         </footer>
     </div>
 
-    <!-- Modal para visualização de imagem -->
     <div id="imageModal" class="modal">
         <span class="close" onclick="closeModal()">&times;</span>
         <img class="modal-content" id="modalImage">
@@ -1066,9 +1039,7 @@
                 const prices = {
                     linha: 65.00,
                     goleiro_verde: 65.00,
-                    goleiro_rosa: 65.00,
-                    meiao: 30.00,
-                    bermuda: 35.00
+                    goleiro_rosa: 65.00
                 };
                 
                 for (const [key, price] of Object.entries(prices)) {
@@ -1155,9 +1126,7 @@
                     quantities: {
                         linha: parseInt(document.getElementById('qty_linha').value) || 0,
                         goleiro_verde: parseInt(document.getElementById('qty_goleiro_verde').value) || 0,
-                        goleiro_rosa: parseInt(document.getElementById('qty_goleiro_rosa').value) || 0,
-                        meiao: parseInt(document.getElementById('qty_meiao').value) || 0,
-                        bermuda: parseInt(document.getElementById('qty_bermuda').value) || 0
+                        goleiro_rosa: parseInt(document.getElementById('qty_goleiro_rosa').value) || 0
                     },
                     total: orderTotal,
                     paymentType: selectedPaymentOption,
@@ -1239,8 +1208,6 @@
             formData.append('Camisa de Linha', orderData.quantities.linha);
             formData.append('Goleiro/Líbero Verde', orderData.quantities.goleiro_verde);
             formData.append('Goleiro/Líbero Rosa', orderData.quantities.goleiro_rosa);
-            formData.append('Meião', orderData.quantities.meiao);
-            formData.append('Bermuda', orderData.quantities.bermuda);
             formData.append('Tamanhos', orderData.sizes);
             formData.append('Observações', orderData.notes);
             formData.append('Total', `R$ ${orderData.total.toFixed(2)}`);
@@ -1297,8 +1264,6 @@
             formData.append('Camisa de Linha', orderData.quantities.linha);
             formData.append('Goleiro/Líbero Verde', orderData.quantities.goleiro_verde);
             formData.append('Goleiro/Líbero Rosa', orderData.quantities.goleiro_rosa);
-            formData.append('Meião', orderData.quantities.meiao);
-            formData.append('Bermuda', orderData.quantities.bermuda);
             formData.append('Tamanhos', orderData.sizes);
             formData.append('Observações', orderData.notes);
             formData.append('Total', `R$ ${orderData.total.toFixed(2)}`);
@@ -1345,14 +1310,6 @@
             
             if (orderData.quantities.goleiro_rosa > 0) {
                 message += `🧤 Goleiro/Líbero Rosa: ${orderData.quantities.goleiro_rosa} unidade(s) - R$ ${(orderData.quantities.goleiro_rosa * 65).toFixed(2)}%0A`;
-            }
-            
-            if (orderData.quantities.meiao > 0) {
-                message += `🧦 Meião: ${orderData.quantities.meiao} unidade(s) - R$ ${(orderData.quantities.meiao * 30).toFixed(2)}%0A`;
-            }
-            
-            if (orderData.quantities.bermuda > 0) {
-                message += `🩳 Bermuda: ${orderData.quantities.bermuda} unidade(s) - R$ ${(orderData.quantities.bermuda * 35).toFixed(2)}%0A`;
             }
             
             message += `%0A*💰 Total do Pedido: R$ ${orderData.total.toFixed(2)}*%0A`;
@@ -1403,43 +1360,32 @@
             const image = document.getElementById(`image-${type}`);
             const currentSrc = image.src;
             
-            if (currentSrc.includes('Imagens-Site-Uniforme')) {
-                if (type === 'linha') {
-                    image.src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Linha%20Tr%C3%A1s.png';
-                } else if (type === 'verde') {
-                    image.src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Verde%20Tr%C3%A1s.png';
-                } else if (type === 'rosa') {
-                    image.src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Rosa%20Tr%C3%A1s.png';
-                }
+            // Verifica se a imagem atual é frente ou verso e alterna
+            if (currentSrc.includes('Frente')) {
+                showBack(type);
             } else {
-                if (type === 'linha') {
-                    image.src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Linha.png';
-                } else if (type === 'verde') {
-                    image.src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Verde.png';
-                } else if (type === 'rosa') {
-                    image.src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Rosa.png';
-                }
+                showFront(type);
             }
             event.stopPropagation();
         }
         
         function showFront(type) {
             if (type === 'linha') {
-                document.getElementById('image-linha').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Linha.png';
+                document.getElementById('image-linha').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%201%20Frente.png';
             } else if (type === 'verde') {
-                document.getElementById('image-verde').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Verde.png';
+                document.getElementById('image-verde').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%20Verde%20Frente.png';
             } else if (type === 'rosa') {
-                document.getElementById('image-rosa').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Uniforme%20Rosa.png';
+                document.getElementById('image-rosa').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%20Rosa%20Frente.png';
             }
         }
         
         function showBack(type) {
             if (type === 'linha') {
-                document.getElementById('image-linha').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Linha%20Tr%C3%A1s.png';
+                document.getElementById('image-linha').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%201%20Costas.png';
             } else if (type === 'verde') {
-                document.getElementById('image-verde').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Verde%20Tr%C3%A1s.png';
+                document.getElementById('image-verde').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%20Verde%20Costas.png';
             } else if (type === 'rosa') {
-                document.getElementById('image-rosa').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Rosa%20Tr%C3%A1s.png';
+                document.getElementById('image-rosa').src = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%20Rosa%20Costas.png';
             }
         }
         
@@ -1460,3 +1406,5 @@
     </script>
 </body>
 </html>
+
+```
