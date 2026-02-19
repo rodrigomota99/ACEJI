@@ -482,23 +482,29 @@
 
         function openWhatsApp() {
             const payType = selectedPaymentOption === 'full' ? 'INTEGRAL' : 'PARCELADO';
-            let msg = `*PEDIDO LOJA ACEJI*%0A%0A`;
-            msg += `*Nome:* ${orderData.name}%0A`;
-            msg += `*Pagamento:* ${payType}%0A`;
-            msg += `*Total Pedido:* R$ ${orderData.total.toFixed(2)}%0A`;
-            msg += `*Valor Pago:* R$ ${orderData.paymentAmount.toFixed(2)}%0A%0A`;
-            msg += `*Itens:*%0A`;
-            if(orderData.quantities.linha > 0) msg += `- Camisa Linha: ${orderData.quantities.linha}%0A`;
-            if(orderData.quantities.goleiro_verde > 0) msg += `- Goleiro Verde: ${orderData.quantities.goleiro_verde}%0A`;
-            if(orderData.quantities.goleiro_rosa > 0) msg += `- Goleiro Rosa: ${orderData.quantities.goleiro_rosa}%0A`;
-            msg += `%0A*Tamanhos:* ${orderData.sizes}`;
             
-            // Adicionando as observações na mensagem
+            // Montando o texto com quebras de linha normais (\n)
+            let msg = `*PEDIDO LOJA ACEJI*\n\n`;
+            msg += `*Nome:* ${orderData.name}\n`;
+            msg += `*Pagamento:* ${payType}\n`;
+            msg += `*Total Pedido:* R$ ${orderData.total.toFixed(2)}\n`;
+            msg += `*Valor Pago:* R$ ${orderData.paymentAmount.toFixed(2)}\n\n`;
+            
+            msg += `*Itens:*\n`;
+            if(orderData.quantities.linha > 0) msg += `- Camisa Linha: ${orderData.quantities.linha}\n`;
+            if(orderData.quantities.goleiro_verde > 0) msg += `- Goleiro Verde: ${orderData.quantities.goleiro_verde}\n`;
+            if(orderData.quantities.goleiro_rosa > 0) msg += `- Goleiro Rosa: ${orderData.quantities.goleiro_rosa}\n`;
+            
+            msg += `\n*Tamanhos:*\n${orderData.sizes}\n`;
+            
             if(orderData.notes && orderData.notes.trim() !== '') {
-                msg += `%0A*Observações:* ${orderData.notes}`;
+                msg += `\n*Observações:*\n${orderData.notes}\n`;
             }
             
-            window.open(`https://wa.me/5541997122329?text=${msg}`, '_blank');
+            // Codifica todo o texto para o formato de URL, garantindo que enters e espaços não quebrem o link
+            const encodedMsg = encodeURIComponent(msg);
+            
+            window.open(`https://wa.me/5541997122329?text=${encodedMsg}`, '_blank');
         }
 
         function copyPixKey() {
