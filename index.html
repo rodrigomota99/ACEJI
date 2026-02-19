@@ -493,6 +493,11 @@
             if(orderData.quantities.goleiro_rosa > 0) msg += `- Goleiro Rosa: ${orderData.quantities.goleiro_rosa}%0A`;
             msg += `%0A*Tamanhos:* ${orderData.sizes}`;
             
+            // Adicionando as observações na mensagem
+            if(orderData.notes && orderData.notes.trim() !== '') {
+                msg += `%0A*Observações:* ${orderData.notes}`;
+            }
+            
             window.open(`https://wa.me/5541997122329?text=${msg}`, '_blank');
         }
 
