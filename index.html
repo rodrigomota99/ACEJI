@@ -316,14 +316,19 @@
                     <h2 class="section-title">Opções de Pagamento</h2>
                     <div class="payment-options">
                         <div class="payment-option selected" id="option-full" onclick="selectPaymentOption('full')">
-                            <h3>Pagamento Integral (100%)</h3>
+                            <h3>PIX Integral (100%)</h3>
                             <div class="payment-option-value" id="full-payment-value">R$ 0,00</div>
                             <p style="font-size: 0.9rem; margin-top:5px;">Pagamento único e entrega prioritária.</p>
                         </div>
                         <div class="payment-option" id="option-half" onclick="selectPaymentOption('half')">
-                            <h3>Parcelado (50% + 50%)</h3>
+                            <h3>PIX Parcelado (50%)</h3>
                             <div class="payment-option-value" id="half-payment-value">R$ 0,00</div>
                             <p style="font-size: 0.9rem; margin-top:5px;">50% agora via PIX, 50% na entrega.</p>
+                        </div>
+                        <div class="payment-option" id="option-credit" onclick="selectPaymentOption('credit')">
+                            <h3>Cartão de Crédito</h3>
+                            <div class="payment-option-value" id="credit-payment-value">R$ 0,00</div>
+                            <p style="font-size: 0.9rem; margin-top:5px;">Link do Mercado Pago enviado via WhatsApp.</p>
                         </div>
                     </div>
                     
@@ -332,24 +337,27 @@
             </div>
             
             <div class="payment-page" id="payment-section">
-                <h2 style="color:var(--primary); margin-bottom:20px;">Pagamento via PIX</h2>
+                <h2 style="color:var(--primary); margin-bottom:20px;" id="payment-title">Pagamento via PIX</h2>
                 <div style="background:#f0f8ff; padding:15px; border-left:4px solid var(--pix); text-align:left; margin-bottom:20px;">
                     <p><strong>Total: <span id="payment-total">R$ 0,00</span></strong></p>
-                    <p><strong>Pagar Agora: <span id="payment-now">R$ 0,00</span></strong></p>
+                    <p id="msg-pay-now"><strong>Pagar Agora: <span id="payment-now">R$ 0,00</span></strong></p>
                     <p id="msg-half" style="display:none; margin-top:10px;">Restante a pagar na entrega: <span id="remaining-amount">R$ 0,00</span></p>
+                    <p id="msg-credit" style="display:none; margin-top:10px; color: var(--accent);"><strong>Atenção:</strong> Solicite o link do Mercado Pago ao ser redirecionado para o WhatsApp.</p>
                 </div>
                 
-                <div class="pix-container">
-                    <div class="qrcode-image">
-                        <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/QR%20CODE%20LUIS.jpeg" alt="QR Code PIX">
-                    </div>
-                    <div style="background:#f8f9fa; padding:10px; border:1px dashed var(--pix); margin-top:15px;">
-                        <p style="font-weight:bold; word-break:break-all;" id="pix-key">atleticaaceji@gmail.com</p>
-                        <button onclick="copyPixKey()" style="background:var(--pix); color:white; border:none; padding:5px 10px; margin-top:10px; cursor:pointer; border-radius:4px;">Copiar Chave</button>
+                <div id="pix-details-area">
+                    <div class="pix-container">
+                        <div class="qrcode-image">
+                            <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/QR%20CODE%20LUIS.jpeg" alt="QR Code PIX">
+                        </div>
+                        <div style="background:#f8f9fa; padding:10px; border:1px dashed var(--pix); margin-top:15px;">
+                            <p style="font-weight:bold; word-break:break-all;" id="pix-key">atleticaaceji@gmail.com</p>
+                            <button onclick="copyPixKey()" style="background:var(--pix); color:white; border:none; padding:5px 10px; margin-top:10px; cursor:pointer; border-radius:4px;">Copiar Chave</button>
+                        </div>
                     </div>
                 </div>
                 
-                <button class="btn-submit" style="background-color:var(--success);" onclick="confirmPayment()">Confirmar Pagamento</button>
+                <button class="btn-submit" style="background-color:var(--success);" id="btn-confirm-payment" onclick="confirmPayment()">Confirmar Pagamento</button>
                 <button onclick="backToForm()" style="background:none; border:none; color:#666; margin-top:15px; cursor:pointer; text-decoration:underline;">Voltar e corrigir dados</button>
             </div>
             
@@ -423,14 +431,9 @@
 
         function calculateTotal() {
             orderTotal = 0;
-            // Tabela de preços atualizada com os novos produtos
             const prices = { 
-                linha: 65.00, 
-                goleiro_verde: 65.00, 
-                goleiro_rosa: 65.00,
-                caneca: 45.00,
-                tirante: 10.00,
-                combo: 50.00
+                linha: 65.00, goleiro_verde: 65.00, goleiro_rosa: 65.00,
+                caneca: 45.00, tirante: 10.00, combo: 50.00
             };
             
             for (const [key, price] of Object.entries(prices)) {
@@ -443,6 +446,7 @@
             
             document.getElementById('full-payment-value').textContent = `R$ ${orderTotal.toFixed(2)}`;
             document.getElementById('half-payment-value').textContent = `R$ ${(orderTotal / 2).toFixed(2)} (50%)`;
+            document.getElementById('credit-payment-value').textContent = `R$ ${orderTotal.toFixed(2)}`; // Novo
         }
 
         function selectPaymentOption(option) {
@@ -459,9 +463,8 @@
             
             if(orderTotal <= 0) { alert('Selecione pelo menos um produto.'); return; }
 
-            paymentAmount = selectedPaymentOption === 'full' ? orderTotal : orderTotal / 2;
+            paymentAmount = (selectedPaymentOption === 'half') ? orderTotal / 2 : orderTotal;
             
-            // Salva dados
             orderData = {
                 name, email, phone, sizes,
                 notes: document.getElementById('notes').value,
@@ -481,28 +484,46 @@
             document.getElementById('payment-total').textContent = `R$ ${orderTotal.toFixed(2)}`;
             document.getElementById('payment-now').textContent = `R$ ${paymentAmount.toFixed(2)}`;
             
-            if(selectedPaymentOption === 'half') {
-                document.getElementById('msg-half').style.display = 'block';
-                document.getElementById('remaining-amount').textContent = `R$ ${(orderTotal/2).toFixed(2)}`;
-            } else {
+            // Lógica de exibição baseada na opção escolhida
+            if (selectedPaymentOption === 'credit') {
+                document.getElementById('payment-title').textContent = "Pagamento via Cartão";
+                document.getElementById('pix-details-area').style.display = 'none';
                 document.getElementById('msg-half').style.display = 'none';
+                document.getElementById('msg-pay-now').style.display = 'none';
+                document.getElementById('msg-credit').style.display = 'block';
+                document.getElementById('btn-confirm-payment').textContent = "Ir para o WhatsApp";
+            } else {
+                document.getElementById('payment-title').textContent = "Pagamento via PIX";
+                document.getElementById('pix-details-area').style.display = 'block';
+                document.getElementById('msg-pay-now').style.display = 'block';
+                document.getElementById('msg-credit').style.display = 'none';
+                document.getElementById('btn-confirm-payment').textContent = "Confirmar Pagamento";
+                
+                if(selectedPaymentOption === 'half') {
+                    document.getElementById('msg-half').style.display = 'block';
+                    document.getElementById('remaining-amount').textContent = `R$ ${(orderTotal/2).toFixed(2)}`;
+                } else {
+                    document.getElementById('msg-half').style.display = 'none';
+                }
             }
 
-            // Troca de tela
             document.getElementById('form-content').style.display = 'none';
             document.getElementById('payment-section').style.display = 'block';
             window.scrollTo(0,0);
             
-            // Envia e-mail oculto (opcional)
             sendEmail('Novo Pedido (Iniciado)');
         }
 
         function confirmPayment() {
-            if(confirm('Já realizou o PIX? Clique OK para abrir o WhatsApp.')) {
+            let confirmMsg = selectedPaymentOption === 'credit' 
+                ? 'Pronto para ir ao WhatsApp solicitar seu link de pagamento?' 
+                : 'Já realizou o PIX? Clique OK para abrir o WhatsApp.';
+
+            if(confirm(confirmMsg)) {
                 document.getElementById('payment-section').style.display = 'none';
                 document.getElementById('confirmation-section').style.display = 'block';
                 
-                sendEmail('Pedido Confirmado (Pago)');
+                sendEmail('Pedido Confirmado');
                 setTimeout(openWhatsApp, 1500);
             }
         }
@@ -524,14 +545,21 @@
         }
 
         function openWhatsApp() {
-            const payType = selectedPaymentOption === 'full' ? 'INTEGRAL' : 'PARCELADO';
+            let payType = '';
+            if (selectedPaymentOption === 'full') payType = 'PIX INTEGRAL';
+            else if (selectedPaymentOption === 'half') payType = 'PIX PARCELADO';
+            else if (selectedPaymentOption === 'credit') payType = 'CARTÃO (MERCADO PAGO)';
             
-            // Montando o texto com quebras de linha normais (\n)
             let msg = `*PEDIDO LOJA ACEJI*\n\n`;
             msg += `*Nome:* ${orderData.name}\n`;
             msg += `*Pagamento:* ${payType}\n`;
             msg += `*Total Pedido:* R$ ${orderData.total.toFixed(2)}\n`;
-            msg += `*Valor Pago:* R$ ${orderData.paymentAmount.toFixed(2)}\n\n`;
+            
+            if (selectedPaymentOption !== 'credit') {
+                msg += `*Valor Pago Agora:* R$ ${orderData.paymentAmount.toFixed(2)}\n\n`;
+            } else {
+                msg += `*Aguardando link de pagamento.*\n\n`;
+            }
             
             msg += `*Itens:*\n`;
             if(orderData.quantities.linha > 0) msg += `- Camisa Linha: ${orderData.quantities.linha}\n`;
@@ -549,9 +577,7 @@
                 msg += `\n*Observações:*\n${orderData.notes}\n`;
             }
             
-            // Codifica todo o texto para o formato de URL, garantindo que enters e espaços não quebrem o link
             const encodedMsg = encodeURIComponent(msg);
-            
             window.open(`https://wa.me/5541997122329?text=${encodedMsg}`, '_blank');
         }
 
