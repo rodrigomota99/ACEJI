@@ -533,10 +533,43 @@
             const formData = new URLSearchParams();
             formData.append('_subject', `${subjectPrefix} - ACEJI`);
             formData.append('_template', 'table');
-            formData.append('Cliente', orderData.name);
-            formData.append('Total', `R$ ${orderData.total.toFixed(2)}`);
-            formData.append('Pago Agora', `R$ ${orderData.paymentAmount.toFixed(2)}`);
             
+            // Dados Pessoais
+            formData.append('Cliente', orderData.name);
+            formData.append('Email', orderData.email);
+            formData.append('Telefone', orderData.phone);
+            
+            // Tipo de Pagamento
+            let payType = '';
+            if (selectedPaymentOption === 'full') payType = 'PIX INTEGRAL';
+            else if (selectedPaymentOption === 'half') payType = 'PIX PARCELADO';
+            else if (selectedPaymentOption === 'credit') payType = 'CARTÃO (MERCADO PAGO)';
+            formData.append('Forma de Pagamento', payType);
+            
+            // Valores
+            formData.append('Total do Pedido', `R$ ${orderData.total.toFixed(2)}`);
+            formData.append('Valor Pago Agora', `R$ ${orderData.paymentAmount.toFixed(2)}`);
+            
+            // Monta a lista de itens
+            let itensStr = '';
+            if(orderData.quantities.linha > 0) itensStr += `${orderData.quantities.linha}x Camisa Linha; `;
+            if(orderData.quantities.goleiro_verde > 0) itensStr += `${orderData.quantities.goleiro_verde}x Goleiro Verde; `;
+            if(orderData.quantities.goleiro_rosa > 0) itensStr += `${orderData.quantities.goleiro_rosa}x Goleiro Rosa; `;
+            if(orderData.quantities.caneca > 0) itensStr += `${orderData.quantities.caneca}x Caneca Oficial; `;
+            if(orderData.quantities.tirante > 0) itensStr += `${orderData.quantities.tirante}x Tirante; `;
+            if(orderData.quantities.combo > 0) itensStr += `${orderData.quantities.combo}x Combo (Caneca + Tirante); `;
+            
+            formData.append('Itens Comprados', itensStr || 'Nenhum item');
+            
+            // Tamanhos e Observações (envia apenas se o usuário preencheu)
+            if(orderData.sizes && orderData.sizes.trim() !== '') {
+                formData.append('Tamanhos', orderData.sizes);
+            }
+            if(orderData.notes && orderData.notes.trim() !== '') {
+                formData.append('Observações', orderData.notes);
+            }
+            
+            // Envio
             fetch('https://formsubmit.co/ajax/pedidosaceji@gmail.com', {
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
