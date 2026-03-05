@@ -58,7 +58,7 @@
         .btn-access { margin-top: auto; background-color: transparent; color: var(--primary); border: 2px solid var(--primary); padding: 8px 20px; border-radius: 20px; font-weight: bold; transition: all 0.3s; }
         .category-card:hover .btn-access { background-color: var(--primary); color: white; }
 
-        /* --- ESTILOS DA LOJA (UNIFORMES) --- */
+        /* --- ESTILOS DA LOJA --- */
         #shop-section { display: none; } /* Começa oculto */
         
         header { background: linear-gradient(135deg, var(--primary), #145A32); color: white; text-align: center; padding: 30px 20px; position: relative; }
@@ -150,10 +150,10 @@
             <div class="categories-grid">
                 <div class="category-card" onclick="showShop()">
                     <div class="icon-container">
-                        <i class="fas fa-tshirt"></i>
+                        <i class="fas fa-shopping-bag"></i>
                     </div>
-                    <h3 class="category-title">Uniformes</h3>
-                    <p class="category-desc">Camisas de linha, goleiro e kits de jogo oficiais.</p>
+                    <h3 class="category-title">Produtos</h3>
+                    <p class="category-desc">Uniformes, canecas e tirantes oficiais da atlética.</p>
                     <span class="btn-access">Ver Produtos</span>
                 </div>
 
@@ -173,13 +173,6 @@
                     <h3 class="category-title">Seja um Atleta</h3>
                     <p class="category-desc">Inscreva-se para representar o IFSC nos jogos.</p>
                     <span class="btn-access">Inscrever-se</span>
-                </div>
-
-                <div class="category-card" onclick="alert('Em breve!')">
-                    <div class="icon-container"><i class="fas fa-beer"></i></div>
-                    <h3 class="category-title">Canecas</h3>
-                    <p class="category-desc">Acessórios para festas e integração.</p>
-                    <span class="btn-access">Em Breve</span>
                 </div>
 
                 <div class="category-card" onclick="alert('Em breve!')">
@@ -218,7 +211,7 @@
                     <div class="logo-img">
                         <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Escudo.png" alt="Logo ACEJI">
                     </div>
-                    <div class="logo-aceji">UNIFORMES DE JOGO</div>
+                    <div class="logo-aceji">PRODUTOS OFICIAIS</div>
                 </div>
             </header>
             
@@ -279,11 +272,46 @@
                             <label>Quantidade:</label><input type="number" id="qty_goleiro_rosa" class="quantity" min="0" value="0">
                         </div>
                     </div>
+
+                    <h2 class="section-title">Acessórios</h2>
+                    <div class="product-grid">
+                        
+                        <div class="product-card">
+                            <div class="product-image-container">
+                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/1-removebg-preview.png" class="product-image" id="image-caneca" onclick="openModalCurrentImage('caneca')">
+                                <div class="zoom-icon" onclick="openModalCurrentImage('caneca')"><i class="fas fa-search-plus"></i></div>
+                            </div>
+                            <div class="product-title">Caneca Oficial</div>
+                            <div class="product-price">R$ 45,00</div>
+                            <label>Quantidade:</label><input type="number" id="qty_caneca" class="quantity" min="0" value="0">
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-image-container">
+                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/FRENTE.png" class="product-image" id="image-tirante" onclick="openModalCurrentImage('tirante')">
+                                <div class="zoom-icon" onclick="openModalCurrentImage('tirante')"><i class="fas fa-search-plus"></i></div>
+                            </div>
+                            <div class="product-title">Tirante</div>
+                            <div class="product-price">R$ 10,00</div>
+                            <label>Quantidade:</label><input type="number" id="qty_tirante" class="quantity" min="0" value="0">
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-image-container">
+                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/2-removebg-preview.png" class="product-image" id="image-combo" onclick="openModalCurrentImage('combo')">
+                                <div class="zoom-icon" onclick="openModalCurrentImage('combo')"><i class="fas fa-search-plus"></i></div>
+                            </div>
+                            <div class="product-title">Combo (Caneca + Tirante)</div>
+                            <div class="product-price">R$ 50,00</div>
+                            <label>Quantidade:</label><input type="number" id="qty_combo" class="quantity" min="0" value="0">
+                        </div>
+
+                    </div>
                     
                     <h2 class="section-title">Tamanhos e Observações</h2>
                     <div class="form-group">
-                        <label>Tamanhos necessários (especificar) *</label>
-                        <textarea id="sizes" rows="3" placeholder="Ex: 1 Camisa Linha M, 1 Goleiro G..." required></textarea>
+                        <label>Tamanhos necessários (especificar)</label>
+                        <textarea id="sizes" rows="3" placeholder="Ex: 1 Camisa Linha M, 1 Goleiro G... (Deixe em branco se for apenas caneca/tirante)"></textarea>
                     </div>
                     <div class="form-group">
                         <label>Observações:</label>
@@ -400,7 +428,15 @@
 
         function calculateTotal() {
             orderTotal = 0;
-            const prices = { linha: 65.00, goleiro_verde: 65.00, goleiro_rosa: 65.00 };
+            // Tabela de preços atualizada com os novos produtos
+            const prices = { 
+                linha: 65.00, 
+                goleiro_verde: 65.00, 
+                goleiro_rosa: 65.00,
+                caneca: 45.00,
+                tirante: 10.00,
+                combo: 50.00
+            };
             
             for (const [key, price] of Object.entries(prices)) {
                 const qty = parseInt(document.getElementById(`qty_${key}`).value) || 0;
@@ -430,14 +466,17 @@
 
             paymentAmount = selectedPaymentOption === 'full' ? orderTotal : orderTotal / 2;
             
-            // Salva dados
+            // Salva dados, agora com os novos itens
             orderData = {
                 name, email, phone, sizes,
                 notes: document.getElementById('notes').value,
                 quantities: {
                     linha: parseInt(document.getElementById('qty_linha').value) || 0,
                     goleiro_verde: parseInt(document.getElementById('qty_goleiro_verde').value) || 0,
-                    goleiro_rosa: parseInt(document.getElementById('qty_goleiro_rosa').value) || 0
+                    goleiro_rosa: parseInt(document.getElementById('qty_goleiro_rosa').value) || 0,
+                    caneca: parseInt(document.getElementById('qty_caneca').value) || 0,
+                    tirante: parseInt(document.getElementById('qty_tirante').value) || 0,
+                    combo: parseInt(document.getElementById('qty_combo').value) || 0
                 },
                 total: orderTotal,
                 paymentAmount: paymentAmount
@@ -503,8 +542,13 @@
             if(orderData.quantities.linha > 0) msg += `- Camisa Linha: ${orderData.quantities.linha}\n`;
             if(orderData.quantities.goleiro_verde > 0) msg += `- Goleiro Verde: ${orderData.quantities.goleiro_verde}\n`;
             if(orderData.quantities.goleiro_rosa > 0) msg += `- Goleiro Rosa: ${orderData.quantities.goleiro_rosa}\n`;
+            if(orderData.quantities.caneca > 0) msg += `- Caneca Oficial: ${orderData.quantities.caneca}\n`;
+            if(orderData.quantities.tirante > 0) msg += `- Tirante: ${orderData.quantities.tirante}\n`;
+            if(orderData.quantities.combo > 0) msg += `- Combo (Caneca + Tirante): ${orderData.quantities.combo}\n`;
             
-            msg += `\n*Tamanhos:*\n${orderData.sizes}\n`;
+            if(orderData.sizes && orderData.sizes.trim() !== '') {
+                msg += `\n*Tamanhos:*\n${orderData.sizes}\n`;
+            }
             
             if(orderData.notes && orderData.notes.trim() !== '') {
                 msg += `\n*Observações:*\n${orderData.notes}\n`;
