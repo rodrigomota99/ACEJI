@@ -148,6 +148,7 @@
             </div>
 
             <div class="categories-grid">
+                
                 <div class="category-card" onclick="showShop()">
                     <div class="icon-container">
                         <i class="fas fa-shopping-bag"></i>
@@ -176,18 +177,12 @@
                 </div>
 
                 <div class="category-card" onclick="alert('Em breve!')">
-                    <div class="icon-container"><i class="fas fa-vest"></i></div>
-                    <h3 class="category-title">Camisetas</h3>
-                    <p class="category-desc">Modelos casuais e dry-fit da atlética.</p>
+                    <div class="icon-container"><i class="fas fa-calendar-alt"></i></div>
+                    <h3 class="category-title">Eventos</h3>
+                    <p class="category-desc">Inscrições para festas e eventos da atlética.</p>
                     <span class="btn-access">Em Breve</span>
                 </div>
 
-                <div class="category-card" onclick="alert('Em breve!')">
-                    <div class="icon-container"><i class="fas fa-hiking"></i></div>
-                    <h3 class="category-title">Trilhas</h3>
-                    <p class="category-desc">Inscrições para eventos outdoor.</p>
-                    <span class="btn-access">Em Breve</span>
-                </div>
             </div>
 
             <div class="social-bar">
@@ -466,7 +461,7 @@
 
             paymentAmount = selectedPaymentOption === 'full' ? orderTotal : orderTotal / 2;
             
-            // Salva dados, agora com os novos itens
+            // Salva dados
             orderData = {
                 name, email, phone, sizes,
                 notes: document.getElementById('notes').value,
