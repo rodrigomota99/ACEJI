@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACEJI - Loja Oficial</title>
+    
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Escudo.png">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -437,7 +440,7 @@
             
             document.getElementById('full-payment-value').textContent = `R$ ${orderTotal.toFixed(2)}`;
             document.getElementById('half-payment-value').textContent = `R$ ${(orderTotal / 2).toFixed(2)} (50%)`;
-            document.getElementById('credit-payment-value').textContent = `R$ ${orderTotal.toFixed(2)}`; // Novo
+            document.getElementById('credit-payment-value').textContent = `R$ ${orderTotal.toFixed(2)}`;
         }
 
         function selectPaymentOption(option) {
