@@ -114,9 +114,18 @@
         .qrcode-image { width: 250px; height: 250px; margin: 0 auto 20px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }
         .qrcode-image img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* --- ESTILOS DE EVENTOS (NOVO) --- */
+        /* --- ESTILOS DE EVENTOS E CALENDÁRIO --- */
         #events-section { display: none; }
         .events-container { padding: 40px 20px; max-width: 800px; margin: 0 auto; }
+        
+        /* Botões de Alternância */
+        .view-toggle { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
+        .btn-toggle { background: white; border: 2px solid var(--primary); color: var(--primary); padding: 10px 25px; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 16px; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; }
+        .btn-toggle:hover { background: #f0f8f0; }
+        .btn-toggle.active { background: var(--primary); color: white; box-shadow: 0 4px 8px rgba(30, 132, 73, 0.2); }
+
+        /* Estilo da Lista */
+        #events-list { display: block; }
         .event-card { display: flex; background: white; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.3s; }
         .event-card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); border-color: var(--primary); }
         .event-date { background: var(--primary); color: white; padding: 20px; min-width: 120px; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
@@ -125,6 +134,21 @@
         .event-details { padding: 25px; display: flex; flex-direction: column; justify-content: center; }
         .event-title { font-size: 1.5rem; color: var(--dark); font-weight: bold; margin-bottom: 8px; }
         .event-time-location { color: #666; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+
+        /* Estilo do Calendário Interativo */
+        #events-calendar { display: none; background: white; border: 1px solid #ddd; border-radius: 10px; padding: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .calendar-header button { background: var(--light); border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; color: var(--primary); cursor: pointer; transition: 0.3s; }
+        .calendar-header button:hover { background: var(--primary); color: white; }
+        .calendar-month-year { font-size: 1.8rem; font-weight: bold; color: var(--dark); text-transform: capitalize; }
+        .calendar-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-weight: bold; margin-bottom: 10px; color: #888; font-size: 0.9rem; text-transform: uppercase; }
+        .calendar-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+        .calendar-day { min-height: 90px; border: 1px solid #eee; border-radius: 8px; padding: 8px; position: relative; background: #fafafa; display: flex; flex-direction: column; }
+        .calendar-day.empty { border: none; background: transparent; }
+        .calendar-day-num { font-weight: bold; color: var(--dark); margin-bottom: 5px; font-size: 1.1rem; }
+        .calendar-day.has-event { background: #e8f5e9; border-color: var(--primary); }
+        .event-badge { background: var(--primary); color: white; font-size: 0.75rem; font-weight: 600; padding: 4px; border-radius: 4px; text-align: center; line-height: 1.2; margin-top: auto; display: block; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .event-badge.accent { background: var(--secondary); color: var(--dark); }
         
         .social-bar { background-color: #f9f9f9; padding: 20px; display: flex; justify-content: center; gap: 20px; border-top: 1px solid #eee; margin-top: 40px; }
         .social-link { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; text-decoration: none; transition: transform 0.3s; }
@@ -142,6 +166,8 @@
             .payment-options { grid-template-columns: 1fr; }
             .menu-title { font-size: 2.2rem; }
             .product-image-container { height: 180px; }
+            .calendar-day { min-height: 70px; padding: 4px; }
+            .event-badge { font-size: 0.65rem; padding: 2px; }
         }
         @media (max-width: 480px) {
             .product-grid { grid-template-columns: 1fr; }
@@ -151,6 +177,10 @@
             .event-day { font-size: 2rem; }
             .event-details { padding: 20px; text-align: center; }
             .event-time-location { justify-content: center; }
+            .view-toggle { flex-direction: column; }
+            .calendar-day { min-height: 60px; }
+            .calendar-month-year { font-size: 1.3rem; }
+            .calendar-header button { width: 35px; height: 35px; }
         }
     </style>
 </head>
@@ -395,44 +425,69 @@
                     <div class="logo-img">
                         <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Escudo.png" alt="Logo ACEJI">
                     </div>
-                    <div class="logo-aceji" style="font-size: 1.5rem;">CALENDÁRIO DE EVENTOS</div>
+                    <div class="logo-aceji" style="font-size: 1.5rem;">EVENTOS E DATAS</div>
                 </div>
             </header>
             
             <div class="events-container">
-                <h2 class="section-title" style="text-align: center; margin-bottom: 30px; border-bottom: none;">Próximos Eventos</h2>
                 
-                <div class="event-card">
-                    <div class="event-date">
-                        <span class="event-day">23</span>
-                        <span class="event-month">Abr</span>
+                <div class="view-toggle">
+                    <button class="btn-toggle active" id="btn-list-view" onclick="toggleEventView('list')">
+                        <i class="fas fa-list-ul"></i> Ver em Lista
+                    </button>
+                    <button class="btn-toggle" id="btn-cal-view" onclick="toggleEventView('calendar')">
+                        <i class="fas fa-calendar-alt"></i> Ver Calendário
+                    </button>
+                </div>
+
+                <div id="events-list">
+                    <div class="event-card">
+                        <div class="event-date">
+                            <span class="event-day">23</span>
+                            <span class="event-month">Abr</span>
+                        </div>
+                        <div class="event-details">
+                            <h3 class="event-title">PL (Pão com Linguiça)</h3>
+                            <p class="event-time-location"><i class="fas fa-info-circle"></i> Mais informações no Instagram</p>
+                        </div>
                     </div>
-                    <div class="event-details">
-                        <h3 class="event-title">PL (Pão com Linguiça)</h3>
-                        <p class="event-time-location"><i class="fas fa-info-circle"></i> Mais informações em nosso Instagram</p>
+
+                    <div class="event-card">
+                        <div class="event-date">
+                            <span class="event-day">07</span>
+                            <span class="event-month">Mai</span>
+                        </div>
+                        <div class="event-details">
+                            <h3 class="event-title">PL (Pão com Linguiça)</h3>
+                            <p class="event-time-location"><i class="fas fa-info-circle"></i> Mais informações no Instagram</p>
+                        </div>
+                    </div>
+
+                    <div class="event-card">
+                        <div class="event-date" style="background: var(--secondary); color: var(--dark);">
+                            <span class="event-day">17</span>
+                            <span class="event-month">Mai</span>
+                        </div>
+                        <div class="event-details">
+                            <h3 class="event-title">Trilha ACEJI (Duas Mamas)</h3>
+                            <p class="event-time-location"><i class="fas fa-info-circle"></i> Mais informações no Instagram</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="event-card">
-                    <div class="event-date">
-                        <span class="event-day">07</span>
-                        <span class="event-month">Mai</span>
+                <div id="events-calendar">
+                    <div class="calendar-header">
+                        <button onclick="changeMonth(-1)"><i class="fas fa-chevron-left"></i></button>
+                        <div class="calendar-month-year" id="calendar-month-year">Abril 2026</div>
+                        <button onclick="changeMonth(1)"><i class="fas fa-chevron-right"></i></button>
                     </div>
-                    <div class="event-details">
-                        <h3 class="event-title">PL (Pão com Linguiça)</h3>
-                        <p class="event-time-location"><i class="fas fa-info-circle"></i> Mais informações em nosso Instagram</p>
+                    
+                    <div class="calendar-weekdays">
+                        <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
                     </div>
-                </div>
-
-                <div class="event-card">
-                    <div class="event-date" style="background: var(--secondary); color: var(--dark);">
-                        <span class="event-day">17</span>
-                        <span class="event-month">Mai</span>
-                    </div>
-                    <div class="event-details">
-                        <h3 class="event-title">Trilha ACEJI (Duas Mamas)</h3>
-                        <p class="event-time-location"><i class="fas fa-info-circle"></i> Mais informações em nosso Instagram</p>
-                    </div>
+                    
+                    <div class="calendar-days" id="calendar-days">
+                        </div>
                 </div>
 
             </div>
@@ -463,15 +518,16 @@
             document.getElementById('shop-section').style.display = 'none';
             document.getElementById('events-section').style.display = 'block';
             window.scrollTo(0,0);
+            
+            // Renderiza o calendário para o mês atual ou abril de 2026
+            renderCalendar(); 
         }
 
         function showMenu() {
-            // Reseta todas as telas para oculto e mostra o menu
             document.getElementById('shop-section').style.display = 'none';
             document.getElementById('events-section').style.display = 'none';
             document.getElementById('main-menu').style.display = 'block';
             
-            // Reseta visualização interna da loja
             document.getElementById('form-content').style.display = 'block';
             document.getElementById('payment-section').style.display = 'none';
             document.getElementById('confirmation-section').style.display = 'none';
@@ -483,6 +539,75 @@
             document.getElementById('form-content').style.display = 'block';
             window.scrollTo(0,0);
         }
+
+        // --- LÓGICA DO CALENDÁRIO ---
+        const eventDates = [
+            { date: '2026-04-23', title: 'Pão com Linguiça', colorClass: '' },
+            { date: '2026-05-07', title: 'Pão com Linguiça', colorClass: '' },
+            { date: '2026-05-17', title: 'Trilha Duas Mamas', colorClass: 'accent' }
+        ];
+
+        let currentCalDate = new Date(2026, 3, 1); // Inicia em Abril (mês 3 em JS) de 2026
+
+        function toggleEventView(viewType) {
+            if(viewType === 'list') {
+                document.getElementById('events-list').style.display = 'block';
+                document.getElementById('events-calendar').style.display = 'none';
+                document.getElementById('btn-list-view').classList.add('active');
+                document.getElementById('btn-cal-view').classList.remove('active');
+            } else {
+                document.getElementById('events-list').style.display = 'none';
+                document.getElementById('events-calendar').style.display = 'block';
+                document.getElementById('btn-list-view').classList.remove('active');
+                document.getElementById('btn-cal-view').classList.add('active');
+                renderCalendar();
+            }
+        }
+
+        function renderCalendar() {
+            const year = currentCalDate.getFullYear();
+            const month = currentCalDate.getMonth();
+            
+            const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+            document.getElementById('calendar-month-year').innerText = `${monthNames[month]} ${year}`;
+            
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            const calendarDaysArea = document.getElementById('calendar-days');
+            calendarDaysArea.innerHTML = '';
+            
+            // Preenche os dias vazios antes do dia 1 do mês
+            for (let i = 0; i < firstDay; i++) {
+                calendarDaysArea.innerHTML += `<div class="calendar-day empty"></div>`;
+            }
+            
+            // Preenche os dias do mês
+            for (let day = 1; day <= daysInMonth; day++) {
+                // Formata YYYY-MM-DD para comparação
+                const formattedMonth = String(month + 1).padStart(2, '0');
+                const formattedDay = String(day).padStart(2, '0');
+                const dateStr = `${year}-${formattedMonth}-${formattedDay}`;
+                
+                const eventFound = eventDates.find(e => e.date === dateStr);
+                
+                let dayHTML = `<div class="calendar-day ${eventFound ? 'has-event' : ''}">`;
+                dayHTML += `<span class="calendar-day-num">${day}</span>`;
+                
+                if(eventFound) {
+                    dayHTML += `<span class="event-badge ${eventFound.colorClass}">${eventFound.title}</span>`;
+                }
+                
+                dayHTML += `</div>`;
+                calendarDaysArea.innerHTML += dayHTML;
+            }
+        }
+
+        function changeMonth(direction) {
+            currentCalDate.setMonth(currentCalDate.getMonth() + direction);
+            renderCalendar();
+        }
+
 
         // --- LÓGICA DA LOJA ---
         let orderData = {};
