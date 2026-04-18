@@ -441,39 +441,7 @@
                 </div>
 
                 <div id="events-list">
-                    <div class="event-card">
-                        <div class="event-date">
-                            <span class="event-day">23</span>
-                            <span class="event-month">Abr</span>
-                        </div>
-                        <div class="event-details">
-                            <h3 class="event-title">PL (Pão com Linguiça)</h3>
-                            <p class="event-time-location"><i class="fas fa-info-circle"></i> Mais informações no Instagram</p>
-                        </div>
                     </div>
-
-                    <div class="event-card">
-                        <div class="event-date">
-                            <span class="event-day">07</span>
-                            <span class="event-month">Mai</span>
-                        </div>
-                        <div class="event-details">
-                            <h3 class="event-title">PL (Pão com Linguiça)</h3>
-                            <p class="event-time-location"><i class="fas fa-info-circle"></i> Mais informações no Instagram</p>
-                        </div>
-                    </div>
-
-                    <div class="event-card">
-                        <div class="event-date" style="background: var(--secondary); color: var(--dark);">
-                            <span class="event-day">17</span>
-                            <span class="event-month">Mai</span>
-                        </div>
-                        <div class="event-details">
-                            <h3 class="event-title">Trilha ACEJI (Duas Mamas)</h3>
-                            <p class="event-time-location"><i class="fas fa-info-circle"></i> Mais informações no Instagram</p>
-                        </div>
-                    </div>
-                </div>
 
                 <div id="events-calendar">
                     <div class="calendar-header">
@@ -519,8 +487,8 @@
             document.getElementById('events-section').style.display = 'block';
             window.scrollTo(0,0);
             
-            // Renderiza o calendário para o mês atual ou abril de 2026
             renderCalendar(); 
+            renderEventList(); // Chama a nova função para gerar a lista dinâmica
         }
 
         function showMenu() {
@@ -540,14 +508,16 @@
             window.scrollTo(0,0);
         }
 
-        // --- LÓGICA DO CALENDÁRIO ---
+        // --- LÓGICA DE EVENTOS (CALENDÁRIO E LISTA) ---
+        
+        // Aqui você cadastra todos os eventos da atlética.
         const eventDates = [
-            { date: '2026-04-23', title: 'Pão com Linguiça', colorClass: '' },
-            { date: '2026-05-07', title: 'Pão com Linguiça', colorClass: '' },
-            { date: '2026-05-17', title: 'Trilha Duas Mamas', colorClass: 'accent' }
+            { date: '2026-04-23', title: 'PL (Pão com Linguiça)', colorClass: '', location: 'Mais informações no Instagram' },
+            { date: '2026-05-07', title: 'PL (Pão com Linguiça)', colorClass: '', location: 'Mais informações no Instagram' },
+            { date: '2026-05-17', title: 'Trilha ACEJI (Duas Mamas)', colorClass: 'accent', location: 'Mais informações no Instagram' }
         ];
 
-        let currentCalDate = new Date(2026, 3, 1); // Inicia em Abril (mês 3 em JS) de 2026
+        let currentCalDate = new Date(2026, 3, 1); // Inicia em Abril de 2026
 
         function toggleEventView(viewType) {
             if(viewType === 'list') {
@@ -560,7 +530,57 @@
                 document.getElementById('events-calendar').style.display = 'block';
                 document.getElementById('btn-list-view').classList.remove('active');
                 document.getElementById('btn-cal-view').classList.add('active');
-                renderCalendar();
+            }
+        }
+
+        // Função nova para renderizar a lista ocultando datas passadas
+        function renderEventList() {
+            const listArea = document.getElementById('events-list');
+            listArea.innerHTML = '';
+            
+            // Pega a data de hoje e zera as horas para comparar certinho
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const monthNames = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+            let hasUpcomingEvents = false;
+
+            // Ordena os eventos por data
+            const sortedEvents = [...eventDates].sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            sortedEvents.forEach(event => {
+                // Separa ano, mes e dia para criar a data com o fuso local correto
+                const [year, month, day] = event.date.split('-');
+                const eventDateObj = new Date(year, parseInt(month) - 1, day);
+                eventDateObj.setHours(0, 0, 0, 0);
+                
+                // Se a data do evento for MAIOR OU IGUAL a hoje, ele entra na lista
+                if (eventDateObj >= today) {
+                    hasUpcomingEvents = true;
+                    
+                    const dayNum = day;
+                    const monthStr = monthNames[parseInt(month) - 1];
+                    const dateStyle = event.colorClass === 'accent' ? 'background: var(--secondary); color: var(--dark);' : '';
+                    
+                    const cardHTML = `
+                        <div class="event-card">
+                            <div class="event-date" style="${dateStyle}">
+                                <span class="event-day">${dayNum}</span>
+                                <span class="event-month">${monthStr}</span>
+                            </div>
+                            <div class="event-details">
+                                <h3 class="event-title">${event.title}</h3>
+                                <p class="event-time-location"><i class="fas fa-info-circle"></i> ${event.location}</p>
+                            </div>
+                        </div>
+                    `;
+                    listArea.innerHTML += cardHTML;
+                }
+            });
+
+            // Se todos os eventos já passaram, mostra uma mensagem
+            if (!hasUpcomingEvents) {
+                listArea.innerHTML = `<p style="text-align:center; color:#666; font-size: 1.1rem; margin-top:20px;">Nenhum evento próximo programado no momento.</p>`;
             }
         }
 
@@ -577,14 +597,11 @@
             const calendarDaysArea = document.getElementById('calendar-days');
             calendarDaysArea.innerHTML = '';
             
-            // Preenche os dias vazios antes do dia 1 do mês
             for (let i = 0; i < firstDay; i++) {
                 calendarDaysArea.innerHTML += `<div class="calendar-day empty"></div>`;
             }
             
-            // Preenche os dias do mês
             for (let day = 1; day <= daysInMonth; day++) {
-                // Formata YYYY-MM-DD para comparação
                 const formattedMonth = String(month + 1).padStart(2, '0');
                 const formattedDay = String(day).padStart(2, '0');
                 const dateStr = `${year}-${formattedMonth}-${formattedDay}`;
@@ -607,7 +624,6 @@
             currentCalDate.setMonth(currentCalDate.getMonth() + direction);
             renderCalendar();
         }
-
 
         // --- LÓGICA DA LOJA ---
         let orderData = {};
