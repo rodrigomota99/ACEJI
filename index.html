@@ -113,6 +113,18 @@
         .pix-container { background: white; border-radius: 10px; padding: 30px; margin: 30px auto; max-width: 500px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); border: 2px solid var(--pix); }
         .qrcode-image { width: 250px; height: 250px; margin: 0 auto 20px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }
         .qrcode-image img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* --- ESTILOS DE EVENTOS (NOVO) --- */
+        #events-section { display: none; }
+        .events-container { padding: 40px 20px; max-width: 800px; margin: 0 auto; }
+        .event-card { display: flex; background: white; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.3s; }
+        .event-card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); border-color: var(--primary); }
+        .event-date { background: var(--primary); color: white; padding: 20px; min-width: 120px; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .event-day { font-size: 2.5rem; font-weight: bold; line-height: 1; }
+        .event-month { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; }
+        .event-details { padding: 25px; display: flex; flex-direction: column; justify-content: center; }
+        .event-title { font-size: 1.5rem; color: var(--dark); font-weight: bold; margin-bottom: 8px; }
+        .event-time-location { color: #666; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
         
         .social-bar { background-color: #f9f9f9; padding: 20px; display: flex; justify-content: center; gap: 20px; border-top: 1px solid #eee; margin-top: 40px; }
         .social-link { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; text-decoration: none; transition: transform 0.3s; }
@@ -134,6 +146,11 @@
         @media (max-width: 480px) {
             .product-grid { grid-template-columns: 1fr; }
             .logo-aceji { font-size: 1.5rem; }
+            .event-card { flex-direction: column; }
+            .event-date { padding: 15px; flex-direction: row; gap: 10px; align-items: baseline; justify-content: center; }
+            .event-day { font-size: 2rem; }
+            .event-details { padding: 20px; text-align: center; }
+            .event-time-location { justify-content: center; }
         }
     </style>
 </head>
@@ -170,11 +187,11 @@
                     <span class="btn-access">Inscrever-se</span>
                 </div>
 
-                <div class="category-card" onclick="alert('Em breve!')">
+                <div class="category-card" onclick="showEvents()">
                     <div class="icon-container"><i class="fas fa-calendar-alt"></i></div>
                     <h3 class="category-title">Eventos</h3>
-                    <p class="category-desc">Inscrições para festas e eventos da atlética.</p>
-                    <span class="btn-access">Em Breve</span>
+                    <p class="category-desc">Fique por dentro das datas e festas da atlética.</p>
+                    <span class="btn-access">Ver Calendário</span>
                 </div>
 
             </div>
@@ -188,7 +205,6 @@
                 <p>ACEJI - A.A.A.CULTURAL E ESPORTIVA | IFSC JOINVILLE &copy; 2026</p>
             </footer>
         </div>
-
 
         <div id="shop-section">
             <header>
@@ -370,6 +386,62 @@
             </footer>
         </div>
 
+        <div id="events-section">
+            <header>
+                <button class="btn-back-menu" onclick="showMenu()">
+                    <i class="fas fa-arrow-left"></i> Menu
+                </button>
+                <div class="logo-container">
+                    <div class="logo-img">
+                        <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Escudo.png" alt="Logo ACEJI">
+                    </div>
+                    <div class="logo-aceji" style="font-size: 1.5rem;">CALENDÁRIO DE EVENTOS</div>
+                </div>
+            </header>
+            
+            <div class="events-container">
+                <h2 class="section-title" style="text-align: center; margin-bottom: 30px; border-bottom: none;">Próximos Eventos</h2>
+                
+                <div class="event-card">
+                    <div class="event-date">
+                        <span class="event-day">23</span>
+                        <span class="event-month">Abr</span>
+                    </div>
+                    <div class="event-details">
+                        <h3 class="event-title">PL (Pão com Linguiça)</h3>
+                        <p class="event-time-location"><i class="fas fa-info-circle"></i> Mais informações em nosso Instagram</p>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-date">
+                        <span class="event-day">07</span>
+                        <span class="event-month">Mai</span>
+                    </div>
+                    <div class="event-details">
+                        <h3 class="event-title">PL (Pão com Linguiça)</h3>
+                        <p class="event-time-location"><i class="fas fa-info-circle"></i> Mais informações em nosso Instagram</p>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-date" style="background: var(--secondary); color: var(--dark);">
+                        <span class="event-day">17</span>
+                        <span class="event-month">Mai</span>
+                    </div>
+                    <div class="event-details">
+                        <h3 class="event-title">Trilha ACEJI (Duas Mamas)</h3>
+                        <p class="event-time-location"><i class="fas fa-info-circle"></i> Mais informações em nosso Instagram</p>
+                    </div>
+                </div>
+
+            </div>
+            
+            <footer style="text-align: center; margin-top: 20px; padding: 20px;">
+                <p>ACEJI - A.A.A.CULTURAL E ESPORTIVA | IFSC JOINVILLE &copy; 2026</p>
+            </footer>
+        </div>
+
     </div>
 
     <div id="imageModal" class="modal">
@@ -378,16 +450,25 @@
     </div>
 
     <script>
-        // --- NAVEGAÇÃO ENTRE TELAS (MENU <-> LOJA) ---
+        // --- NAVEGAÇÃO ENTRE TELAS (MENU <-> LOJA <-> EVENTOS) ---
         function showShop() {
             document.getElementById('main-menu').style.display = 'none';
+            document.getElementById('events-section').style.display = 'none';
             document.getElementById('shop-section').style.display = 'block';
             window.scrollTo(0,0);
         }
 
-        function showMenu() {
-            // Reseta para o estado inicial
+        function showEvents() {
+            document.getElementById('main-menu').style.display = 'none';
             document.getElementById('shop-section').style.display = 'none';
+            document.getElementById('events-section').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
+        function showMenu() {
+            // Reseta todas as telas para oculto e mostra o menu
+            document.getElementById('shop-section').style.display = 'none';
+            document.getElementById('events-section').style.display = 'none';
             document.getElementById('main-menu').style.display = 'block';
             
             // Reseta visualização interna da loja
