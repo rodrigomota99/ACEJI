@@ -13,6 +13,7 @@
             --primary: #1E8449; /* Verde */
             --secondary: #F1C40F; /* Amarelo */
             --accent: #E74C3C; /* Vermelho */
+            --blue: #3498DB; /* Azul para esportes */
             --light: #ECF0F1;
             --dark: #2C3E50;
             --text: #333333;
@@ -147,8 +148,14 @@
         .calendar-day.empty { border: none; background: transparent; }
         .calendar-day-num { font-weight: bold; color: var(--dark); margin-bottom: 5px; font-size: 1.1rem; }
         .calendar-day.has-event { background: #e8f5e9; border-color: var(--primary); }
-        .event-badge { background: var(--primary); color: white; font-size: 0.75rem; font-weight: 600; padding: 4px; border-radius: 4px; text-align: center; line-height: 1.2; margin-top: auto; display: block; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .event-badge.accent { background: var(--secondary); color: var(--dark); }
+        
+        .event-badge { font-size: 0.75rem; font-weight: 600; padding: 4px; border-radius: 4px; text-align: center; line-height: 1.2; margin-top: auto; display: block; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        
+        /* Cores Específicas dos Eventos (Badges) */
+        .event-badge.color-yellow { background: var(--secondary); color: var(--dark); }
+        .event-badge.color-red { background: var(--accent); color: white; }
+        .event-badge.color-blue { background: var(--blue); color: white; }
+        .event-badge.color-green { background: var(--primary); color: white; }
         
         .social-bar { background-color: #f9f9f9; padding: 20px; display: flex; justify-content: center; gap: 20px; border-top: 1px solid #eee; margin-top: 40px; }
         .social-link { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; text-decoration: none; transition: transform 0.3s; }
@@ -488,7 +495,7 @@
             window.scrollTo(0,0);
             
             renderCalendar(); 
-            renderEventList(); // Chama a nova função para gerar a lista dinâmica
+            renderEventList(); 
         }
 
         function showMenu() {
@@ -510,16 +517,16 @@
 
         // --- LÓGICA DE EVENTOS (CALENDÁRIO E LISTA) ---
         
-        // Aqui você cadastra todos os eventos da atlética.
+        // Cores disponíveis: 'color-red' (PL), 'color-yellow' (Trilha), 'color-blue' (Esportes), 'color-green' (Outros)
         const eventDates = [
-            { date: '2026-04-23', title: 'PL (Pão com Linguiça)', colorClass: '', location: 'Mais informações no Instagram' },
-            { date: '2026-05-07', title: 'PL (Pão com Linguiça)', colorClass: '', location: 'Mais informações no Instagram' },
-            { date: '2026-05-17', title: 'Trilha ACEJI (Duas Mamas)', colorClass: 'accent', location: 'Mais informações no Instagram' },
-            { date: '2026-06-20', title: 'Copa Laje Society', colorClass: '', location: 'Mais informações no Instagram' },
-            { date: '2026-06-21', title: 'Copa Laje Society', colorClass: '', location: 'Mais informações no Instagram' }
+            { date: '2026-04-23', title: 'PL (Pão com Linguiça)', colorClass: 'color-red', location: 'Mais informações no Instagram' },
+            { date: '2026-05-07', title: 'PL (Pão com Linguiça)', colorClass: 'color-red', location: 'Mais informações no Instagram' },
+            { date: '2026-05-17', title: 'Trilha ACEJI (Duas Mamas)', colorClass: 'color-yellow', location: 'Mais informações no Instagram' },
+            { date: '2026-06-20', title: 'Copa Laje Society', colorClass: 'color-blue', location: 'Mais informações no Instagram' },
+            { date: '2026-06-21', title: 'Copa Laje Society', colorClass: 'color-blue', location: 'Mais informações no Instagram' }
         ];
 
-        let currentCalDate = new Date(2026, 3, 1); // Inicia em Abril de 2026
+        let currentCalDate = new Date(2026, 3, 1); // Inicia em Abril (mês 3) de 2026
 
         function toggleEventView(viewType) {
             if(viewType === 'list') {
@@ -535,34 +542,39 @@
             }
         }
 
-        // Função nova para renderizar a lista ocultando datas passadas
         function renderEventList() {
             const listArea = document.getElementById('events-list');
             listArea.innerHTML = '';
             
-            // Pega a data de hoje e zera as horas para comparar certinho
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             
             const monthNames = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
             let hasUpcomingEvents = false;
 
-            // Ordena os eventos por data
             const sortedEvents = [...eventDates].sort((a, b) => new Date(a.date) - new Date(b.date));
 
             sortedEvents.forEach(event => {
-                // Separa ano, mes e dia para criar a data com o fuso local correto
                 const [year, month, day] = event.date.split('-');
                 const eventDateObj = new Date(year, parseInt(month) - 1, day);
                 eventDateObj.setHours(0, 0, 0, 0);
                 
-                // Se a data do evento for MAIOR OU IGUAL a hoje, ele entra na lista
                 if (eventDateObj >= today) {
                     hasUpcomingEvents = true;
                     
                     const dayNum = day;
                     const monthStr = monthNames[parseInt(month) - 1];
-                    const dateStyle = event.colorClass === 'accent' ? 'background: var(--secondary); color: var(--dark);' : '';
+                    
+                    // Ajuste de cores inline para o bloco da data na lista
+                    let bgStyle = '';
+                    let textStyle = 'white';
+                    
+                    if (event.colorClass === 'color-yellow') { bgStyle = 'var(--secondary)'; textStyle = 'var(--dark)'; }
+                    else if (event.colorClass === 'color-red') { bgStyle = 'var(--accent)'; }
+                    else if (event.colorClass === 'color-blue') { bgStyle = 'var(--blue)'; }
+                    else { bgStyle = 'var(--primary)'; }
+                    
+                    const dateStyle = `background: ${bgStyle}; color: ${textStyle};`;
                     
                     const cardHTML = `
                         <div class="event-card">
@@ -580,7 +592,6 @@
                 }
             });
 
-            // Se todos os eventos já passaram, mostra uma mensagem
             if (!hasUpcomingEvents) {
                 listArea.innerHTML = `<p style="text-align:center; color:#666; font-size: 1.1rem; margin-top:20px;">Nenhum evento próximo programado no momento.</p>`;
             }
