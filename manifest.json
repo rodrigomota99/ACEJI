@@ -1,0 +1,17 @@
+{
+  "name": "ACEJI - Loja Oficial",
+  "short_name": "ACEJI",
+  "description": "Loja Oficial e Eventos da Atlética ACEJI",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#2ECC71",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Escudo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
