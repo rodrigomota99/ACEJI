@@ -140,6 +140,7 @@
         .event-details { padding: 25px; display: flex; flex-direction: column; justify-content: center; }
         .event-title { font-size: 1.5rem; color: var(--dark); font-weight: bold; margin-bottom: 8px; }
         .event-time-location { color: #666; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+        .event-link { color: var(--primary); text-decoration: underline; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px; }
 
         /* Estilo do Calendário Interativo */
         #events-calendar { display: none; background: white; border: 1px solid #ddd; border-radius: 10px; padding: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
@@ -149,10 +150,11 @@
         .calendar-month-year { font-size: 1.8rem; font-weight: bold; color: var(--dark); text-transform: capitalize; }
         .calendar-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-weight: bold; margin-bottom: 10px; color: #888; font-size: 0.9rem; text-transform: uppercase; }
         .calendar-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
-        .calendar-day { min-height: 90px; border: 1px solid #eee; border-radius: 8px; padding: 8px; position: relative; background: #fafafa; display: flex; flex-direction: column; }
+        .calendar-day { min-height: 90px; border: 1px solid #eee; border-radius: 8px; padding: 8px; position: relative; background: #fafafa; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; }
         .calendar-day.empty { border: none; background: transparent; }
         .calendar-day-num { font-weight: bold; color: var(--dark); margin-bottom: 5px; font-size: 1.1rem; }
         .calendar-day.has-event { background: #e8f5e9; border-color: var(--primary); }
+        .calendar-day.clickable:hover { transform: translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-color: var(--primary); }
         
         .event-badge { font-size: 0.75rem; font-weight: 600; padding: 4px; border-radius: 4px; text-align: center; line-height: 1.2; margin-top: auto; display: block; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         
@@ -529,7 +531,7 @@
 
         // --- LÓGICA DE EVENTOS (CALENDÁRIO E LISTA) ---
         
-        // Propriedade 'link' adicionada. Se existir, o card vira clicável.
+        // Propriedade 'link' adicionada. Se existir, o card e o dia no calendário viram clicáveis.
         const eventDates = [
             { date: '2026-04-23', title: 'PL (Pão com Linguiça)', colorClass: 'color-red', location: 'Mais informações no Instagram', link: null },
             { date: '2026-05-07', title: 'PL (Pão com Linguiça)', colorClass: 'color-red', location: 'Mais informações no Instagram', link: null },
@@ -639,7 +641,17 @@
                 
                 const eventFound = eventDates.find(e => e.date === dateStr);
                 
-                let dayHTML = `<div class="calendar-day ${eventFound ? 'has-event' : ''}">`;
+                let onclickAttr = '';
+                let cursorStyle = '';
+                let clickableClass = '';
+                
+                if (eventFound && eventFound.link) {
+                    onclickAttr = `onclick="window.open('${eventFound.link}', '_blank')"`;
+                    cursorStyle = 'cursor: pointer;';
+                    clickableClass = 'clickable';
+                }
+                
+                let dayHTML = `<div class="calendar-day ${eventFound ? 'has-event' : ''} ${clickableClass}" ${onclickAttr} style="${cursorStyle}">`;
                 dayHTML += `<span class="calendar-day-num">${day}</span>`;
                 
                 if(eventFound) {
