@@ -48,7 +48,6 @@
         #main-menu { display: block; padding: 40px 20px; text-align: center; }
         
         .menu-header { margin-bottom: 40px; }
-        /* Logo aumentada e sem o fundo redondo */
         .menu-logo-img { width: 220px; height: 220px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; }
         .menu-logo-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
         .menu-title { font-size: 3rem; color: var(--primary); font-weight: bold; text-transform: uppercase; letter-spacing: 3px; }
@@ -93,7 +92,6 @@
         .product-card { border: 1px solid var(--border); border-radius: 8px; padding: 15px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; background: var(--bg-container); }
         .product-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); border-color: var(--primary); }
         
-        /* Ajuste do fundo da imagem para manter o produto visível caso seja PNG com logo preto */
         .product-image-container { position: relative; height: 200px; background: #FFFFFF; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; border-radius: 4px; border: 1px solid var(--border); overflow: hidden; cursor: pointer; }
         .product-image { width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s ease; }
         .product-image:hover { transform: scale(1.1); }
@@ -185,6 +183,7 @@
         .modal-content { display: block; margin: 0 auto; max-width: 90%; max-height: 80vh; object-fit: contain; }
         .close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; }
 
+        /* --- RESPONSIVIDADE MOBILE --- */
         @media (max-width: 768px) {
             .product-grid { grid-template-columns: repeat(2, 1fr); }
             .payment-options { grid-template-columns: 1fr; }
@@ -193,19 +192,53 @@
             .calendar-day { min-height: 70px; padding: 4px; }
             .event-badge { font-size: 0.65rem; padding: 2px; }
         }
+
         @media (max-width: 480px) {
-            .product-grid { grid-template-columns: 1fr; }
-            .logo-aceji { font-size: 1.5rem; }
-            .event-card { flex-direction: column; }
-            .event-date { padding: 15px; flex-direction: row; gap: 10px; align-items: baseline; justify-content: center; }
-            .event-day { font-size: 2rem; }
-            .event-details { padding: 20px; text-align: center; }
-            .event-time-location { justify-content: center; }
-            .view-toggle { flex-direction: column; }
+            body { padding: 10px; }
+            .container { border-radius: 8px; }
+            
+            /* Menu Inicial Mobile */
+            #main-menu { padding: 20px 10px; }
+            .menu-logo-img { width: 150px; height: 150px; margin-bottom: 10px; }
+            .menu-title { font-size: 2.2rem; letter-spacing: 1px; margin-bottom: 5px; }
+            .menu-subtitle { font-size: 1rem; margin-bottom: 30px; }
+            
+            /* Cards de Categoria Mobile */
+            .categories-grid { gap: 15px; padding: 0; }
+            .category-card { padding: 20px 15px; }
+            .icon-container { width: 60px; height: 60px; font-size: 24px; margin-bottom: 15px; }
+            .category-title { font-size: 1.2rem; }
+            .category-desc { font-size: 0.85rem; margin-bottom: 15px; }
+            .btn-access { font-size: 0.9rem; padding: 6px 15px; }
+
+            /* Loja Mobile */
+            .product-grid { grid-template-columns: 1fr; gap: 15px; margin-bottom: 20px; }
+            .logo-img { width: 80px; height: 80px; }
+            .logo-aceji { font-size: 1.4rem; }
+            .form-container { padding: 15px 10px; }
+            .section-title { font-size: 1.2rem; margin: 15px 0 10px; }
+            input, select, textarea { padding: 10px; font-size: 14px; }
+            .btn-submit { font-size: 16px; padding: 12px 20px; }
+            .product-image-container { height: 160px; }
+
+            /* Eventos Mobile */
+            .events-container { padding: 20px 10px; }
+            .event-card { flex-direction: column; margin-bottom: 15px; border-radius: 8px; }
+            .event-date { padding: 12px; flex-direction: row; gap: 8px; align-items: baseline; justify-content: center; min-width: auto; }
+            .event-day { font-size: 1.8rem; }
+            .event-month { font-size: 1rem; }
+            .event-details { padding: 15px; text-align: center; }
+            .event-title { font-size: 1.2rem; margin-bottom: 8px; }
+            .event-time-location { justify-content: center; font-size: 0.85rem; }
+            
+            /* Calendário Mobile */
+            .view-toggle { flex-direction: column; gap: 10px; margin-bottom: 20px; }
+            .btn-toggle { font-size: 14px; padding: 8px 20px; justify-content: center; }
             .calendar-day { min-height: 60px; }
             .calendar-month-year { font-size: 1.3rem; }
-            .calendar-header button { width: 35px; height: 35px; }
-            .event-legend { gap: 10px; }
+            .calendar-header button { width: 35px; height: 35px; font-size: 1rem; }
+            .event-legend { gap: 10px; margin-bottom: 20px; }
+            .legend-item { font-size: 0.8rem; }
         }
     </style>
 </head>
