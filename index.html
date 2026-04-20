@@ -529,13 +529,13 @@
 
         // --- LÓGICA DE EVENTOS (CALENDÁRIO E LISTA) ---
         
-        // Cores disponíveis: 'color-red' (PL), 'color-yellow' (Trilha), 'color-blue' (Esportes), 'color-green' (Outros)
+        // Propriedade 'link' adicionada. Se existir, o card vira clicável.
         const eventDates = [
-            { date: '2026-04-23', title: 'PL (Pão com Linguiça)', colorClass: 'color-red', location: 'Mais informações no Instagram' },
-            { date: '2026-05-07', title: 'PL (Pão com Linguiça)', colorClass: 'color-red', location: 'Mais informações no Instagram' },
-            { date: '2026-05-17', title: 'Trilha ACEJI (Duas Mamas)', colorClass: 'color-yellow', location: 'Mais informações no Instagram' },
-            { date: '2026-06-20', title: 'Copa Laje Society', colorClass: 'color-blue', location: 'Mais informações no Instagram' },
-            { date: '2026-06-21', title: 'Copa Laje Society', colorClass: 'color-blue', location: 'Mais informações no Instagram' }
+            { date: '2026-04-23', title: 'PL (Pão com Linguiça)', colorClass: 'color-red', location: 'Mais informações no Instagram', link: null },
+            { date: '2026-05-07', title: 'PL (Pão com Linguiça)', colorClass: 'color-red', location: 'Mais informações no Instagram', link: null },
+            { date: '2026-05-17', title: 'Trilha ACEJI (Duas Mamas)', colorClass: 'color-yellow', location: 'Clique aqui para se inscrever', link: 'https://forms.gle/gRTZaBbH8dq6pjZP7' },
+            { date: '2026-06-20', title: 'Copa Laje Society', colorClass: 'color-blue', location: 'Mais informações no Instagram', link: null },
+            { date: '2026-06-21', title: 'Copa Laje Society', colorClass: 'color-blue', location: 'Mais informações no Instagram', link: null }
         ];
 
         let currentCalDate = new Date(2026, 3, 1); // Inicia em Abril (mês 3) de 2026
@@ -588,15 +588,21 @@
                     
                     const dateStyle = `background: ${bgStyle}; color: ${textStyle};`;
                     
+                    // Configuração de clique caso tenha link
+                    const onclickAttr = event.link ? `onclick="window.open('${event.link}', '_blank')"` : '';
+                    const cursorStyle = event.link ? 'cursor: pointer;' : '';
+                    const locationIcon = event.link ? 'fas fa-external-link-alt' : 'fas fa-info-circle';
+                    const textColor = event.link ? 'color: var(--primary); font-weight: bold;' : '';
+                    
                     const cardHTML = `
-                        <div class="event-card">
+                        <div class="event-card" ${onclickAttr} style="${cursorStyle}">
                             <div class="event-date" style="${dateStyle}">
                                 <span class="event-day">${dayNum}</span>
                                 <span class="event-month">${monthStr}</span>
                             </div>
                             <div class="event-details">
                                 <h3 class="event-title">${event.title}</h3>
-                                <p class="event-time-location"><i class="fas fa-info-circle"></i> ${event.location}</p>
+                                <p class="event-time-location" style="${textColor}"><i class="${locationIcon}"></i> ${event.location}</p>
                             </div>
                         </div>
                     `;
