@@ -48,6 +48,16 @@
             position: relative;
         }
 
+        /* --- ANIMAÇÕES GERAIS (Efeito App) --- */
+        @keyframes fadeInSmooth {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        #main-menu, #shop-section, #events-section, #form-content, #payment-section, #confirmation-section {
+            animation: fadeInSmooth 0.4s ease-out;
+        }
+
         /* --- ESTILOS DO MENU PRINCIPAL --- */
         #main-menu { display: block; padding: 40px 20px; text-align: center; }
         
@@ -77,7 +87,11 @@
         #shop-section { display: none; }
         
         header { background: linear-gradient(135deg, #1E8449, #0A3016); color: white; text-align: center; padding: 30px 20px; position: relative; }
-        .logo-container { display: flex; flex-direction: column; align-items: center; margin-bottom: 15px; }
+        
+        /* Logo clicável */
+        .logo-container { display: flex; flex-direction: column; align-items: center; margin-bottom: 15px; cursor: pointer; transition: transform 0.3s; }
+        .logo-container:hover { transform: scale(1.05); }
+        
         .logo-img { width: 120px; height: 120px; margin-bottom: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         .logo-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
         .logo-aceji { font-size: 2rem; font-weight: bold; color: white; text-transform: uppercase; letter-spacing: 2px; }
@@ -319,7 +333,7 @@
                     <i class="fas fa-arrow-left"></i> Menu
                 </button>
 
-                <div class="logo-container">
+                <div class="logo-container" onclick="showMenu()">
                     <div class="logo-img">
                         <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Escudo.png" alt="Logo ACEJI">
                     </div>
@@ -498,7 +512,8 @@
                 <button class="btn-back-menu" onclick="showMenu()">
                     <i class="fas fa-arrow-left"></i> Menu
                 </button>
-                <div class="logo-container">
+                
+                <div class="logo-container" onclick="showMenu()">
                     <div class="logo-img">
                         <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Escudo.png" alt="Logo ACEJI">
                     </div>
