@@ -38,21 +38,19 @@
         .category-card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 15px 30px rgba(46, 204, 113, 0.15); }
         .icon-container { width: 80px; height: 80px; background-color: rgba(46, 204, 113, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: var(--primary); font-size: 32px; transition: 0.4s; }
         .category-card:hover .icon-container { background-color: var(--primary); color: #121212; }
-        .category-title { font-size: 1.4rem; font-weight: bold; color: var(--dark); margin-bottom: 10px; text-align: center; }
-        .category-desc { font-size: 0.9rem; color: #AAAAAA; margin-bottom: 20px; text-align: center; }
-        .btn-access { margin-top: auto; color: var(--primary); border: 2px solid var(--primary); padding: 8px 20px; border-radius: 20px; font-weight: bold; transition: 0.3s; }
-        .category-card:hover .btn-access { background-color: var(--primary); color: #121212; }
+        .category-title { font-size: 1.4rem; font-weight: bold; color: var(--dark); margin-bottom: 10px; text-align: center;}
+        .category-desc { font-size: 0.9rem; color: #AAAAAA; margin-bottom: 20px; text-align: center;}
+        .btn-access { margin-top: auto; color: var(--primary); border: 2px solid var(--primary); padding: 8px 20px; border-radius: 20px; font-weight: bold; transition: all 0.3s;}
 
         #trilhas-list-section, #shop-section, #copa-laje-section, #trilha-section { display: none; }
-        
         header { background: linear-gradient(135deg, #1E8449, #0A3016); color: white; text-align: center; padding: 30px 20px; position: relative; }
+        
         .logo-container { display: flex; flex-direction: column; align-items: center; margin-bottom: 15px; cursor: pointer; transition: transform 0.3s; }
         .logo-img { width: 120px; height: 120px; margin: 0 auto 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         .logo-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
         .logo-aceji { font-size: 2rem; font-weight: bold; color: white; text-transform: uppercase; letter-spacing: 2px; }
         
-        .btn-back-menu { position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 8px 15px; border-radius: 5px; cursor: pointer; z-index: 20; display: flex; align-items: center; gap: 5px; text-decoration: none;}
-        .btn-back-menu:hover { background: white; color: #1E8449; }
+        .btn-back-menu { position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 8px 15px; border-radius: 5px; cursor: pointer; transition: 0.3s; z-index: 20; display: flex; align-items: center; gap: 5px; text-decoration: none;}
 
         .form-container { padding: 30px; }
         .section-title { color: var(--primary); border-bottom: 2px solid var(--secondary); padding-bottom: 10px; margin: 25px 0 15px; }
@@ -61,7 +59,7 @@
         input, select, textarea { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 4px; font-size: 16px; background-color: var(--bg-input); color: var(--text); }
         
         .checkbox-container { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 15px; background: var(--bg-input); padding: 15px; border-radius: 8px; border: 1px solid var(--border); }
-        .checkbox-container input { width: 22px; height: 22px; accent-color: var(--primary); margin-top: 3px; cursor: pointer;}
+        .checkbox-container input { width: 22px; height: 22px; accent-color: var(--primary); margin-top: 2px; cursor: pointer;}
         .checkbox-container label { font-weight: normal; font-size: 0.95rem; line-height: 1.5; cursor: pointer;}
 
         .info-box { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 8px; border-left: 4px solid var(--primary); margin-bottom: 25px; font-size: 0.95rem; }
@@ -102,42 +100,37 @@
                 <div class="category-card" onclick="showShop()">
                     <div class="icon-container"><i class="fas fa-shopping-bag"></i></div>
                     <h3 class="category-title">Produtos</h3>
-                    <p class="category-desc">Uniformes, canecas e tirantes oficiais.</p>
+                    <p class="category-desc">Uniformes e acessórios oficiais.</p>
                     <span class="btn-access">Ver Produtos</span>
                 </div>
 
                 <div class="category-card" onclick="showCopaLaje()">
                     <div class="icon-container"><i class="fas fa-futbol"></i></div>
                     <h3 class="category-title">Copa Laje Society</h3>
-                    <p class="category-desc">Inscrição para Masculino e Feminino.</p>
+                    <p class="category-desc">Inscrições abertas.</p>
                     <span class="btn-access">Inscrever-se</span>
                 </div>
                 
                 <div class="category-card" onclick="showTrilhasMenu()">
                     <div class="icon-container"><i class="fas fa-mountain"></i></div>
                     <h3 class="category-title">Trilhas ACEJI</h3>
-                    <p class="category-desc">Inscrições para nossas trilhas.</p>
+                    <p class="category-desc">Confere as nossas próximas aventuras.</p>
                     <span class="btn-access">Ver Trilhas</span>
                 </div>
 
                 <div class="category-card" onclick="showEvents()">
                     <div class="icon-container"><i class="fas fa-calendar-alt"></i></div>
                     <h3 class="category-title">Eventos</h3>
-                    <p class="category-desc">Datas, festas e trilhas da atlética.</p>
+                    <p class="category-desc">Calendário da atlética.</p>
                     <span class="btn-access">Ver Calendário</span>
                 </div>
                 
                 <div class="category-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScG2QGpQ3HXJ5jugau2YCwrS-Tfy5X9-csNkyxgz--PRKeDow/viewform', '_blank')">
                     <div class="icon-container"><i class="fas fa-running"></i></div>
                     <h3 class="category-title">Seja um Atleta</h3>
-                    <p class="category-desc">Represente o IFSC nos jogos.</p>
+                    <p class="category-desc">Representa o IFSC.</p>
                     <span class="btn-access">Inscrever-se</span>
                 </div>
-            </div>
-
-            <div class="social-bar">
-                <a href="https://www.instagram.com/acejiatletica/" target="_blank" class="social-link instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://chat.whatsapp.com/Ks3hktil063FHygwoFVP7G" target="_blank" class="social-link whatsapp"><i class="fab fa-whatsapp"></i></a>
             </div>
         </div>
 
@@ -145,7 +138,7 @@
             <header>
                 <button class="btn-back-menu" onclick="showMenu()"><i class="fas fa-arrow-left"></i> Menu</button>
                 <div class="logo-container" onclick="showMenu()">
-                    <div class="logo-img"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Escudo.png" alt="Logo ACEJI"></div>
+                    <div class="logo-img"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Escudo.png"></div>
                     <div class="logo-aceji" style="font-size: 1.5rem;">TRILHAS ACEJI</div>
                 </div>
             </header>
@@ -155,230 +148,191 @@
                     <div class="category-card" onclick="showTrilhaDuasMamas()">
                         <div class="icon-container"><i class="fas fa-hiking"></i></div>
                         <h3 class="category-title">Trilha Duas Mamas</h3>
-                        <p class="category-desc">17 de Maio - Vagas Abertas</p>
-                        <span class="btn-access">Ver e Inscrever-se</span>
+                        <p class="category-desc">17 de Maio - Inscrições Abertas</p>
+                        <span class="btn-access">Inscrever-se</span>
                     </div>
                 </div>
             </div>
         </div>
         
         <div id="trilha-section">
-            <header style="padding: 0; position: relative; height: 280px; overflow: hidden; background: #121212;">
+            <header style="padding: 0; position: relative; height: 280px; overflow: hidden; background: #000;">
                 <button class="btn-back-menu" onclick="showTrilhasMenu()"><i class="fas fa-arrow-left"></i> Voltar</button>
-                <img src="https://s1.wklcdn.com/image_158/4748919/117545689/75461926Master.jpg" style="width: 100%; height: 100%; object-fit: cover; object-position: center 25%; opacity: 0.8;" alt="Trilha">
+                <img src="https://s1.wklcdn.com/image_158/4748919/117545689/75461926Master.jpg" style="width: 100%; height: 100%; object-fit: cover; object-position: center 25%; opacity: 0.9;" alt="Montanhas">
             </header>
             
             <div class="form-container" id="trilha-form-content">
-                <h2 class="section-title" style="font-size: 2rem;">Trilha ACEJI - Duas Mamas</h2>
+                <h2 class="section-title" style="font-size: 1.8rem;">Trilha ACEJI - Duas Mamas</h2>
                 
                 <div class="info-box">
-                    <p>A ACEJI está promovendo o evento "Trilha Duas Mamas" no dia <strong>17 de Maio</strong>. Cada participante é totalmente responsável por sua segurança e risco, navegação (é essencial saber utilizar ferramentas como GPS e Wikiloc) e por cumprir o planejado de forma independente. A organização se limita ao auxílio em encontrar caronas para o transporte até o local e à sugestão de roteiro.</p>
-                    <p>Antes de se inscrever, avalie cuidadosamente suas condições físicas, técnicas e psicológicas para participar. Se você depende de apoio, certifique-se de estar acompanhado por alguém que possa oferecer suporte durante o trajeto, pois as atividades não contam com guia nem suporte técnico, sendo realizadas, muitas vezes, em locais remotos.</p>
+                    <p>A ACEJI está a promover o evento "Trilha Duas Mamas" no dia <strong>17 de Maio</strong>. Cada participante é totalmente responsável pela sua segurança e navegação.</p>
                     
-                    <h3>Como irá funcionar?</h3>
-                    <p>Teremos 1 guia para cada 10 pessoas. Os guias são pessoas que já conhecem a trilha e poderão dar um suporte durante o trajeto, entretanto, não serão responsáveis por vocês ou quaisquer decisões tomadas por conta própria. Vai ter café no pico, então leve suas canequinhas!<br>Ah, além das fotinhos lá no alto, teremos também na cachoeira.</p>
-                    
-                    <h3>Trilha</h3>
+                    <h3>⛰️ Informações da Trilha</h3>
                     <ul>
-                        <li><strong>⛰️ Ganho de Elevação (Altimetria):</strong> ~400 a 500 metros de desnível a partir da base (a prefeitura também promove um circuito de caminhada maior na região que bate 585m de altimetria acumulada).</li>
-                        <li><strong>☁️ Altitude no Topo:</strong> A rampa de voo livre (Mirante) fica a aproximadamente 500 a 600 metros acima do nível do mar.</li>
-                        <li><strong>🏞️ Visual:</strong> Vista panorâmica incrível para Schroeder, Guaramirim e Joinville (até São Francisco do Sul em dias claros).</li>
-                        <li><strong>💦 Bônus:</strong> Cachoeira Duas Mamas na base da trilha (acesso de 2 minutos da estrada).</li>
-                        <li><strong>🥾 Dica de Segurança:</strong> Terreno frequentemente enlameaçado; uso de bota de trilha é altamente recomendado.</li>
+                        <li><strong>Altimetria:</strong> ~400 a 500 metros de desnível.</li>
+                        <li><strong>Visual:</strong> Vista panorâmica para Schroeder, Guaramirim e Joinville.</li>
+                        <li><strong>Bónus:</strong> Cachoeira Duas Mamas na base da trilha.</li>
+                        <li><strong>Horário:</strong> Concentração às 06:30h. Início às 07:00h.</li>
                     </ul>
 
-                    <h3>Horários e Local</h3>
+                    <h3>💰 Custo e Pagamento</h3>
                     <ul>
-                        <li><strong>📍 Concentração:</strong> 06:30h (todos já devem estar reunidos no estacionamento da entrada do morro).</li>
-                        <li><strong>🚶 Início da subida:</strong> 07:00h.</li>
-                    </ul>
-
-                    <p>Iremos dar um kit básico de alimentos e bebidas para utilizarem na trilha, entretanto é importante levar:</p>
-                    <ul>
-                        <li>Mínimo 2 litros de água;</li>
-                        <li>Algum alimento leve como sanduíches e bolachinhas;</li>
-                        <li>Alguma fruta;</li>
-                        <li>Boné e Óculos;</li>
-                        <li>Protetor solar e repelente;</li>
-                        <li>Kit remédios (dor de cabeça, barriga, náusea, rinite...);</li>
-                        <li>Kit emergência (esparadrapo, faixa, gaze, lenço umedecido...).</li>
-                    </ul>
-
-                    <h3>Custo e Pagamento</h3>
-                    <ul>
-                        <li><strong>Taxa de inscrição:</strong> R$ 30,00.</li>
-                        <li><strong>Promoção Convidados:</strong> Se você levar alguém de fora do IFSC, você (quem indicou) paga apenas R$ 20,00, e o seu convidado de fora paga R$ 30,00.</li>
+                        <li><strong>Taxa Individual:</strong> R$ 30,00.</li>
+                        <li><strong>Promoção Convidados:</strong> Se levares alguém de fora do IFSC, tu pagas R$ 20,00 e o convidado paga R$ 30,00.</li>
                     </ul>
                     
-                    <div style="background: rgba(37, 211, 102, 0.1); padding: 15px; border-left: 4px solid var(--whatsapp); margin: 20px 0; border-radius: 4px;">
-                        <p style="margin: 0; color: var(--text);"><strong>WhatsApp da Trilha:</strong> Após o pagamento, você receberá o link exclusivo do grupo dos confirmados no evento.</p>
-                    </div>
-
-                    <h3>Desistências e Reembolsos</h3>
-                    <p>O participante é responsável por repassar sua vaga caso desista. A administração pode auxiliar na organização do repasse, mas se a vaga não for preenchida, o valor pago não será reembolsado.</p>
-                    <p><strong>Ação imediata:</strong> Pedir reembolso logo após a alteração do fator "mudança climática". Se não ocorrer a solicitação de reembolso em um prazo de 48h, não terá mais a possibilidade de pedir a devolução do valor. Reembolso para opções não mencionadas acima, somente mediante a substituição da pessoa confirmada no evento.</p>
+                    <p><strong>Desistências:</strong> Reembolso integral apenas em caso de mudanças climáticas. Em outros casos, o reembolso só é feito se houver substituição do participante.</p>
                 </div>
 
                 <form id="trilhaForm">
-                    <div class="form-group"><label>Seu nome completo *</label><input type="text" id="trilhaNome" required></div>
-                    <div class="form-group"><label>Seu CPF *</label><input type="text" id="trilhaCPF" placeholder="000.000.000-00" required></div>
-                    <div class="form-group" style="background: rgba(241, 196, 15, 0.05); padding: 15px; border-left: 3px solid var(--secondary); border-radius: 4px;">
-                        <label style="color: var(--secondary);">Preencher se tiver algum convidado de fora do IFSC:</label>
-                        <p style="font-size: 0.85rem; margin-bottom: 10px; color: #bbb;">Se fará pagamento para alguém além de você, coloque o nome completo e o CPF de quem mais irá participar.<br>Você que indicou, pagará apenas 20,00. Seu convidado pagará 30,00.</p>
-                        <textarea id="trilhaConvidado" rows="2"></textarea>
+                    <div class="form-group"><label>Nome Completo *</label><input type="text" id="trilhaNome" required></div>
+                    <div class="form-group"><label>CPF *</label><input type="text" id="trilhaCPF" placeholder="000.000.000-00" required></div>
+                    
+                    <div class="form-group" style="background: rgba(241, 196, 15, 0.05); padding: 15px; border-left: 3px solid var(--secondary);">
+                        <label style="color: var(--secondary);">Convidado de fora do IFSC (Nome e CPF):</label>
+                        <textarea id="trilhaConvidado" rows="2" placeholder="Se preencheres, o teu valor baixa para R$ 20."></textarea>
                     </div>
-                    <div class="form-group"><label>Uma chave pix para reembolso *</label><input type="text" id="trilhaPixReembolso" required></div>
+
+                    <div class="form-group"><label>Chave PIX para eventual reembolso *</label><input type="text" id="trilhaPixReembolso" required></div>
+                    
                     <div class="form-group">
-                        <label>Se houver a possibilidade de abrir uma trilha noturna, você teria interesse? *</label>
+                        <label>Interesse em trilha noturna? *</label>
                         <select id="trilhaNoturna" required>
-                            <option value="">Selecione...</option>
-                            <option value="Sim, eu sou iniciante">Sim, eu sou iniciante</option>
-                            <option value="Sim, eu já faço trilhas">Sim, eu já faço trilhas</option>
+                            <option value="">Seleciona...</option>
+                            <option value="Sim, sou iniciante">Sim, sou iniciante</option>
+                            <option value="Sim, já faço trilhas">Sim, já faço trilhas</option>
                             <option value="Não">Não</option>
                         </select>
                     </div>
                     
                     <div class="checkbox-container">
-                        <input type="checkbox" id="check1" required> 
-                        <label for="check1">O evento está sujeito a ser alterado devido a mudanças climáticas. Com isso você tem a opção de pedir o reembolso completo. Concordo.</label>
+                        <input type="checkbox" id="c1" required> 
+                        <label for="c1">Concordo que o reembolso por desistência só ocorre em caso de mudança climática ou substituição de pessoa.</label>
                     </div>
                     <div class="checkbox-container">
-                        <input type="checkbox" id="check2" required> 
-                        <label for="check2">Você concorda com as regras descritas nesse forms? Sim.</label>
+                        <input type="checkbox" id="c2" required> 
+                        <label for="c2">Concordo com as regras descritas acima. (Sim)</label>
                     </div>
                     <div class="checkbox-container">
-                        <input type="checkbox" id="check3" required> 
-                        <label for="check3">Ao responder esse formulário, você estará confirmando sua participação. Entendi.</label>
+                        <input type="checkbox" id="c3" required> 
+                        <label for="c3">Entendo que ao enviar, estou a confirmar a minha participação. (Entendi)</label>
                     </div>
                     
-                    <button type="submit" class="btn-submit" id="btn-trilha-submit">Ir para Pagamento</button>
+                    <button type="submit" class="btn-submit">Próximo: Pagamento e Comprovativo</button>
                 </form>
             </div>
             
-            <div class="payment-page" id="trilha-payment-section" style="display:none;">
-                <h2 style="color:var(--primary); margin-bottom:10px;">Pagamento da Inscrição</h2>
+            <div class="payment-page" id="trilha-payment-section">
+                <h2 style="color:var(--primary); margin-bottom:10px;">Pagamento via PIX</h2>
                 <div style="background: rgba(50, 188, 173, 0.1); padding:15px; border-left:4px solid var(--pix); text-align:left; margin-bottom:20px;">
-                    <p><strong>Total a pagar: <span id="trilha-total-value">R$ 0,00</span></strong></p>
-                    <p style="font-size:0.9rem; color:var(--text); margin-top:5px;" id="trilha-calc-desc"></p>
+                    <p>Total a pagar: <strong id="trilha-total-value">R$ 30,00</strong></p>
+                    <p style="font-size:0.85rem; color:var(--text);" id="trilha-calc-desc"></p>
                 </div>
                 
                 <div class="pix-container">
-                    <div class="qrcode-image"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/QR%20CODE%20LUIS.jpeg" alt="QR Code"></div>
-                    <div style="background:var(--bg-page); padding:10px; border:1px dashed var(--pix); margin-top:15px;">
-                        <p style="font-weight:bold; word-break:break-all;" id="trilha-pix-key">atleticaaceji@gmail.com</p>
-                        <button onclick="copyPix('atleticaaceji@gmail.com')" style="background:var(--pix); color:white; border:none; padding:5px 10px; margin-top:10px; border-radius:4px; cursor:pointer;">Copiar Chave</button>
-                    </div>
+                    <div class="qrcode-image"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/QR%20CODE%20LUIS.jpeg"></div>
+                    <p>Chave PIX: <strong>atleticaaceji@gmail.com</strong></p>
+                    <button onclick="copyPix('atleticaaceji@gmail.com')" style="background:var(--pix); color:white; border:none; padding:5px 10px; margin-top:10px; border-radius:4px; cursor:pointer;">Copiar Chave</button>
                 </div>
 
-                <div class="form-group" style="max-width: 500px; margin: 20px auto; text-align: left; background: var(--bg-input); padding: 20px; border-radius: 8px; border: 1px solid var(--primary);">
-                    <label style="color: var(--primary);"><i class="fas fa-file-upload"></i> Anexar Comprovante PIX *</label>
-                    <p style="font-size: 0.8rem; margin-bottom: 10px;">Obrigatório para validar sua inscrição (Tamanho máx: 5MB).</p>
+                <div class="form-group" style="max-width: 500px; margin: 25px auto; text-align: left; background: var(--bg-input); padding: 20px; border: 1px solid var(--primary); border-radius: 8px;">
+                    <label style="color: var(--primary);"><i class="fas fa-upload"></i> Anexar Comprovativo PIX *</label>
+                    <p style="font-size: 0.8rem; margin-bottom: 10px;">Obrigatório para validar a inscrição (Máx: 5MB).</p>
                     <input type="file" id="trilhaComprovante" name="attachment" accept="image/*,.pdf" required>
                 </div>
                 
-                <button class="btn-submit" style="background-color:var(--success); max-width: 500px;" id="btn-finalizar-trilha" onclick="finalizarInscricaoTrilha()">Confirmar e Enviar Inscrição</button>
-                <p onclick="backToTrilhaForm()" style="margin-top:20px; text-decoration:underline; cursor:pointer;">Voltar e editar dados</p>
+                <button class="btn-submit" style="background-color:var(--success); max-width: 500px;" id="btn-finalizar-trilha" onclick="finalizarInscricaoTrilha()">Enviar Inscrição e Comprovativo</button>
             </div>
 
             <div class="confirmation-page" id="trilha-confirmation-section">
                 <div style="font-size:80px; color:var(--success);"><i class="fas fa-check-circle"></i></div>
-                <h2 style="color:var(--primary); margin-bottom: 20px;">Inscrição Confirmada!</h2>
-                <p style="margin-bottom: 20px;">O seu comprovante e os dados foram enviados com sucesso.</p>
-                <a href="https://chat.whatsapp.com/JNcXIObUcfD4ZXe05Dg2EO" target="_blank" class="btn-submit btn-whatsapp" style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px; max-width: 400px; margin-left: auto; margin-right: auto;">
-                    <i class="fab fa-whatsapp" style="font-size: 24px;"></i> Entrar no Grupo da Trilha
+                <h2 style="color:var(--primary); margin-bottom: 20px;">Inscrição Concluída!</h2>
+                <p>Os teus dados e o comprovativo foram enviados por e-mail para a diretoria.</p>
+                <a href="https://chat.whatsapp.com/JNcXIObUcfD4ZXe05Dg2EO" target="_blank" class="btn-submit" style="background-color: #25D366; text-decoration: none; display: inline-block; margin-top: 15px;">
+                    <i class="fab fa-whatsapp"></i> Entrar no Grupo da Trilha
                 </a>
-                <button class="btn-submit" style="background-color: var(--bg-input); color: var(--text); max-width: 400px; margin-left: auto; margin-right: auto;" onclick="showMenu()">Voltar ao Menu Principal</button>
+                <button class="btn-submit" style="background-color: var(--bg-input); margin-top: 15px;" onclick="showMenu()">Voltar ao Menu</button>
             </div>
         </div>
 
-        <div id="shop-section"> <header><button class="btn-back-menu" onclick="showMenu()">Voltar</button><h2>LOJA</h2></header> <div class="form-container">Dados da loja carregados via script...</div> </div>
-        <div id="copa-laje-section"> <header><button class="btn-back-menu" onclick="showMenu()">Voltar</button><h2>COPA LAJE</h2></header> <div class="form-container">Ficha da Copa Laje carregada via script...</div> </div>
-        <div id="events-section"> <header><button class="btn-back-menu" onclick="showMenu()">Voltar</button><h2>EVENTOS</h2></header> <div class="events-container">Calendário carregado via script...</div> </div>
+        <div id="shop-section"> <header><button class="btn-back-menu" onclick="showMenu()">Voltar</button><h2>PRODUTOS</h2></header> <div class="form-container">Configura a tua loja aqui...</div> </div>
+        <div id="copa-laje-section"> <header><button class="btn-back-menu" onclick="showMenu()">Voltar</button><h2>COPA LAJE</h2></header> <div class="form-container">Ficha da Copa Laje aqui...</div> </div>
 
     </div>
 
     <script>
-        // --- NAVEGAÇÃO ---
         function hideAll() {
-            ['main-menu', 'trilhas-list-section', 'shop-section', 'events-section', 'copa-laje-section', 'trilha-section', 'trilha-payment-section', 'trilha-confirmation-section'].forEach(id => {
+            ['main-menu', 'trilhas-list-section', 'shop-section', 'copa-laje-section', 'trilha-section', 'trilha-payment-section', 'trilha-confirmation-section'].forEach(id => {
                 const el = document.getElementById(id); if(el) el.style.display = 'none';
             });
         }
         function showMenu() { hideAll(); document.getElementById('main-menu').style.display = 'block'; }
-        function showTrilhasMenu() { hideAll(); document.getElementById('trilhas-list-section').style.display = 'block'; window.scrollTo(0,0);}
-        function showTrilhaDuasMamas() { hideAll(); document.getElementById('trilha-section').style.display = 'block'; document.getElementById('trilha-form-content').style.display = 'block'; window.scrollTo(0,0);}
-        function backToTrilhaForm() { document.getElementById('trilha-payment-section').style.display = 'none'; document.getElementById('trilha-form-content').style.display = 'block'; window.scrollTo(0,0);}
+        function showTrilhasMenu() { hideAll(); document.getElementById('trilhas-list-section').style.display = 'block'; window.scrollTo(0,0); }
+        function showTrilhaDuasMamas() { hideAll(); document.getElementById('trilha-section').style.display = 'block'; document.getElementById('trilha-form-content').style.display = 'block'; window.scrollTo(0,0); }
         function showCopaLaje() { hideAll(); document.getElementById('copa-laje-section').style.display = 'block'; }
         function showShop() { hideAll(); document.getElementById('shop-section').style.display = 'block'; }
-        function showEvents() { hideAll(); document.getElementById('events-section').style.display = 'block'; }
-        function copyPix(txt) { navigator.clipboard.writeText(txt); alert("Chave PIX copiada!"); }
+        function copyPix(txt) { navigator.clipboard.writeText(txt); alert("Copiado!"); }
 
-        // --- LÓGICA DA TRILHA ---
         let dadosTrilha = {};
 
+        // 1. Captura dados do formulário
         document.getElementById('trilhaForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const convidado = document.getElementById('trilhaConvidado').value.trim();
             const total = (convidado !== "") ? 50 : 30;
-            const desc = (convidado !== "") ? "Inscrição (R$ 20) + Convidado (R$ 30)" : "Taxa de Inscrição: R$ 30,00";
             
             dadosTrilha = {
                 nome: document.getElementById('trilhaNome').value,
                 cpf: document.getElementById('trilhaCPF').value,
                 convidado: convidado || "Nenhum",
-                pixReembolso: document.getElementById('trilhaPixReembolso').value,
+                pix: document.getElementById('trilhaPixReembolso').value,
                 noturna: document.getElementById('trilhaNoturna').value,
                 total: total
             };
 
             document.getElementById('trilha-total-value').textContent = `R$ ${total.toFixed(2)}`;
-            document.getElementById('trilha-calc-desc').textContent = desc;
+            document.getElementById('trilha-calc-desc').textContent = (convidado !== "") ? "Valor: R$ 20 (teu) + R$ 30 (convidado)" : "Valor Individual: R$ 30,00";
+            
             document.getElementById('trilha-form-content').style.display = 'none';
             document.getElementById('trilha-payment-section').style.display = 'block';
             window.scrollTo(0,0);
         });
 
+        // 2. Envio definitivo com ficheiro
         function finalizarInscricaoTrilha() {
             const fileInput = document.getElementById('trilhaComprovante');
             const btn = document.getElementById('btn-finalizar-trilha');
 
             if (!fileInput.files[0]) {
-                alert("Por favor, anexe o comprovante do PIX.");
-                return;
-            }
-
-            if (fileInput.files[0].size > 5 * 1024 * 1024) {
-                alert("O ficheiro é demasiado grande. Envie um print com menos de 5MB.");
+                alert("Anexa o comprovativo primeiro!");
                 return;
             }
 
             btn.disabled = true;
-            btn.textContent = "A enviar comprovante...";
+            btn.textContent = "A enviar comprovativo...";
 
-            // CRIAÇÃO DO FormData - ISTO É O QUE PERMITE O ENVIO DO FICHEIRO
+            // FormData empacota texto + ficheiro automaticamente
             const formData = new FormData();
-            formData.append('_subject', `Inscrição Trilha + Comprovante - ${dadosTrilha.nome}`);
+            formData.append('_subject', `INSCRIÇÃO TRILHA: ${dadosTrilha.nome}`);
             formData.append('_template', 'table');
-            
-            // Dados de texto
             formData.append('Atleta', dadosTrilha.nome);
             formData.append('CPF', dadosTrilha.cpf);
             formData.append('Convidado', dadosTrilha.convidado);
-            formData.append('PIX Reembolso', dadosTrilha.pixReembolso);
+            formData.append('PIX Reembolso', dadosTrilha.pix);
             formData.append('Interesse Noturna', dadosTrilha.noturna);
-            formData.append('Total Pago', `R$ ${dadosTrilha.total.toFixed(2)}`);
+            formData.append('Valor Total', `R$ ${dadosTrilha.total.toFixed(2)}`);
             
-            // O FICHEIRO - A chave tem de ser exatamente 'attachment'
+            // A chave 'attachment' é obrigatória no FormSubmit
             formData.append('attachment', fileInput.files[0]);
 
-            // ENVIO AJAX - NOTA: Não definimos Content-Type para o browser tratar do multipart
+            // Envio via Fetch sem cabeçalhos manuais
             fetch('https://formsubmit.co/ajax/pedidosaceji@gmail.com', {
                 method: 'POST',
-                headers: { 'Accept': 'application/json' },
-                body: formData
+                body: formData // O browser define o Content-Type: multipart/form-data corretamente
             })
             .then(res => res.json())
             .then(data => {
+                // Se o e-mail foi aceite pelo servidor
                 if(data.success === "true" || data.message) {
                     document.getElementById('trilha-payment-section').style.display = 'none';
                     document.getElementById('trilha-confirmation-section').style.display = 'block';
@@ -388,9 +342,9 @@
                 }
             })
             .catch(() => {
-                alert("Erro ao enviar. Verifique se o arquivo não é demasiado pesado.");
+                alert("Erro ao enviar. Tenta usar um print mais leve ou verifica a internet.");
                 btn.disabled = false;
-                btn.textContent = "Confirmar e Enviar Inscrição";
+                btn.textContent = "Enviar Inscrição e Comprovativo";
             });
         }
     </script>
