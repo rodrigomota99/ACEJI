@@ -54,7 +54,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Incluído #copa-laje-section na animação */
         #main-menu, #shop-section, #events-section, #copa-laje-section, #form-content, #payment-section, #confirmation-section {
             animation: fadeInSmooth 0.4s ease-out;
         }
@@ -291,6 +290,7 @@
 
             <div class="categories-grid">
                 
+                <!-- 1. ABA DE PRODUTOS -->
                 <div class="category-card" onclick="showShop()">
                     <div class="icon-container">
                         <i class="fas fa-shopping-bag"></i>
@@ -300,15 +300,15 @@
                     <span class="btn-access">Ver Produtos</span>
                 </div>
 
-                <div class="category-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScG2QGpQ3HXJ5jugau2YCwrS-Tfy5X9-csNkyxgz--PRKeDow/viewform', '_blank')">
-                    <div class="icon-container">
-                        <i class="fas fa-running"></i>
-                    </div>
-                    <h3 class="category-title">Seja um Atleta</h3>
-                    <p class="category-desc">Inscreva-se para representar o IFSC nos jogos.</p>
+                <!-- 2. ABA COPA LAJE SOCIETY (Movida para a segunda posição com ícone de bola) -->
+                <div class="category-card" onclick="showCopaLaje()">
+                    <div class="icon-container"><i class="fas fa-futbol"></i></div>
+                    <h3 class="category-title">Copa Laje Society</h3>
+                    <p class="category-desc">Inscrição para a Copa Laje Society (Masculino e Feminino).</p>
                     <span class="btn-access">Inscrever-se</span>
                 </div>
 
+                <!-- 3. ABA EVENTOS -->
                 <div class="category-card" onclick="showEvents()">
                     <div class="icon-container"><i class="fas fa-calendar-alt"></i></div>
                     <h3 class="category-title">Eventos</h3>
@@ -316,11 +316,13 @@
                     <span class="btn-access">Ver Calendário</span>
                 </div>
                 
-                <!-- NOVA ABA: COPA LAJE SOCIETY -->
-                <div class="category-card" onclick="showCopaLaje()">
-                    <div class="icon-container"><i class="fas fa-trophy"></i></div>
-                    <h3 class="category-title">Copa Laje Society</h3>
-                    <p class="category-desc">Inscrição para a Copa Laje Society (Masculino e Feminino).</p>
+                <!-- 4. ABA SEJA UM ATLETA (Movida para a última posição) -->
+                <div class="category-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScG2QGpQ3HXJ5jugau2YCwrS-Tfy5X9-csNkyxgz--PRKeDow/viewform', '_blank')">
+                    <div class="icon-container">
+                        <i class="fas fa-running"></i>
+                    </div>
+                    <h3 class="category-title">Seja um Atleta</h3>
+                    <p class="category-desc">Inscreva-se para representar o IFSC nos jogos.</p>
                     <span class="btn-access">Inscrever-se</span>
                 </div>
 
@@ -336,7 +338,7 @@
             </footer>
         </div>
         
-        <!-- NOVA SEÇÃO: INSCRIÇÃO COPA LAJE -->
+        <!-- SEÇÃO: INSCRIÇÃO COPA LAJE -->
         <div id="copa-laje-section">
             <header>
                 <button class="btn-back-menu" onclick="showMenu()">
