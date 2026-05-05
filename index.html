@@ -13,69 +13,144 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #2ECC71; --secondary: #F1C40F; --accent: #E74C3C; --blue: #3498DB;
-            --light: #333333; --dark: #FFFFFF; --text: #E0E0E0;
-            --bg-page: #121212; --bg-container: #1E1E1E; --bg-input: #2C2C2C; --border: #333333;
-            --success: #27AE60; --instagram: #E1306C; --whatsapp: #25D366; --pix: #32BCAD;
+            /* Cores do Tema Escuro */
+            --primary: #2ECC71; 
+            --secondary: #F1C40F; 
+            --accent: #E74C3C; 
+            --blue: #3498DB;
+            --light: #333333; 
+            --dark: #FFFFFF; 
+            --text: #E0E0E0;
+            --bg-page: #121212; 
+            --bg-container: #1E1E1E; 
+            --bg-input: #2C2C2C; 
+            --border: #333333;
+            
+            /* Marcas */
+            --success: #27AE60; 
+            --instagram: #E1306C; 
+            --whatsapp: #25D366; 
+            --pix: #32BCAD;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
         body { background-color: var(--bg-page); color: var(--text); line-height: 1.6; padding: 20px; min-height: 100vh; }
-        .container { max-width: 1000px; margin: 0 auto; background: var(--bg-container); border-radius: 10px; box-shadow: 0 0 30px rgba(0, 0, 0, 0.5); overflow: hidden; position: relative; }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--bg-container);
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            position: relative;
+        }
 
-        @keyframes fadeInSmooth { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        #main-menu, #trilhas-list-section, #shop-section, #events-section, #copa-laje-section, #trilha-section, #trilha-payment-section, #trilha-confirmation-section { animation: fadeInSmooth 0.4s ease-out; }
+        /* --- ANIMAÇÕES GERAIS --- */
+        @keyframes fadeInSmooth {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-animate { animation: fadeInSmooth 0.4s ease-out; }
 
+        /* --- ESTILOS DE HEADER --- */
         header { background: linear-gradient(135deg, #1E8449, #0A3016); color: white; text-align: center; padding: 30px 20px; position: relative; }
+        
         .logo-container { display: flex; flex-direction: column; align-items: center; margin-bottom: 15px; cursor: pointer; transition: transform 0.3s; }
+        .logo-container:hover { transform: scale(1.05); }
+        
         .logo-img { width: 120px; height: 120px; margin: 0 auto 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         .logo-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
         .logo-aceji { font-size: 2rem; font-weight: bold; color: white; text-transform: uppercase; letter-spacing: 2px; }
-        .btn-back-menu { position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 8px 15px; border-radius: 5px; cursor: pointer; z-index: 20; text-decoration: none; display: flex; align-items: center; gap: 5px;}
+        
+        .btn-back-menu { position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 8px 15px; border-radius: 5px; cursor: pointer; transition: 0.3s; z-index: 20; display: flex; align-items: center; gap: 5px; text-decoration: none; }
         .btn-back-menu:hover { background: white; color: #1E8449; }
 
+        /* --- MENU PRINCIPAL --- */
         #main-menu { display: block; padding: 40px 20px; text-align: center; }
+        .menu-header { margin-bottom: 40px; }
+        .menu-logo-img { width: 200px; height: 200px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; }
+        .menu-logo-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .menu-title { font-size: 3rem; color: var(--primary); font-weight: bold; text-transform: uppercase; letter-spacing: 3px; }
+        .menu-subtitle { font-size: 1.2rem; color: #AAAAAA; font-weight: 300; }
+        
         .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; margin-bottom: 40px; padding: 0 20px; }
-        .category-card { background: var(--bg-container); border: 1px solid var(--border); border-radius: 12px; padding: 30px 20px; transition: all 0.4s ease; cursor: pointer; display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden; }
+        .category-card { background: var(--bg-container); border: 1px solid var(--border); border-radius: 12px; padding: 30px 20px; transition: all 0.4s ease; cursor: pointer; display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         .category-card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 15px 30px rgba(46, 204, 113, 0.15); }
+        
         .icon-container { width: 80px; height: 80px; background-color: rgba(46, 204, 113, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: var(--primary); font-size: 32px; transition: 0.4s; }
         .category-card:hover .icon-container { background-color: var(--primary); color: #121212; }
+        
         .category-title { font-size: 1.4rem; font-weight: bold; color: var(--dark); margin-bottom: 10px; }
-        .btn-access { margin-top: auto; color: var(--primary); border: 2px solid var(--primary); padding: 8px 20px; border-radius: 20px; font-weight: bold; }
+        .category-desc { font-size: 0.9rem; color: #AAAAAA; margin-bottom: 20px; text-align: center; }
+        .btn-access { margin-top: auto; color: var(--primary); border: 2px solid var(--primary); padding: 8px 20px; border-radius: 20px; font-weight: bold; transition: 0.3s; }
+        .category-card:hover .btn-access { background-color: var(--primary); color: #121212; }
 
+        /* --- FORMULÁRIOS E TEXTOS --- */
         .form-container { padding: 30px; }
         .section-title { color: var(--primary); border-bottom: 2px solid var(--secondary); padding-bottom: 10px; margin: 25px 0 15px; }
         .form-group { margin-bottom: 20px; }
         label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark); }
         input, select, textarea { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 4px; font-size: 16px; background-color: var(--bg-input); color: var(--text); }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); }
         
         .checkbox-container { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 15px; background: var(--bg-input); padding: 15px; border-radius: 8px; border: 1px solid var(--border); }
-        .checkbox-container input { width: 22px; height: 22px; accent-color: var(--primary); margin-top: 3px; cursor: pointer;}
-        .checkbox-container label { font-weight: normal; font-size: 0.95rem; line-height: 1.5; cursor: pointer;}
+        .checkbox-container input { width: 22px; height: 22px; accent-color: var(--primary); margin-top: 3px; cursor: pointer; }
 
-        .info-box { background: rgba(255,255,255,0.03); padding: 25px; border-radius: 8px; border-left: 4px solid var(--primary); margin-bottom: 25px; font-size: 0.95rem; }
-        .info-box h3 { color: var(--secondary); margin-top: 25px; margin-bottom: 10px; font-size: 1.2rem;}
+        .info-box { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 8px; border-left: 4px solid var(--primary); margin-bottom: 25px; font-size: 0.95rem; }
+        .info-box h3 { color: var(--secondary); margin-top: 25px; margin-bottom: 10px; font-size: 1.2rem; }
         .info-box ul { margin-left: 20px; margin-bottom: 15px; }
         .info-box li { margin-bottom: 8px; }
-        .info-box p { margin-bottom: 15px; }
 
-        .btn-submit { background-color: var(--primary); color: #121212; border: none; padding: 15px 30px; font-size: 18px; font-weight: bold; border-radius: 4px; cursor: pointer; width: 100%; transition: 0.3s; margin-top: 20px; text-align: center;}
-        .btn-submit:hover { background-color: #27AE60; }
+        /* --- PRODUTOS --- */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .product-card { border: 1px solid var(--border); border-radius: 8px; padding: 15px; text-align: center; background: var(--bg-container); transition: 0.3s; }
+        .product-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .product-image-container { position: relative; height: 200px; background: #FFFFFF; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; border-radius: 4px; border: 1px solid var(--border); overflow: hidden; cursor: pointer; }
+        .product-image { width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s ease; }
+        .product-image:hover { transform: scale(1.1); }
+        .product-title { font-weight: bold; margin-bottom: 5px; color: var(--dark); }
+        .product-price { color: var(--primary); font-weight: 600; margin-bottom: 10px; }
+        .quantity { width: 60px; text-align: center; }
+
+        /* --- BOTÕES E PAGAMENTO --- */
+        .btn-submit { background-color: var(--primary); color: #121212; border: none; padding: 15px 30px; font-size: 18px; font-weight: bold; border-radius: 4px; cursor: pointer; width: 100%; transition: 0.3s; margin-top: 20px; text-align: center; display: block; text-decoration: none;}
+        .btn-submit:hover { background-color: #27AE60; transform: translateY(-2px); }
+        .btn-submit:disabled { background-color: #555; cursor: not-allowed; transform: none; }
         
+        .btn-whatsapp { background-color: #25D366; color: white; }
+        .btn-whatsapp:hover { background-color: #1EBE55; }
+        .btn-blue { background-color: #3498DB; color: white; }
+
         .payment-page, .confirmation-page { display: none; text-align: center; padding: 40px 20px; }
         .pix-container { background: var(--bg-input); border-radius: 10px; padding: 30px; margin: 30px auto; max-width: 500px; border: 2px solid var(--pix); }
         .qrcode-image { width: 220px; height: 220px; margin: 0 auto 20px; border-radius: 8px; overflow: hidden; }
         .qrcode-image img { width: 100%; height: 100%; object-fit: cover; }
 
-        #trilhas-list-section, #copa-laje-section, #shop-section, #trilha-section { display: none; }
+        /* --- EVENTOS --- */
+        #events-section { display: none; }
+        .view-toggle { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; }
+        .btn-toggle { background: var(--bg-input); border: 2px solid var(--primary); color: var(--primary); padding: 10px 25px; border-radius: 25px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-toggle.active { background: var(--primary); color: #121212; }
 
         .social-bar { background-color: #181818; padding: 20px; display: flex; justify-content: center; gap: 20px; border-top: 1px solid var(--border); margin-top: 40px; }
-        .social-link { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; text-decoration: none; }
-        
+        .social-link { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; text-decoration: none; transition: transform 0.3s; }
+        .social-link:hover { transform: scale(1.1); }
+
+        /* --- MODAL --- */
+        .modal { display: none; position: fixed; z-index: 2000; padding-top: 50px; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); overflow: auto; }
+        .modal-content { display: block; margin: 0 auto; max-width: 90%; max-height: 80vh; object-fit: contain; }
+        .close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; }
+
+        /* --- MOBILE --- */
         @media (max-width: 480px) {
             .menu-title { font-size: 2.2rem; }
             .form-container { padding: 15px; }
-            .logo-img { width: 90px; height: 90px; }
+            .logo-img { width: 80px; height: 80px; }
+            .logo-aceji { font-size: 1.4rem; }
+            header { padding: 20px 10px; }
         }
     </style>
 </head>
@@ -83,7 +158,7 @@
 
     <div class="container">
         
-        <div id="main-menu">
+        <div id="main-menu" class="section-animate">
             <div class="menu-header">
                 <div class="menu-logo-img">
                     <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Escudo.png" alt="Logo ACEJI">
@@ -96,35 +171,35 @@
                 <div class="category-card" onclick="showShop()">
                     <div class="icon-container"><i class="fas fa-shopping-bag"></i></div>
                     <h3 class="category-title">Produtos</h3>
-                    <p class="category-desc">Uniformes e acessórios oficiais.</p>
+                    <p class="category-desc">Uniformes, canecas e acessórios oficiais.</p>
                     <span class="btn-access">Ver Produtos</span>
                 </div>
 
                 <div class="category-card" onclick="showCopaLaje()">
                     <div class="icon-container"><i class="fas fa-futbol"></i></div>
                     <h3 class="category-title">Copa Laje Society</h3>
-                    <p class="category-desc">Inscrições para o torneio.</p>
+                    <p class="category-desc">Inscrições abertas para o torneio.</p>
                     <span class="btn-access">Inscrever-se</span>
                 </div>
                 
                 <div class="category-card" onclick="showTrilhasMenu()">
                     <div class="icon-container"><i class="fas fa-mountain"></i></div>
                     <h3 class="category-title">Trilhas ACEJI</h3>
-                    <p class="category-desc">Confira nossas próximas aventuras.</p>
+                    <p class="category-desc">Próximas aventuras e trilhas da atlética.</p>
                     <span class="btn-access">Ver Trilhas</span>
                 </div>
 
                 <div class="category-card" onclick="showEvents()">
                     <div class="icon-container"><i class="fas fa-calendar-alt"></i></div>
                     <h3 class="category-title">Eventos</h3>
-                    <p class="category-desc">Calendário de festas e datas.</p>
+                    <p class="category-desc">Datas de festas, PL e integração.</p>
                     <span class="btn-access">Ver Calendário</span>
                 </div>
                 
                 <div class="category-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScG2QGpQ3HXJ5jugau2YCwrS-Tfy5X9-csNkyxgz--PRKeDow/viewform', '_blank')">
                     <div class="icon-container"><i class="fas fa-running"></i></div>
                     <h3 class="category-title">Seja um Atleta</h3>
-                    <p class="category-desc">Represente o IFSC nos jogos.</p>
+                    <p class="category-desc">Represente o IFSC nos jogos oficiais.</p>
                     <span class="btn-access">Inscrever-se</span>
                 </div>
             </div>
@@ -135,7 +210,7 @@
             </div>
         </div>
 
-        <div id="trilhas-list-section">
+        <div id="trilhas-list-section" class="section-animate">
             <header>
                 <button class="btn-back-menu" onclick="showMenu()"><i class="fas fa-arrow-left"></i> Menu</button>
                 <div class="logo-container" onclick="showMenu()">
@@ -149,17 +224,17 @@
                     <div class="category-card" onclick="showTrilhaDuasMamas()">
                         <div class="icon-container"><i class="fas fa-hiking"></i></div>
                         <h3 class="category-title">Trilha Duas Mamas</h3>
-                        <p class="category-desc">17 de Maio - Inscrições Abertas</p>
-                        <span class="btn-access">Inscrever-se</span>
+                        <p class="category-desc">Data: 17 de Maio - Inscrições Abertas</p>
+                        <span class="btn-access">Ficha de Inscrição</span>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <div id="trilha-section">
-            <header style="padding: 0; position: relative; height: 300px; overflow: hidden; background: #000;">
+
+        <div id="trilha-section" class="section-animate">
+            <header style="padding: 0; position: relative; height: 280px; overflow: hidden; background: #000;">
                 <button class="btn-back-menu" onclick="showTrilhasMenu()"><i class="fas fa-arrow-left"></i> Voltar</button>
-                <img src="https://s1.wklcdn.com/image_158/4748919/117545689/75461926Master.jpg" style="width: 100%; height: 100%; object-fit: cover; object-position: center 20%; opacity: 0.9;" alt="Trilha">
+                <img src="https://s1.wklcdn.com/image_158/4748919/117545689/75461926Master.jpg" style="width: 100%; height: 100%; object-fit: cover; object-position: center 25%; opacity: 0.9;" alt="Trilha">
             </header>
             
             <div class="form-container" id="trilha-form-content">
@@ -174,16 +249,16 @@
                     
                     <h3>Trilha</h3>
                     <ul>
-                        <li><strong>⛰️ Ganho de Elevação (Altimetria):</strong> ~400 a 500 metros de desnível a partir da base (a prefeitura também promove um circuito de caminhada maior na região que bate 585m de altimetria acumulada).</li>
-                        <li><strong>☁️ Altitude no Topo:</strong> A rampa de voo livre (Mirante) fica a aproximadamente 500 a 600 metros acima do nível do mar.</li>
-                        <li><strong>🏞️ Visual:</strong> Vista panorâmica incrível para Schroeder, Guaramirim e Joinville (até São Francisco do Sul em dias claros).</li>
+                        <li><strong>⛰️ Ganho de Elevação:</strong> ~400 a 500 metros de desnível a partir da base (o circuito maior da prefeitura bate 585m acumulados).</li>
+                        <li><strong>☁️ Altitude no Topo:</strong> A rampa de voo livre (Mirante) fica a aprox. 500 a 600 metros acima do nível do mar.</li>
+                        <li><strong>🏞️ Visual:</strong> Vista panorâmica incrível para Schroeder, Guaramirim e Joinville (até SFS em dias claros).</li>
                         <li><strong>💦 Bônus:</strong> Cachoeira Duas Mamas na base da trilha (acesso de 2 minutos da estrada).</li>
-                        <li><strong>🥾 Dica de Segurança:</strong> Terreno frequentemente enlameaçado; uso de bota de trilha é altamente recomendado.</li>
+                        <li><strong>🥾 Dica de Segurança:</strong> Terreno frequentemente enlameado; uso de bota de trilha é altamente recomendado.</li>
                     </ul>
 
                     <h3>Horários e Local</h3>
                     <ul>
-                        <li><strong>📍 Concentração:</strong> 06:30h (todos já devem estar reunidos no estacionamento da entrada do morro).</li>
+                        <li><strong>📍 Concentração:</strong> 06:30h (estacionamento da entrada do morro).</li>
                         <li><strong>🚶 Início da subida:</strong> 07:00h.</li>
                     </ul>
 
@@ -192,34 +267,34 @@
                         <li>Mínimo 2 litros de água;</li>
                         <li>Algum alimento leve como sanduíches e bolachinhas;</li>
                         <li>Alguma fruta;</li>
-                        <li>Boné; Óculos;</li>
+                        <li>Boné e Óculos;</li>
                         <li>Protetor solar e repelente;</li>
                         <li>Kit remédios (dor de cabeça, barriga, náusea, rinite...);</li>
                         <li>Kit emergência (esparadrapo, faixa, gaze, lenço umedecido...).</li>
                     </ul>
 
-                    <h3>Custo:</h3>
+                    <h3>Custo e Pagamento</h3>
                     <ul>
                         <li><strong>Taxa de inscrição:</strong> R$ 30,00.</li>
                         <li><strong>Promoção Convidados:</strong> Se você levar alguém de fora do IFSC, você (quem indicou) paga apenas R$ 20,00, e o seu convidado de fora paga R$ 30,00.</li>
                     </ul>
                     
-                    <h3>Desistências:</h3>
-                    <p>O participante é responsável por repassar sua vaga caso desista. A administração pode auxiliar na organização do repasse, mas se a vaga não for preenchida, o valor pago não será reembolsado.</p>
-                    
-                    <h3>Reembolsos:</h3>
-                    <p>Ação imediata: Pedir reembolso logo após a alteração do fator "mudança climática". Se não ocorrer a solicitação de reembolso em um prazo de 48h, não terá mais a possibilidade de pedir a devolução do valor. Isso configura desistência não relacionada com mudança climática. Reembolso para opções não mencionadas acima, somente mediante a substituição da pessoa confirmada no evento.</p>
+                    <h3>Desistências e Reembolsos</h3>
+                    <p>O participante é responsável por repassar sua vaga caso desista. A administração pode auxiliar na organização do repasse, mas se a vaga não for preenchida, o valor pago não será reembolsado. Ação imediata: Pedir reembolso logo após a alteração do fator "mudança climática" (prazo de 48h). Em outros casos, o reembolso só é feito mediante a substituição da pessoa.</p>
                 </div>
 
                 <form id="trilhaForm">
-                    <div class="form-group"><label>Seu nome completo *</label><input type="text" id="t_nome" required></div>
-                    <div class="form-group"><label>Seu CPF *</label><input type="text" id="t_cpf" required></div>
-                    <div class="form-group" style="background: rgba(241, 196, 15, 0.05); padding: 15px; border-left: 3px solid var(--secondary);">
-                        <label style="color: var(--secondary);">Preencher se tiver algum convidado de fora do IFSC:</label>
-                        <p style="font-size: 0.85rem; margin-bottom: 10px; color: #bbb;">Você que indicou paga 20,00. Seu convidado paga 30,00.</p>
-                        <textarea id="t_convidado" rows="2" placeholder="Nome completo e CPF do convidado"></textarea>
+                    <div class="form-group"><label>Nome Completo *</label><input type="text" id="t_nome" required></div>
+                    <div class="form-group"><label>CPF *</label><input type="text" id="t_cpf" placeholder="000.000.000-00" required></div>
+                    
+                    <div class="form-group" style="background: rgba(241, 196, 15, 0.05); padding: 15px; border-left: 3px solid var(--secondary); border-radius: 4px;">
+                        <label style="color: var(--secondary);">Convidado de fora do IFSC:</label>
+                        <p style="font-size: 0.85rem; margin-bottom: 10px; color: #bbb;">Se fará pagamento para alguém além de você, coloque o nome completo e o CPF do convidado.<br>Você pagará 20,00 e o convidado 30,00.</p>
+                        <textarea id="t_convidado" rows="2"></textarea>
                     </div>
-                    <div class="form-group"><label>Uma chave pix para reembolso *</label><input type="text" id="t_pix" required></div>
+
+                    <div class="form-group"><label>Chave PIX para reembolso *</label><input type="text" id="t_pix" required></div>
+
                     <div class="form-group">
                         <label>Interesse em trilha noturna? *</label>
                         <select id="t_noturna" required>
@@ -229,20 +304,20 @@
                             <option value="Não">Não</option>
                         </select>
                     </div>
-                    
-                    <div class="checkbox-container"><input type="checkbox" required> <label>O evento esta sujeito a ser alterado devido ao mudanças climáticas. Com isso você tem a opção de pedir o reembolso completo. Concordo.</label></div>
+
+                    <div class="checkbox-container"><input type="checkbox" required> <label>O evento está sujeito a ser alterado devido a mudanças climáticas. Concordo com as regras de reembolso.</label></div>
                     <div class="checkbox-container"><input type="checkbox" required> <label>Você concorda com as regras descritas nesse forms? Sim.</label></div>
                     <div class="checkbox-container"><input type="checkbox" required> <label>Ao responder esse formulário, você estará confirmando sua participação. Entendi.</label></div>
                     
                     <button type="submit" class="btn-submit">Ir para Pagamento</button>
                 </form>
             </div>
-            
-            <div class="payment-page" id="trilha-payment-section">
+
+            <div id="trilha-payment-section" class="payment-page section-animate">
                 <h2 style="color:var(--primary); margin-bottom:10px;">Pagamento da Inscrição</h2>
                 <div style="background: rgba(50, 188, 173, 0.1); padding:15px; border-left:4px solid var(--pix); text-align:left; margin-bottom:20px;">
                     <p>Total a pagar: <strong id="t_total_txt">R$ 30,00</strong></p>
-                    <p id="t_desc_txt" style="font-size:0.85rem; color:var(--text);"></p>
+                    <p id="t_desc_txt" style="font-size:0.85rem; color:var(--text); margin-top:5px;"></p>
                 </div>
                 <div class="pix-container">
                     <div class="qrcode-image"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/QR%20CODE%20LUIS.jpeg"></div>
@@ -250,57 +325,163 @@
                     <button onclick="copyPix('atleticaaceji@gmail.com')" style="background:var(--pix); color:white; border:none; padding:5px 10px; margin-top:10px; border-radius:4px; cursor:pointer;">Copiar Chave</button>
                 </div>
                 <button class="btn-submit" style="background-color:var(--success);" onclick="finalizarTrilha()">Confirmar Inscrição</button>
+                <p onclick="showTrilhaDuasMamas()" style="margin-top:20px; text-decoration:underline; cursor:pointer;">Voltar e editar dados</p>
             </div>
 
-            <div class="confirmation-page" id="trilha-confirmation-section">
+            <div id="trilha-confirmation-section" class="confirmation-page section-animate">
                 <div style="font-size:80px; color:var(--success);"><i class="fas fa-check-circle"></i></div>
-                <h2 style="color:var(--primary); margin-bottom: 20px;">Inscrição Realizada!</h2>
-                <p>Siga os dois passos abaixo para validar sua vaga:</p>
+                <h2 style="color:var(--primary); margin-bottom: 20px;">Dados Enviados!</h2>
+                <p>Para confirmar sua vaga, siga os passos abaixo:</p>
                 
                 <button onclick="enviarWppTrilha()" class="btn-submit btn-whatsapp" style="display: flex; align-items: center; justify-content: center; gap: 10px; max-width: 400px; margin: 20px auto 10px auto;">
-                    <i class="fab fa-whatsapp"></i> 1. Enviar Comprovante (WhatsApp)
+                    <i class="fab fa-whatsapp" style="font-size: 24px;"></i> 1. Enviar Comprovante (WhatsApp)
                 </button>
 
-                <a href="https://chat.whatsapp.com/JNcXIObUcfD4ZXe05Dg2EO" target="_blank" class="btn-submit" style="background-color: #3498DB; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; max-width: 400px; margin: 0 auto 30px auto;">
+                <a href="https://chat.whatsapp.com/JNcXIObUcfD4ZXe05Dg2EO" target="_blank" class="btn-submit btn-blue" style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; max-width: 400px; margin: 0 auto 30px auto;">
                     <i class="fas fa-users"></i> 2. Entrar no Grupo da Trilha
                 </a>
                 
-                <button class="btn-submit" style="background-color: var(--bg-input); max-width: 400px; margin: 0 auto;" onclick="showMenu()">Voltar ao Menu Principal</button>
+                <button class="btn-submit" style="background-color: var(--bg-input); color: var(--text); max-width: 400px; margin: 0 auto;" onclick="showMenu()">Voltar ao Menu Principal</button>
             </div>
         </div>
 
-        <div id="copa-laje-section"> 
-            <header><button class="btn-back-menu" onclick="showMenu()">Voltar</button><h2>COPA LAJE</h2></header> 
+        <div id="copa-laje-section" class="section-animate">
+            <header>
+                <button class="btn-back-menu" onclick="showMenu()"><i class="fas fa-arrow-left"></i> Menu</button>
+                <div class="logo-container" onclick="showMenu()">
+                    <div class="logo-img"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Escudo.png"></div>
+                    <div class="logo-aceji" style="font-size: 1.5rem;">COPA LAJE SOCIETY</div>
+                </div>
+            </header>
             <div class="form-container">
                 <form id="copaForm">
-                    <div class="form-group"><label>Categoria *</label><select id="c_cat" required><option value="Masculino">Masculino</option><option value="Feminino">Feminino</option></select></div>
-                    <div class="form-group"><label>Nome Atleta *</label><input type="text" id="c_nome" required></div>
-                    <div class="form-group"><label>Telefone *</label><input type="tel" id="c_tel" required></div>
-                    <button type="submit" class="btn-submit">Enviar</button>
+                    <h2 class="section-title">Ficha de Inscrição</h2>
+                    <div class="form-group">
+                        <label>Categoria *</label>
+                        <select id="c_cat" required>
+                            <option value="">Selecione...</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Feminino">Feminino</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Nome do Atleta *</label><input type="text" id="c_nome" required></div>
+                    <div class="form-group"><label>Telefone / WhatsApp *</label><input type="tel" id="c_tel" placeholder="(XX) 9XXXX-XXXX" required></div>
+                    <button type="submit" class="btn-submit">Confirmar Inscrição</button>
                 </form>
             </div>
         </div>
 
-        <div id="shop-section">
-            <header><button class="btn-back-menu" onclick="showMenu()">Voltar</button><h2>LOJA OFICIAL</h2></header>
-            <div class="form-container">Loja disponível no menu principal...</div>
+        <div id="shop-section" class="section-animate">
+            <header>
+                <button class="btn-back-menu" onclick="showMenu()"><i class="fas fa-arrow-left"></i> Menu</button>
+                <div class="logo-container" onclick="showMenu()">
+                    <div class="logo-img"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Escudo.png"></div>
+                    <div class="logo-aceji">PRODUTOS OFICIAIS</div>
+                </div>
+            </header>
+            <div class="form-container">
+                <form id="uniformOrderForm">
+                    <h2 class="section-title">Dados Pessoais</h2>
+                    <div class="form-group"><label>Nome Completo *</label><input type="text" id="name" required></div>
+                    <div class="form-group"><label>E-mail *</label><input type="email" id="email" required></div>
+                    <div class="form-group"><label>Telefone *</label><input type="tel" id="phone" required></div>
+                    
+                    <h2 class="section-title">Uniformes</h2>
+                    <div class="product-grid">
+                        <div class="product-card">
+                            <div class="product-image-container"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%201%20Frente.png" class="product-image"></div>
+                            <div class="product-title">Camisa de Linha</div>
+                            <div class="product-price">R$ 65,00</div>
+                            <label>Qtd:</label><input type="number" id="qty_linha" class="quantity" min="0" value="0">
+                        </div>
+                        <div class="product-card">
+                            <div class="product-image-container"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%20Verde%20Frente.png" class="product-image"></div>
+                            <div class="product-title">Goleiro Verde</div>
+                            <div class="product-price">R$ 65,00</div>
+                            <label>Qtd:</label><input type="number" id="qty_verde" class="quantity" min="0" value="0">
+                        </div>
+                    </div>
+
+                    <h2 class="section-title">Acessórios</h2>
+                    <div class="product-grid">
+                        <div class="product-card">
+                            <div class="product-image-container"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Somente%20caneca.png" class="product-image"></div>
+                            <div class="product-title">Caneca Oficial</div>
+                            <div class="product-price">R$ 45,00</div>
+                            <label>Qtd:</label><input type="number" id="qty_caneca" class="quantity" min="0" value="0">
+                        </div>
+                        <div class="product-card">
+                            <div class="product-image-container"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/FRENTE.png" class="product-image"></div>
+                            <div class="product-title">Tirante</div>
+                            <div class="product-price">R$ 10,00</div>
+                            <label>Qtd:</label><input type="number" id="qty_tirante" class="quantity" min="0" value="0">
+                        </div>
+                    </div>
+                    
+                    <h2 class="section-title">Observações</h2>
+                    <textarea id="notes" rows="3" placeholder="Tamanhos (P, M, G, GG), nomes para personalizar, etc."></textarea>
+                    
+                    <button type="submit" class="btn-submit" id="btn-shop-submit">Ir para Pagamento</button>
+                </form>
+            </div>
+            
+            <div id="payment-section" class="payment-page section-animate">
+                <h2 style="color:var(--primary); margin-bottom:20px;">Pagamento via PIX</h2>
+                <div style="background: rgba(50, 188, 173, 0.1); padding:15px; border-left:4px solid var(--pix); text-align:left; margin-bottom:20px;">
+                    <p>Total do Pedido: <strong id="shop-total-txt">R$ 0,00</strong></p>
+                </div>
+                <div class="pix-container">
+                    <div class="qrcode-image"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/QR%20CODE%20LUIS.jpeg"></div>
+                    <p>Chave: <strong>atleticaaceji@gmail.com</strong></p>
+                    <button onclick="copyPix('atleticaaceji@gmail.com')" style="background:var(--pix); color:white; border:none; padding:5px 10px; margin-top:10px; border-radius:4px; cursor:pointer;">Copiar Chave</button>
+                </div>
+                <button class="btn-submit" style="background-color:var(--success);" onclick="confirmarPedidoLoja()">Confirmar Pagamento</button>
+            </div>
+
+            <div id="confirmation-section" class="confirmation-page section-animate">
+                <div style="font-size:80px; color:var(--success);"><i class="fas fa-check-circle"></i></div>
+                <h2 style="color:var(--primary);">Pedido Recebido!</h2>
+                <p>O WhatsApp abrirá para você enviar o comprovante.</p>
+                <button class="btn-submit" onclick="showMenu()">Voltar ao Menu</button>
+            </div>
+        </div>
+
+        <div id="events-section" class="section-animate">
+            <header>
+                <button class="btn-back-menu" onclick="showMenu()"><i class="fas fa-arrow-left"></i> Menu</button>
+                <div class="logo-container" onclick="showMenu()">
+                    <div class="logo-img"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Escudo.png"></div>
+                    <div class="logo-aceji">CALENDÁRIO ACEJI</div>
+                </div>
+            </header>
+            <div class="form-container" style="text-align: center;">
+                <p style="margin-bottom: 20px;">Acompanhe nossas datas e próximos eventos!</p>
+                <div class="info-box" style="text-align: left;">
+                    <p>📅 <strong>17/05</strong> - Trilha Duas Mamas</p>
+                    <p>📅 <strong>Junho</strong> - Copa Laje Society (Datas a confirmar)</p>
+                </div>
+                <button class="btn-submit" onclick="showMenu()">Voltar ao Menu</button>
+            </div>
         </div>
 
     </div>
 
     <script>
+        // --- NAVEGAÇÃO ---
         function hideAll() {
-            ['main-menu', 'trilhas-list-section', 'shop-section', 'events-section', 'copa-laje-section', 'trilha-section', 'trilha-payment-section', 'trilha-confirmation-section'].forEach(id => {
+            ['main-menu', 'trilhas-list-section', 'shop-section', 'events-section', 'copa-laje-section', 'trilha-section', 'trilha-payment-section', 'trilha-confirmation-section', 'payment-section', 'confirmation-section'].forEach(id => {
                 const el = document.getElementById(id); if(el) el.style.display = 'none';
             });
         }
         function showMenu() { hideAll(); document.getElementById('main-menu').style.display = 'block'; }
-        function showTrilhasMenu() { hideAll(); document.getElementById('trilhas-list-section').style.display = 'block'; }
+        function showTrilhasMenu() { hideAll(); document.getElementById('trilhas-list-section').style.display = 'block'; window.scrollTo(0,0); }
         function showTrilhaDuasMamas() { hideAll(); document.getElementById('trilha-section').style.display = 'block'; document.getElementById('trilha-form-content').style.display = 'block'; window.scrollTo(0,0); }
-        function showCopaLaje() { hideAll(); document.getElementById('copa-laje-section').style.display = 'block'; }
-        function showShop() { hideAll(); document.getElementById('shop-section').style.display = 'block'; }
-        function copyPix(txt) { navigator.clipboard.writeText(txt); alert("Chave copiada!"); }
+        function showCopaLaje() { hideAll(); document.getElementById('copa-laje-section').style.display = 'block'; window.scrollTo(0,0); }
+        function showShop() { hideAll(); document.getElementById('shop-section').style.display = 'block'; document.getElementById('uniformOrderForm').style.display = 'block'; window.scrollTo(0,0); }
+        function showEvents() { hideAll(); document.getElementById('events-section').style.display = 'block'; window.scrollTo(0,0); }
+        function copyPix(txt) { navigator.clipboard.writeText(txt); alert("Chave PIX copiada!"); }
 
+        // --- LÓGICA DA TRILHA ---
         let t_dados = {};
         document.getElementById('trilhaForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -315,7 +496,7 @@
                 total: valor
             };
             document.getElementById('t_total_txt').textContent = `R$ ${valor.toFixed(2)}`;
-            document.getElementById('t_desc_txt').textContent = (conv !== "") ? "R$ 20 (Sua) + R$ 30 (Convidado)" : "Taxa: R$ 30,00";
+            document.getElementById('t_desc_txt').textContent = (conv !== "") ? "Inscrição (R$ 20) + Convidado (R$ 30)" : "Valor Individual: R$ 30,00";
             document.getElementById('trilha-form-content').style.display = 'none';
             document.getElementById('trilha-payment-section').style.display = 'block';
             window.scrollTo(0,0);
@@ -327,8 +508,9 @@
             body.append('Atleta', t_dados.nome);
             body.append('CPF', t_dados.cpf);
             body.append('Convidado', t_dados.conv);
-            body.append('Pix Reembolso', t_dados.pix);
-            body.append('Total', `R$ ${t_dados.total.toFixed(2)}`);
+            body.append('PIX Reembolso', t_dados.pix);
+            body.append('Noturna', t_dados.noturna);
+            body.append('Valor Total', `R$ ${t_dados.total.toFixed(2)}`);
 
             fetch('https://formsubmit.co/ajax/pedidosaceji@gmail.com', { method: 'POST', body: body })
             .then(() => {
@@ -343,11 +525,64 @@
             window.open(`https://wa.me/5541997122329?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
+        // --- LÓGICA COPA LAJE ---
         document.getElementById('copaForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert("Inscrição enviada!");
-            showMenu();
+            const nome = document.getElementById('c_nome').value;
+            const body = new URLSearchParams();
+            body.append('_subject', `COPA LAJE: ${nome}`);
+            body.append('Atleta', nome);
+            body.append('Categoria', document.getElementById('c_cat').value);
+            body.append('Telefone', document.getElementById('c_tel').value);
+            
+            fetch('https://formsubmit.co/ajax/pedidosaceji@gmail.com', { method: 'POST', body: body })
+            .then(() => { alert("Inscrição enviada com sucesso!"); showMenu(); });
         });
+
+        // --- LÓGICA LOJA ---
+        let s_dados = {};
+        document.getElementById('uniformOrderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const q_linha = parseInt(document.getElementById('qty_linha').value) || 0;
+            const q_verde = parseInt(document.getElementById('qty_verde').value) || 0;
+            const q_caneca = parseInt(document.getElementById('qty_caneca').value) || 0;
+            const q_tirante = parseInt(document.getElementById('qty_tirante').value) || 0;
+            
+            const total = (q_linha * 65) + (q_verde * 65) + (q_caneca * 45) + (q_tirante * 10);
+            if(total <= 0) { alert("Selecione ao menos um produto."); return; }
+
+            s_dados = {
+                nome: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                notes: document.getElementById('notes').value,
+                total: total,
+                itens: `${q_linha}x Linha, ${q_verde}x Verde, ${q_caneca}x Caneca, ${q_tirante}x Tirante`
+            };
+
+            document.getElementById('shop-total-txt').textContent = `R$ ${total.toFixed(2)}`;
+            document.getElementById('uniformOrderForm').style.display = 'none';
+            document.getElementById('payment-section').style.display = 'block';
+            window.scrollTo(0,0);
+        });
+
+        function confirmarPedidoLoja() {
+            const body = new URLSearchParams();
+            body.append('_subject', `PEDIDO LOJA: ${s_dados.nome}`);
+            body.append('Cliente', s_dados.nome);
+            body.append('WhatsApp', s_dados.phone);
+            body.append('Itens', s_dados.itens);
+            body.append('Total', `R$ ${s_dados.total.toFixed(2)}`);
+            body.append('Obs', s_dados.notes);
+
+            fetch('https://formsubmit.co/ajax/pedidosaceji@gmail.com', { method: 'POST', body: body })
+            .then(() => {
+                document.getElementById('payment-section').style.display = 'none';
+                document.getElementById('confirmation-section').style.display = 'block';
+                const msg = `*PEDIDO LOJA ACEJI*\n\n*Cliente:* ${s_dados.nome}\n*Itens:* ${s_dados.itens}\n*Total:* R$ ${s_dados.total.toFixed(2)}\n\n_Seguindo comprovante PIX abaixo:_`;
+                window.open(`https://wa.me/5541997122329?text=${encodeURIComponent(msg)}`, '_blank');
+            });
+        }
     </script>
 </body>
 </html>
