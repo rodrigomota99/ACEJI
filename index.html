@@ -437,6 +437,11 @@
                         <label>Seu CPF *</label>
                         <input type="text" id="trilhaCPF" placeholder="000.000.000-00" required>
                     </div>
+                    <!-- NOVO CAMPO: TELEFONE/WHATSAPP -->
+                    <div class="form-group">
+                        <label>Telefone / WhatsApp *</label>
+                        <input type="tel" id="trilhaWhatsApp" placeholder="(XX) 9XXXX-XXXX" required>
+                    </div>
                     
                     <div class="form-group" style="background: rgba(241, 196, 15, 0.05); padding: 15px; border-left: 3px solid var(--secondary); border-radius: 4px;">
                         <label style="color: var(--secondary);">Convidado de fora do IFSC:</label>
@@ -907,6 +912,7 @@
 
             const nome = document.getElementById('trilhaNome').value;
             const cpf = document.getElementById('trilhaCPF').value;
+            const whatsapp = document.getElementById('trilhaWhatsApp').value; // Novo Campo Capturado
             const convidado = document.getElementById('trilhaConvidado').value.trim();
             const pixReembolso = document.getElementById('trilhaPixReembolso').value;
             const noturna = document.getElementById('trilhaNoturna').value;
@@ -920,7 +926,7 @@
             }
 
             trilhaData = {
-                nome, cpf, convidado, pixReembolso, noturna, total
+                nome, cpf, whatsapp, convidado, pixReembolso, noturna, total
             };
 
             // Atualiza tela de pagamento da trilha
@@ -943,6 +949,7 @@
             formData.append('Evento', 'Trilha Duas Mamas (17 de Maio)');
             formData.append('Nome Completo', trilhaData.nome);
             formData.append('CPF', trilhaData.cpf);
+            formData.append('Telefone / WhatsApp', trilhaData.whatsapp); // Envia o novo campo
             formData.append('Convidado de fora do IFSC', trilhaData.convidado || 'Nenhum');
             formData.append('PIX para Reembolso', trilhaData.pixReembolso);
             formData.append('Interesse Trilha Noturna', trilhaData.noturna);
@@ -972,6 +979,7 @@
         function enviarComprovanteWpp() {
             let msg = `*COMPROVANTE TRILHA DUAS MAMAS*\n\n`;
             msg += `*Nome:* ${trilhaData.nome}\n`;
+            msg += `*WhatsApp:* ${trilhaData.whatsapp}\n`; // Adiciona para visualização na msg do WPP
             msg += `*Valor Pago:* R$ ${trilhaData.total.toFixed(2)}\n`;
             if(trilhaData.convidado !== "") {
                 msg += `*(Inclui convidado de fora do IFSC)*\n`;
@@ -997,7 +1005,9 @@
             { date: '2026-06-21', title: 'Copa Laje Society', colorClass: 'color-blue', location: 'Mais informações no Instagram', link: null }
         ];
 
-        let currentCalDate = new Date(2026, 3, 1); 
+        // NOVO: Inicializa o calendário no mês/ano correntes e seta o dia para 1 (Evita saltos no dia 31)
+        let currentCalDate = new Date(); 
+        currentCalDate.setDate(1); 
 
         function toggleEventView(viewType) {
             if(viewType === 'list') {
