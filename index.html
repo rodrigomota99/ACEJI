@@ -275,7 +275,6 @@
 
     <div class="container">
         
-        <!-- ============================== MENU PRINCIPAL ============================== -->
         <div id="main-menu">
             <div class="menu-header">
                 <div class="menu-logo-img">
@@ -322,6 +321,13 @@
                     <span class="btn-access">Inscrever-se</span>
                 </div>
 
+                <div class="category-card" onclick="window.open('circuitos.html', '_blank')">
+                    <div class="icon-container"><i class="fas fa-bolt"></i></div>
+                    <h3 class="category-title">Estudos: Circuitos</h3>
+                    <p class="category-desc">Guia interativo e simulador para análise de circuitos de 1ª e 2ª Ordem.</p>
+                    <span class="btn-access">Acessar Guia</span>
+                </div>
+
             </div>
 
             <div class="social-bar">
@@ -334,7 +340,6 @@
             </footer>
         </div>
         
-        <!-- ============================== MENU LISTA DE TRILHAS ============================== -->
         <div id="trilhas-list-section">
             <header>
                 <button class="btn-back-menu" onclick="showMenu()">
@@ -365,9 +370,7 @@
             </footer>
         </div>
 
-        <!-- ============================== INSCRIÇÃO TRILHA DUAS MAMAS ============================== -->
         <div id="trilha-section">
-            <!-- Header com ajuste para focar nas montanhas (object-position: center 20%) -->
             <header style="padding: 0; position: relative; height: 280px; overflow: hidden; background: #121212;">
                 <button class="btn-back-menu" onclick="showTrilhasMenu()" style="top: 15px; left: 15px; z-index: 10;">
                     <i class="fas fa-arrow-left"></i> Voltar
@@ -437,7 +440,6 @@
                         <label>Seu CPF *</label>
                         <input type="text" id="trilhaCPF" placeholder="000.000.000-00" required>
                     </div>
-                    <!-- NOVO CAMPO: TELEFONE/WHATSAPP -->
                     <div class="form-group">
                         <label>Telefone / WhatsApp *</label>
                         <input type="tel" id="trilhaWhatsApp" placeholder="(XX) 9XXXX-XXXX" required>
@@ -530,7 +532,6 @@
             </footer>
         </div>
 
-        <!-- ============================== COPA LAJE ============================== -->
         <div id="copa-laje-section">
             <header>
                 <button class="btn-back-menu" onclick="showMenu()">
@@ -577,7 +578,6 @@
             </footer>
         </div>
 
-        <!-- ============================== LOJA DE PRODUTOS ============================== -->
         <div id="shop-section">
             <header>
                 <button class="btn-back-menu" onclick="showMenu()">
@@ -758,7 +758,6 @@
             </footer>
         </div>
 
-        <!-- ============================== EVENTOS / CALENDÁRIO ============================== -->
         <div id="events-section">
             <header>
                 <button class="btn-back-menu" onclick="showMenu()">
@@ -815,7 +814,6 @@
 
     </div>
 
-    <!-- MODAL IMAGENS LOJA -->
     <div id="imageModal" class="modal">
         <span class="close" onclick="closeModal()">&times;</span>
         <img class="modal-content" id="modalImage">
