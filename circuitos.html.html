@@ -1,0 +1,466 @@
+<!-- Chosen Palette: Warm Neutrals with Amber and Slate (Slate-50 to Slate-900, Amber-500 accents) -->
+<!-- Application Structure Plan: The application utilizes a dashboard-style sidebar layout to segment the study material into four distinct modules: Introdução, Fundamentos (CC), 1ª Ordem, and 2ª Ordem. This structure was chosen because electrical circuit analysis is highly sequential; users must master initial conditions before moving to transients. The navigation prevents cognitive overload, allowing users to interact with one specific temporal domain at a time. -->
+<!-- Visualization & Content Choices: Section 1 (Fundamentos) uses interactive CSS cards to inform about CC states. Section 2 (1ª Ordem) uses a Chart.js line graph with sliders to visualize the exponential change over time, fulfilling the "Change" goal. Section 3 (2ª Ordem) uses an interactive calculator to organize and compare alpha and omega_0, diagnosing the damping type dynamically. Library: Chart.js (NO SVG/Mermaid). -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Interativo: Circuitos Elétricos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 40vh;
+            max-height: 400px;
+        }
+        .nav-active {
+            background-color: #334155;
+            border-left-width: 4px;
+            border-color: #f59e0b;
+            color: white;
+            font-weight: 600;
+        }
+        .nav-inactive {
+            background-color: transparent;
+            border-left-width: 4px;
+            border-color: transparent;
+            color: #94a3b8;
+        }
+        .nav-inactive:hover {
+            background-color: #1e293b;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 h-screen flex overflow-hidden">
+
+    <aside class="w-64 bg-slate-900 flex-shrink-0 flex flex-col shadow-xl z-20">
+        <div class="p-6 bg-slate-950 border-b border-slate-800">
+            <h1 class="text-xl font-bold text-white flex items-center gap-2">
+                <span class="text-amber-500 text-2xl">⚡</span> Circuitos
+            </h1>
+            <p class="text-xs text-slate-400 mt-1">Guia Interativo 1ª e 2ª Ordem</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4 flex flex-col gap-1">
+            <button class="nav-tab nav-active px-6 py-3 text-left w-full transition-colors flex items-center gap-3" data-target="sec-intro">
+                <span class="text-lg">🏠</span> Introdução
+            </button>
+            <button class="nav-tab nav-inactive px-6 py-3 text-left w-full transition-colors flex items-center gap-3" data-target="sec-fundamentos">
+                <span class="text-lg">🛑</span> Fundamentos CC
+            </button>
+            <button class="nav-tab nav-inactive px-6 py-3 text-left w-full transition-colors flex items-center gap-3" data-target="sec-primeira">
+                <span class="text-lg">📉</span> 1ª Ordem
+            </button>
+            <button class="nav-tab nav-inactive px-6 py-3 text-left w-full transition-colors flex items-center gap-3" data-target="sec-segunda">
+                <span class="text-lg">🌊</span> 2ª Ordem
+            </button>
+            <button class="nav-tab nav-inactive px-6 py-3 text-left w-full transition-colors flex items-center gap-3" data-target="sec-dicas">
+                <span class="text-lg">📐</span> Truques & Degrau
+            </button>
+        </nav>
+        <div class="p-4 bg-slate-950 text-xs text-slate-500 text-center border-t border-slate-800">
+            Baseado em Nilsson & Irwin
+        </div>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto p-8 md:p-12">
+        <div class="max-w-5xl mx-auto">
+
+            <section id="sec-intro" class="content-section block animate-fade-in">
+                <header class="mb-8 border-b border-slate-200 pb-4">
+                    <h2 class="text-3xl font-bold text-slate-900">Análise de Circuitos Dinâmicos</h2>
+                    <p class="text-slate-500 mt-2 text-lg">De transições simples a oscilações complexas.</p>
+                </header>
+                <div class="bg-white rounded-xl shadow-sm p-8 border border-slate-100">
+                    <p class="text-lg leading-relaxed text-slate-700 mb-6">
+                        <strong>Objetivo desta seção:</strong> Bem-vindo ao ambiente interativo de estudos. Este painel foi desenhado para consolidar o seu conhecimento sobre circuitos de primeira e segunda ordem. Aqui, você não apenas lerá as fórmulas, mas interagirá com os parâmetros matemáticos para entender visualmente como a energia elétrica se comporta ao longo do tempo.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                        <div class="bg-amber-50 p-6 rounded-lg border border-amber-100">
+                            <h3 class="font-bold text-amber-800 text-lg mb-2">Como usar este guia</h3>
+                            <ul class="list-disc list-inside text-amber-900 space-y-2">
+                                <li>Navegue pelo menu lateral na ordem sugerida.</li>
+                                <li>Interaja com os gráficos e calculadoras.</li>
+                                <li>Observe como as fórmulas respondem aos seus inputs.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-100 p-6 rounded-lg border border-slate-200">
+                            <h3 class="font-bold text-slate-800 text-lg mb-2">Bibliografia Base</h3>
+                            <p class="text-slate-600">O conteúdo reflete as metodologias clássicas encontradas em:</p>
+                            <ul class="list-disc list-inside text-slate-600 mt-2 font-medium">
+                                <li>Nilsson, J. W. & Riedel, S. A. - Circuitos Elétricos</li>
+                                <li>Irwin, J. D. - Análise Básica de Circuitos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-fundamentos" class="content-section hidden animate-fade-in">
+                <header class="mb-8 border-b border-slate-200 pb-4">
+                    <h2 class="text-3xl font-bold text-slate-900">Condições Iniciais e Regime Permanente</h2>
+                </header>
+                <div class="mb-8">
+                    <p class="text-lg leading-relaxed text-slate-700">
+                        <strong>Objetivo desta seção:</strong> Estabelecer a fundação absoluta para a resolução de qualquer circuito dinâmico. Aqui você explorará o comportamento estático dos componentes armazenadores de energia antes de qualquer chave ser acionada ($t < 0$) e a regra de ouro da continuidade. Interaja com os painéis abaixo para fixar os modelos equivalentes.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden group hover:shadow-md transition-shadow">
+                        <div class="bg-slate-800 p-4 text-center">
+                            <h3 class="text-xl font-bold text-white">Capacitor (C) em CC</h3>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-4xl text-center mb-4">⏸️</div>
+                            <h4 class="text-center font-bold text-amber-600 text-xl mb-4">Circuito Aberto</h4>
+                            <div class="space-y-3 text-slate-700 bg-slate-50 p-4 rounded-lg">
+                                <p class="flex justify-between border-b border-slate-200 pb-2"><span>Corrente ($i$)</span> <span class="font-mono font-bold">0 A</span></p>
+                                <p class="flex justify-between border-b border-slate-200 pb-2"><span>Tensão ($v$)</span> <span class="font-mono font-bold">Constante</span></p>
+                                <p class="flex justify-between pt-1"><span>Memória</span> <span class="font-mono font-bold text-amber-600">v_C(0⁻) = v_C(0⁺)</span></p>
+                            </div>
+                            <p class="text-sm mt-4 text-slate-500 text-center">A tensão não pode saltar instantaneamente.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden group hover:shadow-md transition-shadow">
+                        <div class="bg-slate-800 p-4 text-center">
+                            <h3 class="text-xl font-bold text-white">Indutor (L) em CC</h3>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-4xl text-center mb-4">➰</div>
+                            <h4 class="text-center font-bold text-amber-600 text-xl mb-4">Curto-Circuito (Fio)</h4>
+                            <div class="space-y-3 text-slate-700 bg-slate-50 p-4 rounded-lg">
+                                <p class="flex justify-between border-b border-slate-200 pb-2"><span>Tensão ($v$)</span> <span class="font-mono font-bold">0 V</span></p>
+                                <p class="flex justify-between border-b border-slate-200 pb-2"><span>Corrente ($i$)</span> <span class="font-mono font-bold">Constante</span></p>
+                                <p class="flex justify-between pt-1"><span>Memória</span> <span class="font-mono font-bold text-amber-600">i_L(0⁻) = i_L(0⁺)</span></p>
+                            </div>
+                            <p class="text-sm mt-4 text-slate-500 text-center">A corrente não pode saltar instantaneamente.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-primeira" class="content-section hidden animate-fade-in">
+                <header class="mb-8 border-b border-slate-200 pb-4">
+                    <h2 class="text-3xl font-bold text-slate-900">Circuitos de 1ª Ordem (RL ou RC)</h2>
+                </header>
+                <div class="mb-8">
+                    <p class="text-lg leading-relaxed text-slate-700">
+                        <strong>Objetivo desta seção:</strong> Visualizar a transição exponencial de tensão ou corrente. Utilize o simulador interativo abaixo para modificar a condição inicial, o estado final de regime e a constante de tempo ($\tau$). Observe como a "Fórmula Universal" descreve o descarregamento ou o carregamento do circuito, formando a curva característica.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200 mb-8">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 text-center">Simulador de Resposta ao Degrau / Natural</h3>
+                    
+                    <div class="bg-slate-900 text-white p-4 rounded-lg text-center mb-8 font-mono text-lg overflow-x-auto">
+                        x(t) = <span class="text-amber-400">X_f</span> + [<span class="text-blue-400">X_0</span> - <span class="text-amber-400">X_f</span>] · e<sup>-t / <span class="text-green-400">τ</span></sup>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-1 space-y-6 bg-slate-50 p-6 rounded-lg border border-slate-200">
+                            <div>
+                                <label class="flex justify-between text-sm font-bold text-slate-700 mb-2">
+                                    <span>Valor Inicial (X₀)</span>
+                                    <span id="valX0" class="text-blue-600">5</span>
+                                </label>
+                                <input type="range" id="inputX0" min="-10" max="10" step="0.5" value="5" class="w-full accent-blue-600">
+                                <p class="text-xs text-slate-500 mt-1">A "memória" do instante t=0⁺</p>
+                            </div>
+                            
+                            <div>
+                                <label class="flex justify-between text-sm font-bold text-slate-700 mb-2">
+                                    <span>Valor Final (X_f)</span>
+                                    <span id="valXf" class="text-amber-600">0</span>
+                                </label>
+                                <input type="range" id="inputXf" min="-10" max="10" step="0.5" value="0" class="w-full accent-amber-600">
+                                <p class="text-xs text-slate-500 mt-1">Regime permanente (t→∞). Zero para resp. natural.</p>
+                            </div>
+
+                            <div>
+                                <label class="flex justify-between text-sm font-bold text-slate-700 mb-2">
+                                    <span>Constante Tempo (τ)</span>
+                                    <span id="valTau" class="text-green-600">1</span>
+                                </label>
+                                <input type="range" id="inputTau" min="0.1" max="5" step="0.1" value="1" class="w-full accent-green-600">
+                                <p class="text-xs text-slate-500 mt-1">L/R ou R·C. Dita a velocidade.</p>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-2">
+                            <div class="chart-container">
+                                <canvas id="stepResponseChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-segunda" class="content-section hidden animate-fade-in">
+                <header class="mb-8 border-b border-slate-200 pb-4">
+                    <h2 class="text-3xl font-bold text-slate-900">Circuitos de 2ª Ordem (RLC)</h2>
+                </header>
+                <div class="mb-8">
+                    <p class="text-lg leading-relaxed text-slate-700">
+                        <strong>Objetivo desta seção:</strong> Auxiliar no "Passo 1" da resolução de circuitos RLC: o Diagnóstico. Aqui, você pode inserir valores físicos de resistores, indutores e capacitores. A aplicação calculará automaticamente a frequência natural e o fator de amortecimento, indicando instantaneamente se o circuito irá oscilar (Subamortecido) ou apenas decair suavemente, revelando a equação correspondente baseada no relatório.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-800 mb-6 border-b pb-2">Entrada de Parâmetros (RLC Série)</h3>
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="flex justify-between text-sm font-bold text-slate-700 mb-2">
+                                        <span>Resistência (R) em Ω</span>
+                                        <span id="valR" class="font-mono text-slate-900">2</span>
+                                    </label>
+                                    <input type="range" id="inputR" min="0.1" max="10" step="0.1" value="2" class="w-full accent-slate-600">
+                                </div>
+                                <div>
+                                    <label class="flex justify-between text-sm font-bold text-slate-700 mb-2">
+                                        <span>Indutância (L) em H</span>
+                                        <span id="valL" class="font-mono text-slate-900">1</span>
+                                    </label>
+                                    <input type="range" id="inputL" min="0.1" max="5" step="0.1" value="1" class="w-full accent-slate-600">
+                                </div>
+                                <div>
+                                    <label class="flex justify-between text-sm font-bold text-slate-700 mb-2">
+                                        <span>Capacitância (C) em F</span>
+                                        <span id="valC" class="font-mono text-slate-900">1</span>
+                                    </label>
+                                    <input type="range" id="inputC" min="0.1" max="5" step="0.1" value="1" class="w-full accent-slate-600">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col justify-center">
+                            <div class="bg-slate-50 p-6 rounded-lg border border-slate-200 mb-6">
+                                <h4 class="font-bold text-slate-700 text-sm uppercase tracking-wider mb-4">Frequências Calculadas</h4>
+                                <div class="grid grid-cols-2 gap-4 text-center">
+                                    <div class="bg-white p-3 rounded shadow-sm">
+                                        <div class="text-xs text-slate-500 mb-1">Fator de Amortecimento (α)</div>
+                                        <div class="text-2xl font-mono text-amber-600 font-bold" id="calcAlpha">1.0000</div>
+                                    </div>
+                                    <div class="bg-white p-3 rounded shadow-sm">
+                                        <div class="text-xs text-slate-500 mb-1">Freq. Natural (ω₀)</div>
+                                        <div class="text-2xl font-mono text-blue-600 font-bold" id="calcOmega">1.0000</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="rlcResult" class="p-6 rounded-lg text-center transition-colors duration-500 border-2 bg-blue-100 border-blue-500">
+                                <div class="text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Diagnóstico de Amortecimento</div>
+                                <h3 id="rlcResultTitle" class="text-2xl font-bold text-slate-900 mb-4">Criticamente Amortecido (α = ω₀)</h3>
+                                <div class="bg-white/80 p-4 rounded font-mono text-lg text-slate-800 shadow-inner" id="rlcResultEq">
+                                    x(t) = (A<sub>1</sub> + A<sub>2</sub>t)e<sup>-αt</sup>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-dicas" class="content-section hidden animate-fade-in">
+                <header class="mb-8 border-b border-slate-200 pb-4">
+                    <h2 class="text-3xl font-bold text-slate-900">O Truque das Derivadas e Degrau RLC</h2>
+                </header>
+                <div class="mb-8">
+                    <p class="text-lg leading-relaxed text-slate-700">
+                        <strong>Objetivo desta seção:</strong> Fornecer as chaves analíticas necessárias para finalizar problemas complexos de 2ª Ordem. Aqui organizamos as fórmulas cruciais para encontrar as constantes (A₁, A₂, B₁, B₂) exigidas pelas equações de resposta natural e detalhamos a estrutura da resposta ao degrau completo.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <div class="text-3xl mb-4">📐</div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-4">Como achar as Derivadas (t=0⁺)</h3>
+                        <p class="text-slate-600 mb-4">As equações de 2ª ordem requerem duas condições iniciais: a grandeza $x(0^+)$ e a sua derivada. Utilize as leis fundamentais dos componentes no exato instante inicial para descobrir a derivada:</p>
+                        
+                        <div class="space-y-4 font-mono text-sm bg-slate-50 p-4 rounded-lg border border-slate-100">
+                            <div class="pb-3 border-b border-slate-200">
+                                <span class="text-slate-500 block mb-1">Derivada da Corrente no Indutor:</span>
+                                <span class="text-amber-600 font-bold text-base">di_L(0⁺)/dt = v_L(0⁺) / L</span>
+                            </div>
+                            <div class="pt-1">
+                                <span class="text-slate-500 block mb-1">Derivada da Tensão no Capacitor:</span>
+                                <span class="text-blue-600 font-bold text-base">dv_C(0⁺)/dt = i_C(0⁺) / C</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex flex-col">
+                        <div class="text-3xl mb-4">⚡</div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-4">Resposta ao Degrau (2ª Ordem)</h3>
+                        <p class="text-slate-600 mb-6">Quando uma fonte ativa permanece conectada ao circuito RLC após o chaveamento, a solução completa é a soma do regime permanente com a resposta transitória (natural).</p>
+                        
+                        <div class="mt-auto bg-slate-900 text-white p-5 rounded-lg text-center">
+                            <div class="font-mono text-xl mb-2">x(t) = <span class="text-amber-400">X_f</span> + <span class="text-blue-400">x_n(t)</span></div>
+                            <p class="text-xs text-slate-400 text-left mt-4 border-t border-slate-700 pt-3">
+                                <strong>X_f:</strong> Valor final em regime permanente (t→∞).<br>
+                                <strong>x_n(t):</strong> Equação do diagnóstico natural (Super, Crítico ou Sub).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        const tabs = document.querySelectorAll('.nav-tab');
+        const sections = document.querySelectorAll('.content-section');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.getAttribute('data-target');
+                sections.forEach(sec => sec.classList.add('hidden'));
+                document.getElementById(target).classList.remove('hidden');
+                
+                tabs.forEach(t => {
+                    t.classList.remove('nav-active');
+                    t.classList.add('nav-inactive');
+                });
+                tab.classList.remove('nav-inactive');
+                tab.classList.add('nav-active');
+                
+                if(target === 'sec-primeira') updateChart();
+            });
+        });
+
+        let stepChart;
+        function initChart() {
+            const ctx = document.getElementById('stepResponseChart').getContext('2d');
+            stepChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Amplitude',
+                        data: [],
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'rgba(245, 158, 11, 0.15)',
+                        borderWidth: 3,
+                        pointRadius: 0,
+                        pointHitRadius: 10,
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Tempo (s)' },
+                            grid: { color: '#f1f5f9' }
+                        },
+                        y: {
+                            title: { display: true, text: 'Amplitude x(t)' },
+                            grid: { color: '#f1f5f9' },
+                            suggestedMin: -10,
+                            suggestedMax: 10
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { backgroundColor: '#1e293b', padding: 10, cornerRadius: 8 }
+                    }
+                }
+            });
+        }
+
+        function updateChart() {
+            if(!stepChart) return;
+            const x0 = parseFloat(document.getElementById('inputX0').value);
+            const xf = parseFloat(document.getElementById('inputXf').value);
+            const tau = parseFloat(document.getElementById('inputTau').value);
+            
+            document.getElementById('valX0').textContent = x0;
+            document.getElementById('valXf').textContent = xf;
+            document.getElementById('valTau').textContent = tau;
+            
+            const labels = [];
+            const data = [];
+            const maxTime = 5 * tau;
+            const step = maxTime / 100;
+            
+            for (let t = 0; t <= maxTime; t += step) {
+                labels.push(t.toFixed(2));
+                const val = xf + (x0 - xf) * Math.exp(-t / tau);
+                data.push(val);
+            }
+            
+            stepChart.data.labels = labels;
+            stepChart.data.datasets[0].data = data;
+            stepChart.update();
+        }
+
+        document.getElementById('inputX0').addEventListener('input', updateChart);
+        document.getElementById('inputXf').addEventListener('input', updateChart);
+        document.getElementById('inputTau').addEventListener('input', updateChart);
+
+        function updateRLC() {
+            const r = parseFloat(document.getElementById('inputR').value);
+            const l = parseFloat(document.getElementById('inputL').value);
+            const c = parseFloat(document.getElementById('inputC').value);
+            
+            document.getElementById('valR').textContent = r;
+            document.getElementById('valL').textContent = l;
+            document.getElementById('valC').textContent = c;
+            
+            const alpha = r / (2 * l);
+            const omega0 = 1 / Math.sqrt(l * c);
+            
+            document.getElementById('calcAlpha').textContent = alpha.toFixed(4);
+            document.getElementById('calcOmega').textContent = omega0.toFixed(4);
+            
+            const resultBox = document.getElementById('rlcResult');
+            const resultTitle = document.getElementById('rlcResultTitle');
+            const resultEq = document.getElementById('rlcResultEq');
+            
+            resultBox.classList.remove('bg-red-100', 'bg-blue-100', 'bg-green-100', 'border-red-500', 'border-blue-500', 'border-green-500');
+            
+            const diff = alpha - omega0;
+            
+            if (diff > 0.001) {
+                resultBox.classList.add('bg-red-100', 'border-red-500');
+                resultTitle.textContent = "Superamortecido (α > ω₀)";
+                resultEq.innerHTML = "x(t) = A<sub>1</sub>e<sup>s₁t</sup> + A<sub>2</sub>e<sup>s₂t</sup>";
+            } else if (Math.abs(diff) <= 0.001) {
+                resultBox.classList.add('bg-blue-100', 'border-blue-500');
+                resultTitle.textContent = "Criticamente Amortecido (α = ω₀)";
+                resultEq.innerHTML = "x(t) = (A<sub>1</sub> + A<sub>2</sub>t)e<sup>-αt</sup>";
+            } else {
+                resultBox.classList.add('bg-green-100', 'border-green-500');
+                resultTitle.textContent = "Subamortecido (α < ω₀)";
+                resultEq.innerHTML = "x(t) = e<sup>-αt</sup> [B<sub>1</sub>cos(ω<sub>d</sub>t) + B<sub>2</sub>sin(ω<sub>d</sub>t)]";
+            }
+        }
+
+        document.getElementById('inputR').addEventListener('input', updateRLC);
+        document.getElementById('inputL').addEventListener('input', updateRLC);
+        document.getElementById('inputC').addEventListener('input', updateRLC);
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initChart();
+            updateChart();
+            updateRLC();
+        });
+    </script>
+</body>
+</html>
