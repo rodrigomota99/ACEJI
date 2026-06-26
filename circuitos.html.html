@@ -1,0 +1,774 @@
+<!-- Chosen Palette: Warm Neutrals with Amber and Slate (Slate-50 to Slate-900, Amber-500 accents) -->
+<!-- Application Structure Plan: The application utilizes a dashboard-style sidebar layout to segment the study material into four distinct modules: Introdução, Fundamentos (CC), 1ª Ordem, and 2ª Ordem. This structure was chosen because electrical circuit analysis is highly sequential; users must master initial conditions before moving to transients. The navigation prevents cognitive overload, allowing users to interact with one specific temporal domain at a time. -->
+<!-- Visualization & Content Choices: Section 1 (Fundamentos) uses interactive CSS cards to inform about CC states. Section 2 (1ª Ordem) uses a Chart.js line graph with sliders to visualize the exponential change over time, fulfilling the "Change" goal. Section 3 (2ª Ordem) uses an interactive calculator to organize and compare alpha and omega_0, diagnosing the damping type dynamically. Library: Chart.js (NO SVG/Mermaid). -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Interativo: Circuitos Elétricos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 40vh;
+            max-height: 400px;
+        }
+        .nav-active {
+            background-color: #334155;
+            border-bottom-width: 4px;
+            border-color: #f59e0b;
+            color: white;
+            font-weight: 600;
+        }
+        .nav-inactive {
+            background-color: transparent;
+            border-bottom-width: 4px;
+            border-color: transparent;
+            color: #94a3b8;
+        }
+        .nav-inactive:hover {
+            background-color: #1e293b;
+            color: white;
+        }
+        @media (min-width: 768px) {
+            .nav-active {
+                border-bottom-width: 0;
+                border-left-width: 4px;
+            }
+            .nav-inactive {
+                border-bottom-width: 0;
+                border-left-width: 4px;
+            }
+        }
+        /* Ocultar barra de rolagem no menu mobile */
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 h-screen flex flex-col md:flex-row overflow-hidden">
+
+    <aside class="w-full md:w-64 bg-slate-900 flex-shrink-0 flex flex-col shadow-xl z-20">
+        <div class="p-4 md:p-6 bg-slate-950 border-b border-slate-800 flex justify-between items-center md:block">
+            <h1 class="text-xl font-bold text-white flex items-center gap-2">
+                <span class="text-amber-500 text-2xl">⚡</span> Circuitos
+            </h1>
+            <p class="text-xs text-slate-400 mt-1 hidden md:block">Guia Interativo 1ª e 2ª Ordem</p>
+        </div>
+        <nav class="flex overflow-x-auto md:overflow-y-auto py-0 md:py-4 flex-row md:flex-col gap-1 md:gap-1 px-2 md:px-0 scrollbar-hide">
+            <button class="nav-tab nav-active px-4 md:px-6 py-3 md:py-3 text-left w-auto md:w-full transition-colors flex items-center gap-2 md:gap-3 whitespace-nowrap" data-target="sec-intro">
+                <span class="text-lg">🏠</span> Introdução
+            </button>
+            <button class="nav-tab nav-inactive px-4 md:px-6 py-3 md:py-3 text-left w-auto md:w-full transition-colors flex items-center gap-2 md:gap-3 whitespace-nowrap" data-target="sec-fundamentos">
+                <span class="text-lg">🛑</span> Fundamentos CC
+            </button>
+            <button class="nav-tab nav-inactive px-4 md:px-6 py-3 md:py-3 text-left w-auto md:w-full transition-colors flex items-center gap-2 md:gap-3 whitespace-nowrap" data-target="sec-primeira">
+                <span class="text-lg">📉</span> 1ª Ordem
+            </button>
+            <button class="nav-tab nav-inactive px-4 md:px-6 py-3 md:py-3 text-left w-auto md:w-full transition-colors flex items-center gap-2 md:gap-3 whitespace-nowrap" data-target="sec-segunda">
+                <span class="text-lg">🌊</span> 2ª Ordem
+            </button>
+            <button class="nav-tab nav-inactive px-4 md:px-6 py-3 md:py-3 text-left w-auto md:w-full transition-colors flex items-center gap-2 md:gap-3 whitespace-nowrap" data-target="sec-dicas">
+                <span class="text-lg">📐</span> Truques & Degrau
+            </button>
+            <button class="nav-tab nav-inactive px-4 md:px-6 py-3 md:py-3 text-left w-auto md:w-full transition-colors flex items-center gap-2 md:gap-3 whitespace-nowrap" data-target="sec-exercicios">
+                <span class="text-lg">📝</span> Exercícios
+            </button>
+        </nav>
+        <div class="p-4 bg-slate-950 text-xs text-slate-500 text-center border-t border-slate-800 hidden md:block">
+            Baseado em Nilsson & Irwin
+        </div>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12 relative z-10">
+        <div class="max-w-5xl mx-auto pb-12">
+
+            <section id="sec-intro" class="content-section block animate-fade-in">
+                <header class="mb-8 border-b border-slate-200 pb-4">
+                    <h2 class="text-3xl font-bold text-slate-900">Análise de Circuitos Dinâmicos</h2>
+                    <p class="text-slate-500 mt-2 text-lg">De transições simples a oscilações complexas.</p>
+                </header>
+                <div class="bg-white rounded-xl shadow-sm p-8 border border-slate-100">
+                    <p class="text-lg leading-relaxed text-slate-700 mb-6">
+                        <strong>Objetivo desta secção:</strong> Bem-vindo ao ambiente interativo de estudos. Este painel foi desenhado para consolidar o seu conhecimento sobre circuitos de primeira e segunda ordem. Aqui, não apenas lerá as fórmulas, mas interagirá com os parâmetros matemáticos para entender visualmente como a energia elétrica se comporta ao longo do tempo.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                        <div class="bg-amber-50 p-6 rounded-lg border border-amber-100">
+                            <h3 class="font-bold text-amber-800 text-lg mb-2">Como usar este guia</h3>
+                            <ul class="list-disc list-inside text-amber-900 space-y-2">
+                                <li>Navegue pelo menu lateral na ordem sugerida.</li>
+                                <li>Interaja com os gráficos e calculadoras.</li>
+                                <li>Observe como as fórmulas respondem aos seus inputs.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-100 p-6 rounded-lg border border-slate-200">
+                            <h3 class="font-bold text-slate-800 text-lg mb-2">Bibliografia Base</h3>
+                            <p class="text-slate-600">O conteúdo reflete as metodologias clássicas encontradas em:</p>
+                            <ul class="list-disc list-inside text-slate-600 mt-2 font-medium">
+                                <li>Nilsson, J. W. & Riedel, S. A. - Circuitos Elétricos</li>
+                                <li>Irwin, J. D. - Análise Básica de Circuitos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-fundamentos" class="content-section hidden animate-fade-in">
+                <header class="mb-8 border-b border-slate-200 pb-4">
+                    <h2 class="text-3xl font-bold text-slate-900">Condições Iniciais e Regime Permanente</h2>
+                </header>
+                <div class="mb-8">
+                    <p class="text-lg leading-relaxed text-slate-700">
+                        <strong>Objetivo desta secção:</strong> Estabelecer a fundação absoluta para a resolução de qualquer circuito dinâmico. Aqui explorará o comportamento estático dos componentes armazenadores de energia antes de qualquer chave ser acionada ($t < 0$) e a regra de ouro da continuidade.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden group hover:shadow-md transition-shadow">
+                        <div class="bg-slate-800 p-4 text-center">
+                            <h3 class="text-xl font-bold text-white">Capacitor (C) em CC</h3>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-4xl text-center mb-4">⏸️</div>
+                            <h4 class="text-center font-bold text-amber-600 text-xl mb-4">Circuito Aberto</h4>
+                            <div class="space-y-3 text-slate-700 bg-slate-50 p-4 rounded-lg">
+                                <p class="flex justify-between border-b border-slate-200 pb-2"><span>Corrente ($i$)</span> <span class="font-mono font-bold">0 A</span></p>
+                                <p class="flex justify-between border-b border-slate-200 pb-2"><span>Tensão ($v$)</span> <span class="font-mono font-bold">Constante</span></p>
+                                <p class="flex justify-between pt-1"><span>Memória</span> <span class="font-mono font-bold text-amber-600">v_C(0⁻) = v_C(0⁺)</span></p>
+                            </div>
+                            <p class="text-sm mt-4 text-slate-500 text-center">A tensão não pode saltar instantaneamente.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden group hover:shadow-md transition-shadow">
+                        <div class="bg-slate-800 p-4 text-center">
+                            <h3 class="text-xl font-bold text-white">Indutor (L) em CC</h3>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-4xl text-center mb-4">➰</div>
+                            <h4 class="text-center font-bold text-amber-600 text-xl mb-4">Curto-Circuito (Fio)</h4>
+                            <div class="space-y-3 text-slate-700 bg-slate-50 p-4 rounded-lg">
+                                <p class="flex justify-between border-b border-slate-200 pb-2"><span>Tensão ($v$)</span> <span class="font-mono font-bold">0 V</span></p>
+                                <p class="flex justify-between border-b border-slate-200 pb-2"><span>Corrente ($i$)</span> <span class="font-mono font-bold">Constante</span></p>
+                                <p class="flex justify-between pt-1"><span>Memória</span> <span class="font-mono font-bold text-amber-600">i_L(0⁻) = i_L(0⁺)</span></p>
+                            </div>
+                            <p class="text-sm mt-4 text-slate-500 text-center">A corrente não pode saltar instantaneamente.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-primeira" class="content-section hidden animate-fade-in">
+                <header class="mb-8 border-b border-slate-200 pb-4">
+                    <h2 class="text-3xl font-bold text-slate-900">Circuitos de 1ª Ordem (RL ou RC)</h2>
+                </header>
+                <div class="mb-8">
+                    <p class="text-lg leading-relaxed text-slate-700">
+                        <strong>Objetivo desta secção:</strong> Visualizar a transição exponencial de tensão ou corrente. Utilize o simulador interativo abaixo para modificar a condição inicial, o estado final de regime e a constante de tempo ($\tau$).
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200 mb-8">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 text-center">Simulador de Resposta ao Degrau / Natural</h3>
+                    
+                    <div class="bg-slate-900 text-white p-4 rounded-lg text-center mb-8 font-mono text-lg overflow-x-auto">
+                        x(t) = <span class="text-amber-400">X_f</span> + [<span class="text-blue-400">X_0</span> - <span class="text-amber-400">X_f</span>] · e<sup>-t / <span class="text-green-400">τ</span></sup>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-1 space-y-6 bg-slate-50 p-6 rounded-lg border border-slate-200">
+                            <div>
+                                <label class="flex justify-between text-sm font-bold text-slate-700 mb-2">
+                                    <span>Valor Inicial (X₀)</span>
+                                    <span id="valX0" class="text-blue-600">5</span>
+                                </label>
+                                <input type="range" id="inputX0" min="-10" max="10" step="0.5" value="5" class="w-full accent-blue-600">
+                                <p class="text-xs text-slate-500 mt-1">A "memória" do instante t=0⁺</p>
+                            </div>
+                            
+                            <div>
+                                <label class="flex justify-between text-sm font-bold text-slate-700 mb-2">
+                                    <span>Valor Final (X_f)</span>
+                                    <span id="valXf" class="text-amber-600">0</span>
+                                </label>
+                                <input type="range" id="inputXf" min="-10" max="10" step="0.5" value="0" class="w-full accent-amber-600">
+                                <p class="text-xs text-slate-500 mt-1">Regime permanente (t→∞).</p>
+                            </div>
+
+                            <div>
+                                <label class="flex justify-between text-sm font-bold text-slate-700 mb-2">
+                                    <span>Constante Tempo (τ)</span>
+                                    <span id="valTau" class="text-green-600">1</span>
+                                </label>
+                                <input type="range" id="inputTau" min="0.1" max="5" step="0.1" value="1" class="w-full accent-green-600">
+                                <p class="text-xs text-slate-500 mt-1">L/R ou R·C. Dita a velocidade.</p>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-2">
+                            <div class="chart-container">
+                                <canvas id="stepResponseChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-segunda" class="content-section hidden animate-fade-in">
+                <header class="mb-8 border-b border-slate-200 pb-4">
+                    <h2 class="text-3xl font-bold text-slate-900">Circuitos de 2ª Ordem (RLC)</h2>
+                </header>
+                <div class="mb-8">
+                    <p class="text-lg leading-relaxed text-slate-700">
+                        <strong>Objetivo desta secção:</strong> Auxiliar no "Passo 1" da resolução de circuitos RLC: o Diagnóstico. A aplicação calculará automaticamente a frequência natural e o fator de amortecimento, indicando o tipo de resposta.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-800 mb-6 border-b pb-2">Entrada de Parâmetros (RLC Série)</h3>
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="flex justify-between text-sm font-bold text-slate-700 mb-2">
+                                        <span>Resistência (R) em Ω</span>
+                                        <span id="valR" class="font-mono text-slate-900">2</span>
+                                    </label>
+                                    <input type="range" id="inputR" min="0.1" max="10" step="0.1" value="2" class="w-full accent-slate-600">
+                                </div>
+                                <div>
+                                    <label class="flex justify-between text-sm font-bold text-slate-700 mb-2">
+                                        <span>Indutância (L) em H</span>
+                                        <span id="valL" class="font-mono text-slate-900">1</span>
+                                    </label>
+                                    <input type="range" id="inputL" min="0.1" max="5" step="0.1" value="1" class="w-full accent-slate-600">
+                                </div>
+                                <div>
+                                    <label class="flex justify-between text-sm font-bold text-slate-700 mb-2">
+                                        <span>Capacitância (C) em F</span>
+                                        <span id="valC" class="font-mono text-slate-900">1</span>
+                                    </label>
+                                    <input type="range" id="inputC" min="0.1" max="5" step="0.1" value="1" class="w-full accent-slate-600">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col justify-center">
+                            <div class="bg-slate-50 p-6 rounded-lg border border-slate-200 mb-6">
+                                <h4 class="font-bold text-slate-700 text-sm uppercase tracking-wider mb-4">Frequências Calculadas</h4>
+                                <div class="grid grid-cols-2 gap-4 text-center">
+                                    <div class="bg-white p-3 rounded shadow-sm">
+                                        <div class="text-xs text-slate-500 mb-1">Fator de Amortecimento (α)</div>
+                                        <div class="text-2xl font-mono text-amber-600 font-bold" id="calcAlpha">1.0000</div>
+                                    </div>
+                                    <div class="bg-white p-3 rounded shadow-sm">
+                                        <div class="text-xs text-slate-500 mb-1">Freq. Natural (ω₀)</div>
+                                        <div class="text-2xl font-mono text-blue-600 font-bold" id="calcOmega">1.0000</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="rlcResult" class="p-6 rounded-lg text-center transition-colors duration-500 border-2 bg-blue-100 border-blue-500">
+                                <div class="text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Diagnóstico de Amortecimento</div>
+                                <h3 id="rlcResultTitle" class="text-2xl font-bold text-slate-900 mb-4">Criticamente Amortecido (α = ω₀)</h3>
+                                <div class="bg-white/80 p-4 rounded font-mono text-lg text-slate-800 shadow-inner" id="rlcResultEq">
+                                    x(t) = (A<sub>1</sub> + A<sub>2</sub>t)e<sup>-αt</sup>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-dicas" class="content-section hidden animate-fade-in">
+                <header class="mb-8 border-b border-slate-200 pb-4">
+                    <h2 class="text-3xl font-bold text-slate-900">O Truque das Derivadas e Degrau RLC</h2>
+                </header>
+                <div class="mb-8">
+                    <p class="text-lg leading-relaxed text-slate-700">
+                        <strong>Objetivo desta secção:</strong> Fornecer as chaves analíticas necessárias para finalizar problemas complexos de 2ª Ordem e organizar a estrutura da resposta ao degrau completo.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <div class="text-3xl mb-4">📐</div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-4">Como achar as Derivadas (t=0⁺)</h3>
+                        <p class="text-slate-600 mb-4">As equações de 2ª ordem requerem duas condições iniciais. Utilize as leis fundamentais dos componentes no exato instante inicial:</p>
+                        
+                        <div class="space-y-4 font-mono text-sm bg-slate-50 p-4 rounded-lg border border-slate-100">
+                            <div class="pb-3 border-b border-slate-200">
+                                <span class="text-slate-500 block mb-1">Derivada da Corrente no Indutor:</span>
+                                <span class="text-amber-600 font-bold text-base">di_L(0⁺)/dt = v_L(0⁺) / L</span>
+                            </div>
+                            <div class="pt-1">
+                                <span class="text-slate-500 block mb-1">Derivada da Tensão no Capacitor:</span>
+                                <span class="text-blue-600 font-bold text-base">dv_C(0⁺)/dt = i_C(0⁺) / C</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex flex-col">
+                        <div class="text-3xl mb-4">⚡</div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-4">Resposta ao Degrau (2ª Ordem)</h3>
+                        <p class="text-slate-600 mb-6">Quando uma fonte ativa permanece conectada ao circuito RLC após o chaveamento, a solução completa é a soma do regime permanente com a resposta natural.</p>
+                        
+                        <div class="mt-auto bg-slate-900 text-white p-5 rounded-lg text-center overflow-x-auto">
+                            <div class="font-mono text-lg sm:text-xl mb-2 whitespace-nowrap">x(t) = <span class="text-amber-400">X_f</span> + <span class="text-blue-400">x_n(t)</span></div>
+                            <p class="text-xs text-slate-400 text-left mt-4 border-t border-slate-700 pt-3">
+                                <strong>X_f:</strong> Valor final em regime permanente (t→∞).<br>
+                                <strong>x_n(t):</strong> Equação do diagnóstico natural (Super, Crítico ou Sub).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-exercicios" class="content-section hidden animate-fade-in pb-12">
+                <header class="mb-8 border-b border-slate-200 pb-4">
+                    <h2 class="text-3xl font-bold text-slate-900">Exercícios Práticos</h2>
+                    <p class="text-slate-500 mt-2 text-lg">Teste os seus conhecimentos com problemas clássicos da bibliografia base.</p>
+                </header>
+
+                <div class="space-y-8">
+                    
+                    <!-- ================= BLOCO 1ª ORDEM ================= -->
+
+                    <!-- Exercício 1 -->
+                    <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">1ª Ordem (RL) - Natural</span>
+                            <h3 class="text-xl font-bold text-slate-800">Problema 1: Abertura de Chave</h3>
+                        </div>
+                        <p class="text-slate-700 mb-4 leading-relaxed">
+                            No circuito, a chave esteve fechada por muito tempo. Em <span class="font-mono bg-slate-100 px-1 rounded">t = 0</span>, a chave é aberta.
+                        </p>
+                        <ul class="list-disc list-inside text-slate-600 mb-6 space-y-1 ml-2">
+                            <li>Ramo 1 (com chave): Fonte CC de 24V em série com resistor de 2Ω.</li>
+                            <li>Ramo 2: Indutor de 2H.</li>
+                            <li>Ramo 3: Resistor de 10Ω.</li>
+                        </ul>
+                        <p class="font-bold text-slate-800 mb-6">Determine a equação da corrente no indutor $i_L(t)$ para $t \ge 0$.</p>
+                        
+                        <button onclick="document.getElementById('resp1').classList.toggle('hidden')" class="bg-slate-800 hover:bg-slate-700 text-white font-medium py-2 px-6 rounded transition-colors">Mostrar Resposta</button>
+
+                        <div id="resp1" class="hidden mt-6 bg-slate-50 p-6 rounded-lg border border-slate-200 text-slate-700 space-y-4">
+                            <div>
+                                <h4 class="font-bold text-slate-900">Passo 1: Encontrar $I_0$ (t < 0)</h4>
+                                <p>O indutor atua como fio, curto-circuitando o resistor de 10Ω. $I_0 = 24V / 2\Omega = 12A$.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Passo 2: Encontrar $R_{eq}$ (t > 0)</h4>
+                                <p>A chave abre, isolando a fonte. Restam o indutor e o resistor de 10Ω. $R_{eq} = 10\Omega$.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Passo 3: $\tau$ e Equação</h4>
+                                <p>$\tau = L / R_{eq} = 2 / 10 = 0,2s$.</p>
+                                <p class="font-mono bg-green-100 text-green-900 font-bold p-3 rounded block mt-2 text-center text-lg">$i_L(t) = 12e^{-5t} \text{ A}$</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Exercício 2 -->
+                    <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">1ª Ordem (RC) - Natural</span>
+                            <h3 class="text-xl font-bold text-slate-800">Problema 2: Descarga de Capacitor</h3>
+                        </div>
+                        <p class="text-slate-700 mb-4 leading-relaxed">
+                            Um capacitor de <span class="font-mono bg-slate-100 px-1 rounded">C = 5 mF</span> está carregado com uma tensão inicial de <span class="font-mono bg-slate-100 px-1 rounded">12V</span>. No instante $t=0$, ele é conectado a dois resistores em paralelo: um de $20\Omega$ e outro de $5\Omega$.
+                        </p>
+                        <p class="font-bold text-slate-800 mb-6">Qual é a expressão para a tensão no capacitor $v_C(t)$?</p>
+                        
+                        <button onclick="document.getElementById('resp2').classList.toggle('hidden')" class="bg-slate-800 hover:bg-slate-700 text-white font-medium py-2 px-6 rounded transition-colors">Mostrar Resposta</button>
+
+                        <div id="resp2" class="hidden mt-6 bg-slate-50 p-6 rounded-lg border border-slate-200 text-slate-700 space-y-4">
+                            <div><h4 class="font-bold text-slate-900">Passo 1: Valor Inicial</h4><p>$V_0 = 12V$ (Dado pelo problema).</p></div>
+                            <div><h4 class="font-bold text-slate-900">Passo 2: $R_{eq}$</h4><p>Resistores em paralelo: $R_{eq} = (20 \cdot 5) / (20 + 5) = 100 / 25 = 4\Omega$.</p></div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Passo 3: $\tau$ e Equação</h4>
+                                <p>$\tau = R_{eq} \cdot C = 4 \cdot 0,005 = 0,02s$. O inverso é $1/0,02 = 50$.</p>
+                                <p class="font-mono bg-green-100 text-green-900 font-bold p-3 rounded block mt-2 text-center text-lg">$v_C(t) = 12e^{-50t} \text{ V}$</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Exercício 3 -->
+                    <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="bg-cyan-100 text-cyan-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">1ª Ordem (RL) - Degrau</span>
+                            <h3 class="text-xl font-bold text-slate-800">Problema 3: Ligação de Indutor</h3>
+                        </div>
+                        <p class="text-slate-700 mb-4 leading-relaxed">
+                            Um indutor de $L = 50mH$, inicialmente descarregado ($i(0)=0$), é conectado subitamente em $t=0$ a um circuito série contendo uma fonte de tensão de $10V$ e um resistor de $5\Omega$.
+                        </p>
+                        <p class="font-bold text-slate-800 mb-6">Encontre a equação da corrente $i_L(t)$ usando a fórmula do degrau.</p>
+                        
+                        <button onclick="document.getElementById('resp3').classList.toggle('hidden')" class="bg-slate-800 hover:bg-slate-700 text-white font-medium py-2 px-6 rounded transition-colors">Mostrar Resposta</button>
+
+                        <div id="resp3" class="hidden mt-6 bg-slate-50 p-6 rounded-lg border border-slate-200 text-slate-700 space-y-4">
+                            <div><h4 class="font-bold text-slate-900">Passo 1 e 2: Valores Inicial e Final</h4><p>$I_0 = 0A$. Em $t \to \infty$, o indutor vira fio. $I_f = 10V / 5\Omega = 2A$.</p></div>
+                            <div><h4 class="font-bold text-slate-900">Passo 3: $\tau$</h4><p>$\tau = L/R = 0,05 / 5 = 0,01s$. (Inverso = 100).</p></div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Passo 4: Fórmula Universal</h4>
+                                <p>$i(t) = I_f + (I_0 - I_f)e^{-t/\tau} \Rightarrow 2 + (0 - 2)e^{-100t}$</p>
+                                <p class="font-mono bg-green-100 text-green-900 font-bold p-3 rounded block mt-2 text-center text-lg">$i_L(t) = 2 - 2e^{-100t} \text{ A}$</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Exercício 4 -->
+                    <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="bg-cyan-100 text-cyan-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">1ª Ordem (RC) - Degrau</span>
+                            <h3 class="text-xl font-bold text-slate-800">Problema 4: Carga Completa</h3>
+                        </div>
+                        <p class="text-slate-700 mb-4 leading-relaxed">
+                            Um capacitor de $C = 0,1F$ possui uma tensão inicial $v_C(0) = 5V$. Em $t=0$, ele é conectado em série com uma fonte de $20V$ e um resistor de $10\Omega$.
+                        </p>
+                        <p class="font-bold text-slate-800 mb-6">Determine $v_C(t)$ para $t \ge 0$.</p>
+                        
+                        <button onclick="document.getElementById('resp4').classList.toggle('hidden')" class="bg-slate-800 hover:bg-slate-700 text-white font-medium py-2 px-6 rounded transition-colors">Mostrar Resposta</button>
+
+                        <div id="resp4" class="hidden mt-6 bg-slate-50 p-6 rounded-lg border border-slate-200 text-slate-700 space-y-4">
+                            <div><p><strong>Valores:</strong> $V_0 = 5V$. $V_f = 20V$ (o capacitor carrega até a tensão da fonte pois vira circuito aberto). $\tau = RC = 10 \cdot 0,1 = 1s$.</p></div>
+                            <div>
+                                <p><strong>Equação:</strong> $v(t) = V_f + (V_0 - V_f)e^{-t/\tau} \Rightarrow 20 + (5 - 20)e^{-t/1}$</p>
+                                <p class="font-mono bg-green-100 text-green-900 font-bold p-3 rounded block mt-2 text-center text-lg">$v_C(t) = 20 - 15e^{-t} \text{ V}$</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Exercício 5 -->
+                    <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">1ª Ordem - Teoria</span>
+                            <h3 class="text-xl font-bold text-slate-800">Problema 5: Fontes Dependentes</h3>
+                        </div>
+                        <p class="text-slate-700 mb-6 leading-relaxed">
+                            Ao analisar um circuito RL para $t > 0$, percebe-se a presença de uma fonte dependente. A análise nodal revela que a tensão nos terminais do indutor é $v_L = -8 \cdot i_L$. Sabendo que $L = 2H$ e a corrente inicial é $3A$, monte a equação.
+                        </p>
+                        
+                        <button onclick="document.getElementById('resp5').classList.toggle('hidden')" class="bg-slate-800 hover:bg-slate-700 text-white font-medium py-2 px-6 rounded transition-colors">Mostrar Resposta</button>
+
+                        <div id="resp5" class="hidden mt-6 bg-slate-50 p-6 rounded-lg border border-slate-200 text-slate-700 space-y-4">
+                            <div><p>A relação $v_L = -R_{eq} \cdot i_L$ diz-nos diretamente que $R_{eq} = 8\Omega$.</p></div>
+                            <div><p>$\tau = L/R_{eq} = 2/8 = 0,25s$ (Inverso = 4).</p></div>
+                            <div><p class="font-mono bg-green-100 text-green-900 font-bold p-3 rounded block mt-2 text-center text-lg">$i_L(t) = 3e^{-4t} \text{ A}$</p></div>
+                        </div>
+                    </div>
+
+                    <!-- Exercício 6 -->
+                    <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">1ª Ordem - Teoria</span>
+                            <h3 class="text-xl font-bold text-slate-800">Problema 6: O que é o tempo de acomodação (5τ)?</h3>
+                        </div>
+                        <p class="text-slate-700 mb-6 leading-relaxed">
+                            No problema 4, quanto tempo levará para o capacitor ser considerado "totalmente carregado" na prática da engenharia? E qual será a sua tensão exata nesse instante?
+                        </p>
+                        
+                        <button onclick="document.getElementById('resp6').classList.toggle('hidden')" class="bg-slate-800 hover:bg-slate-700 text-white font-medium py-2 px-6 rounded transition-colors">Mostrar Resposta</button>
+
+                        <div id="resp6" class="hidden mt-6 bg-slate-50 p-6 rounded-lg border border-slate-200 text-slate-700 space-y-4">
+                            <div><p>O tempo de acomodação prático é $5\tau$. Como $\tau = 1s$, levará **5 segundos**.</p></div>
+                            <div><p>Para $t=5$, $v_C(5) = 20 - 15e^{-5} = 20 - 15(0,0067) \approx 20 - 0,1 = \mathbf{19,9V}$. (Atingiu 99% da transição).</p></div>
+                        </div>
+                    </div>
+
+                    <!-- ================= BLOCO 2ª ORDEM ================= -->
+
+                    <!-- Exercício 7 -->
+                    <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">2ª Ordem (RLC Par) - Diag</span>
+                            <h3 class="text-xl font-bold text-slate-800">Problema 7: Diagnóstico RLC Paralelo</h3>
+                        </div>
+                        <p class="text-slate-700 mb-4 leading-relaxed">
+                            Circuito RLC paralelo sem fontes para $t>0$: $R = 10 \Omega$, $L = 1 H$, $C = 2,5 mF$.
+                        </p>
+                        <p class="font-bold text-slate-800 mb-6">Qual será o tipo de resposta de amortecimento?</p>
+                        
+                        <button onclick="document.getElementById('resp7').classList.toggle('hidden')" class="bg-slate-800 hover:bg-slate-700 text-white font-medium py-2 px-6 rounded transition-colors">Mostrar Resposta</button>
+
+                        <div id="resp7" class="hidden mt-6 bg-slate-50 p-6 rounded-lg border border-slate-200 text-slate-700 space-y-4">
+                            <p>$\alpha = \frac{1}{2RC} = \frac{1}{2 \cdot 10 \cdot 0,0025} = 20 \text{ rad/s}$</p>
+                            <p>$\omega_0 = \frac{1}{\sqrt{LC}} = \frac{1}{\sqrt{1 \cdot 0,0025}} = 20 \text{ rad/s}$</p>
+                            <p class="font-mono bg-blue-100 text-blue-900 font-bold p-3 rounded block mt-2 text-center text-lg">Criticamente Amortecido ($\alpha = \omega_0$)</p>
+                        </div>
+                    </div>
+
+                    <!-- Exercício 8 -->
+                    <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">2ª Ordem (RLC Sér) - Diag</span>
+                            <h3 class="text-xl font-bold text-slate-800">Problema 8: Diagnóstico RLC Série</h3>
+                        </div>
+                        <p class="text-slate-700 mb-4 leading-relaxed">
+                            Um circuito RLC série é deixado descarregar com os componentes: $R = 50\Omega$, $L = 1H$, $C = 10mF$.
+                        </p>
+                        <p class="font-bold text-slate-800 mb-6">Classifique o amortecimento deste circuito.</p>
+                        
+                        <button onclick="document.getElementById('resp8').classList.toggle('hidden')" class="bg-slate-800 hover:bg-slate-700 text-white font-medium py-2 px-6 rounded transition-colors">Mostrar Resposta</button>
+
+                        <div id="resp8" class="hidden mt-6 bg-slate-50 p-6 rounded-lg border border-slate-200 text-slate-700 space-y-4">
+                            <p>Atenção à fórmula do $\alpha$ em série! $\alpha = \frac{R}{2L} = \frac{50}{2} = 25 \text{ rad/s}$</p>
+                            <p>$\omega_0 = \frac{1}{\sqrt{1 \cdot 0,01}} = \frac{1}{\sqrt{0,01}} = 10 \text{ rad/s}$</p>
+                            <p class="font-mono bg-red-100 text-red-900 font-bold p-3 rounded block mt-2 text-center text-lg">Superamortecido ($\alpha > \omega_0$)</p>
+                        </div>
+                    </div>
+
+                    <!-- Exercício 9 -->
+                    <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">2ª Ordem (RLC Par) - Diag</span>
+                            <h3 class="text-xl font-bold text-slate-800">Problema 9: Prevendo Oscilações</h3>
+                        </div>
+                        <p class="text-slate-700 mb-4 leading-relaxed">
+                            Tem-se um RLC Paralelo com $R=100\Omega$, $L=4H$ e $C=0,01F$.
+                        </p>
+                        <p class="font-bold text-slate-800 mb-6">Este circuito irá gerar oscilações ao descarregar?</p>
+                        
+                        <button onclick="document.getElementById('resp9').classList.toggle('hidden')" class="bg-slate-800 hover:bg-slate-700 text-white font-medium py-2 px-6 rounded transition-colors">Mostrar Resposta</button>
+
+                        <div id="resp9" class="hidden mt-6 bg-slate-50 p-6 rounded-lg border border-slate-200 text-slate-700 space-y-4">
+                            <p>$\alpha = \frac{1}{2RC} = \frac{1}{2 \cdot 100 \cdot 0,01} = \frac{1}{2} = 0,5 \text{ rad/s}$</p>
+                            <p>$\omega_0 = \frac{1}{\sqrt{4 \cdot 0,01}} = \frac{1}{0,2} = 5 \text{ rad/s}$</p>
+                            <p>Como $\alpha < \omega_0$, a resposta é **Subamortecida**. Portanto, **Sim**, ele irá oscilar (gerar ondas de seno/cosseno).</p>
+                        </div>
+                    </div>
+
+                    <!-- Exercício 10 -->
+                    <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="bg-orange-100 text-orange-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">2ª Ordem - Raízes</span>
+                            <h3 class="text-xl font-bold text-slate-800">Problema 10: O Cálculo de s₁ e s₂</h3>
+                        </div>
+                        <p class="text-slate-700 mb-4 leading-relaxed">
+                            Um circuito superamortecido possui $\alpha = 5 \text{ rad/s}$ e $\omega_0 = 4 \text{ rad/s}$.
+                        </p>
+                        <p class="font-bold text-slate-800 mb-6">Calcule as raízes da equação característica e defina o formato matemático da resposta.</p>
+                        
+                        <button onclick="document.getElementById('resp10').classList.toggle('hidden')" class="bg-slate-800 hover:bg-slate-700 text-white font-medium py-2 px-6 rounded transition-colors">Mostrar Resposta</button>
+
+                        <div id="resp10" class="hidden mt-6 bg-slate-50 p-6 rounded-lg border border-slate-200 text-slate-700 space-y-4">
+                            <p>$s_{1,2} = -\alpha \pm \sqrt{\alpha^2 - \omega_0^2}$</p>
+                            <p>$s_{1,2} = -5 \pm \sqrt{25 - 16} = -5 \pm \sqrt{9} = -5 \pm 3$</p>
+                            <p>$s_1 = -2$ e $s_2 = -8$</p>
+                            <p class="font-mono bg-white text-slate-900 border border-slate-200 p-3 rounded block mt-2 text-center text-lg">x(t) = A₁e^{-2t} + A₂e^{-8t}</p>
+                        </div>
+                    </div>
+
+                    <!-- Exercício 11 -->
+                    <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="bg-orange-100 text-orange-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">2ª Ordem - Oscilação</span>
+                            <h3 class="text-xl font-bold text-slate-800">Problema 11: A Frequência Amortecida (ω_d)</h3>
+                        </div>
+                        <p class="text-slate-700 mb-4 leading-relaxed">
+                            Um circuito subamortecido tem $\alpha = 3$ e $\omega_0 = 5$.
+                        </p>
+                        <p class="font-bold text-slate-800 mb-6">Calcule a frequência de oscilação amortecida ($\omega_d$) e monte o formato da equação da resposta.</p>
+                        
+                        <button onclick="document.getElementById('resp11').classList.toggle('hidden')" class="bg-slate-800 hover:bg-slate-700 text-white font-medium py-2 px-6 rounded transition-colors">Mostrar Resposta</button>
+
+                        <div id="resp11" class="hidden mt-6 bg-slate-50 p-6 rounded-lg border border-slate-200 text-slate-700 space-y-4">
+                            <p>$\omega_d = \sqrt{\omega_0^2 - \alpha^2} = \sqrt{25 - 9} = \sqrt{16} = 4 \text{ rad/s}$</p>
+                            <p class="font-mono bg-white text-slate-900 border border-slate-200 p-3 rounded block mt-2 text-center text-lg">x(t) = e^{-3t}[B₁cos(4t) + B₂sen(4t)]</p>
+                        </div>
+                    </div>
+
+                    <!-- Exercício 12 -->
+                    <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">2ª Ordem - Degrau</span>
+                            <h3 class="text-xl font-bold text-slate-800">Problema 12: Os Valores Finais do Degrau</h3>
+                        </div>
+                        <p class="text-slate-700 mb-4 leading-relaxed">
+                            Uma fonte de tensão CC de $12V$ é ligada a um circuito RLC série puro.
+                        </p>
+                        <p class="font-bold text-slate-800 mb-6">Após muito tempo ($t \to \infty$), quais serão os valores da corrente no indutor $i_L(\infty)$ e da tensão no capacitor $v_C(\infty)$?</p>
+                        
+                        <button onclick="document.getElementById('resp12').classList.toggle('hidden')" class="bg-slate-800 hover:bg-slate-700 text-white font-medium py-2 px-6 rounded transition-colors">Mostrar Resposta</button>
+
+                        <div id="resp12" class="hidden mt-6 bg-slate-50 p-6 rounded-lg border border-slate-200 text-slate-700 space-y-4">
+                            <p>Em regime permanente CC, o indutor atua como fio e o capacitor como circuito aberto.</p>
+                            <p>Como o circuito está em série e o capacitor abre o circuito, nenhuma corrente consegue fluir.</p>
+                            <p>Logo, $i_L(\infty) = 0A$. Sendo circuito aberto, toda a tensão da fonte de $12V$ ficará retida nos terminais do capacitor. Logo, $v_C(\infty) = 12V$.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        // Funcionalidade das Abas de Navegação
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.nav-tab');
+            const sections = document.querySelectorAll('.content-section');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.getAttribute('data-target');
+                    
+                    // Esconde todas as seções e mostra a selecionada
+                    sections.forEach(sec => sec.classList.add('hidden'));
+                    const targetSection = document.getElementById(target);
+                    if (targetSection) {
+                        targetSection.classList.remove('hidden');
+                    }
+                    
+                    // Atualiza o estilo das abas
+                    tabs.forEach(t => {
+                        t.classList.remove('nav-active');
+                        t.classList.add('nav-inactive');
+                    });
+                    tab.classList.remove('nav-inactive');
+                    tab.classList.add('nav-active');
+                    
+                    // Atualiza gráficos se necessário
+                    if(target === 'sec-primeira') updateChart();
+                });
+            });
+
+            // Inicializar e configurar funcionalidades
+            initChart();
+            updateChart();
+            updateRLC();
+
+            // Adicionar event listeners aos inputs da Primeira Ordem
+            document.getElementById('inputX0').addEventListener('input', updateChart);
+            document.getElementById('inputXf').addEventListener('input', updateChart);
+            document.getElementById('inputTau').addEventListener('input', updateChart);
+
+            // Adicionar event listeners aos inputs da Segunda Ordem
+            document.getElementById('inputR').addEventListener('input', updateRLC);
+            document.getElementById('inputL').addEventListener('input', updateRLC);
+            document.getElementById('inputC').addEventListener('input', updateRLC);
+        });
+
+        // Lógica do Gráfico de 1ª Ordem
+        let stepChart;
+        function initChart() {
+            const canvas = document.getElementById('stepResponseChart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            stepChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Amplitude',
+                        data: [],
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'rgba(245, 158, 11, 0.15)',
+                        borderWidth: 3,
+                        pointRadius: 0,
+                        pointHitRadius: 10,
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Tempo (s)' },
+                            grid: { color: '#f1f5f9' }
+                        },
+                        y: {
+                            title: { display: true, text: 'Amplitude x(t)' },
+                            grid: { color: '#f1f5f9' },
+                            suggestedMin: -10,
+                            suggestedMax: 10
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { backgroundColor: '#1e293b', padding: 10, cornerRadius: 8 }
+                    }
+                }
+            });
+        }
+
+        function updateChart() {
+            if(!stepChart) return;
+            const x0 = parseFloat(document.getElementById('inputX0').value);
+            const xf = parseFloat(document.getElementById('inputXf').value);
+            const tau = parseFloat(document.getElementById('inputTau').value);
+            
+            document.getElementById('valX0').textContent = x0;
+            document.getElementById('valXf').textContent = xf;
+            document.getElementById('valTau').textContent = tau;
+            
+            const labels = [];
+            const data = [];
+            const maxTime = 5 * tau;
+            const step = maxTime / 100;
+            
+            for (let t = 0; t <= maxTime; t += step) {
+                labels.push(t.toFixed(2));
+                const val = xf + (x0 - xf) * Math.exp(-t / tau);
+                data.push(val);
+            }
+            
+            stepChart.data.labels = labels;
+            stepChart.data.datasets[0].data = data;
+            stepChart.update();
+        }
+
+        // Lógica do Simulador de 2ª Ordem RLC
+        function updateRLC() {
+            const r = parseFloat(document.getElementById('inputR').value);
+            const l = parseFloat(document.getElementById('inputL').value);
+            const c = parseFloat(document.getElementById('inputC').value);
+            
+            document.getElementById('valR').textContent = r;
+            document.getElementById('valL').textContent = l;
+            document.getElementById('valC').textContent = c;
+            
+            const alpha = r / (2 * l);
+            const omega0 = 1 / Math.sqrt(l * c);
+            
+            document.getElementById('calcAlpha').textContent = alpha.toFixed(4);
+            document.getElementById('calcOmega').textContent = omega0.toFixed(4);
+            
+            const resultBox = document.getElementById('rlcResult');
+            const resultTitle = document.getElementById('rlcResultTitle');
+            const resultEq = document.getElementById('rlcResultEq');
+            
+            resultBox.classList.remove('bg-red-100', 'bg-blue-100', 'bg-green-100', 'border-red-500', 'border-blue-500', 'border-green-500');
+            
+            const diff = alpha - omega0;
+            
+            if (diff > 0.001) {
+                resultBox.classList.add('bg-red-100', 'border-red-500');
+                resultTitle.textContent = "Superamortecido (α > ω₀)";
+                resultEq.innerHTML = "x(t) = A<sub>1</sub>e<sup>s₁t</sup> + A<sub>2</sub>e<sup>s₂t</sup>";
+            } else if (Math.abs(diff) <= 0.001) {
+                resultBox.classList.add('bg-blue-100', 'border-blue-500');
+                resultTitle.textContent = "Criticamente Amortecido (α = ω₀)";
+                resultEq.innerHTML = "x(t) = (A<sub>1</sub> + A<sub>2</sub>t)e<sup>-αt</sup>";
+            } else {
+                resultBox.classList.add('bg-green-100', 'border-green-500');
+                resultTitle.textContent = "Subamortecido (α < ω₀)";
+                resultEq.innerHTML = "x(t) = e<sup>-αt</sup> [B<sub>1</sub>cos(ω<sub>d</sub>t) + B<sub>2</sub>sin(ω<sub>d</sub>t)]";
+            }
+        }
+    </script>
+</body>
+</html>
