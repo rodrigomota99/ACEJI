@@ -104,6 +104,8 @@
         input[type="text"], input[type="email"], input[type="tel"], input[type="number"], select, textarea { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 4px; font-size: 16px; background-color: var(--bg-input); color: var(--text); }
         input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); }
         
+        .info-box { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 8px; border-left: 4px solid var(--primary); margin-bottom: 25px; font-size: 0.95rem; }
+        
         .btn-submit { background-color: var(--primary); color: #121212; border: none; padding: 15px 30px; font-size: 18px; font-weight: bold; border-radius: 4px; cursor: pointer; display: block; width: 100%; transition: background-color 0.3s; margin-top: 20px; text-align: center; text-decoration: none;}
         .btn-submit:hover { background-color: #27AE60; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(46, 204, 113, 0.2); }
         .btn-submit:disabled { background-color: #555; cursor: not-allowed; transform: none; box-shadow: none; }
@@ -336,6 +338,10 @@
                 <form id="jifscForm">
                     <h2 class="section-title">Inscrição JIFSC Gerais 2026</h2>
                     
+                    <div class="info-box" style="margin-top: 0; margin-bottom: 25px; border-left-color: var(--secondary);">
+                        <p style="margin: 0; font-size: 0.95rem;"><strong>Aviso Importante:</strong> Deseja participar de mais de uma modalidade? Sem problemas! No entanto, é necessário realizar <strong>uma inscrição por modalidade</strong>. Basta preencher e enviar este formulário novamente para cada esporte desejado.</p>
+                    </div>
+
                     <div class="form-group">
                         <label>Modalidade *</label>
                         <select id="jifscModalidade" required>
@@ -369,10 +375,20 @@
 
                     <div class="form-group">
                         <label>Já tem o uniforme da ACEJI 2026? *</label>
-                        <select id="jifscUniforme" required>
+                        <select id="jifscUniforme" required onchange="toggleUniformeModelo()">
                             <option value="">Selecione...</option>
                             <option value="Sim">Sim</option>
                             <option value="Não">Não</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="grupo-modelo-uniforme" style="display: none; background: rgba(255,255,255,0.03); padding: 15px; border-left: 3px solid var(--primary); border-radius: 4px;">
+                        <label style="color: var(--primary);">Qual modelo de uniforme você tem? *</label>
+                        <select id="jifscModeloUniforme">
+                            <option value="">Selecione o modelo...</option>
+                            <option value="Preto (Linha)">Preto (Linha)</option>
+                            <option value="Verde e Vermelho (Goleiro/Líbero)">Verde e Vermelho (Goleiro/Líbero)</option>
+                            <option value="Rosa (Goleiro/Líbero)">Rosa (Goleiro/Líbero)</option>
                         </select>
                     </div>
                     
@@ -682,6 +698,22 @@
             window.scrollTo(0,0);
         }
 
+        // --- LÓGICA DO UNIFORME JIFSC ---
+        function toggleUniformeModelo() {
+            const selectUniforme = document.getElementById('jifscUniforme').value;
+            const grupoModelo = document.getElementById('grupo-modelo-uniforme');
+            const selectModelo = document.getElementById('jifscModeloUniforme');
+            
+            if (selectUniforme === 'Sim') {
+                grupoModelo.style.display = 'block';
+                selectModelo.required = true;
+            } else {
+                grupoModelo.style.display = 'none';
+                selectModelo.required = false;
+                selectModelo.value = '';
+            }
+        }
+
         // --- LÓGICA DE INSCRIÇÃO JIFSC ---
         document.getElementById('jifscForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -691,20 +723,25 @@
             const telefone = document.getElementById('jifscTelefone').value;
             const curso = document.getElementById('jifscCurso').value;
             const uniforme = document.getElementById('jifscUniforme').value;
+            const modeloUniforme = document.getElementById('jifscModeloUniforme').value;
+            
             const btnJifscSubmit = document.getElementById('btn-jifsc-submit');
+
+            // Concatena a resposta do uniforme para ficar formatado bonitinho no email
+            const infoUniforme = (uniforme === 'Sim') ? `Sim - ${modeloUniforme}` : 'Não';
 
             btnJifscSubmit.textContent = "Enviando Inscrição...";
             btnJifscSubmit.disabled = true;
 
             const formData = new URLSearchParams();
-            formData.append('_subject', modalidade); // Título do email será apenas a modalidade
+            formData.append('_subject', modalidade);
             formData.append('_template', 'table');
             formData.append('Evento', 'JIFSC Gerais 2026');
             formData.append('Modalidade', modalidade);
             formData.append('Nome Completo', nome);
             formData.append('Telefone / WhatsApp', telefone);
             formData.append('Curso', curso);
-            formData.append('Possui Uniforme ACEJI 2026?', uniforme);
+            formData.append('Possui Uniforme ACEJI 2026?', infoUniforme);
 
             fetch('https://formsubmit.co/ajax/pedidosaceji@gmail.com', {
                 method: 'POST',
@@ -713,8 +750,9 @@
             })
             .then(response => response.json())
             .then(data => {
-                alert('Inscrição para o JIFSC enviada com sucesso!');
+                alert('Inscrição para o JIFSC enviada com sucesso! Caso deseje participar de outra modalidade, basta preencher novamente.');
                 document.getElementById('jifscForm').reset();
+                toggleUniformeModelo(); // Reseta a exibição da caixa de modelo
                 showMenu();
             })
             .catch(error => {
