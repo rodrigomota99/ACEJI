@@ -78,9 +78,34 @@
         .menu-title { font-size: 3rem; color: var(--primary); font-weight: bold; text-transform: uppercase; letter-spacing: 3px; }
         .menu-subtitle { font-size: 1.2rem; color: #AAAAAA; font-weight: 300; }
         
-        .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; margin-bottom: 40px; padding: 0 20px; }
+        .categories-grid { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 30px; 
+            margin-bottom: 40px; 
+            padding: 0 20px; 
+        }
         
-        .category-card { background: var(--bg-container); border: 1px solid var(--border); border-radius: 12px; padding: 30px 20px; transition: all 0.4s ease; cursor: pointer; display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .category-card { 
+            background: var(--bg-container); 
+            border: 1px solid var(--border); 
+            border-radius: 12px; 
+            padding: 30px 20px; 
+            transition: all 0.4s ease; 
+            cursor: pointer; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            position: relative; 
+            overflow: hidden; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
+            
+            /* Novas regras para manter o layout lado a lado */
+            flex: 1 1 200px;      /* Faz os itens se ajustarem lado a lado */
+            max-width: 250px;     /* Evita que um botão fique gigante sozinho na linha */
+            width: 100%;
+        }
         .category-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(46, 204, 113, 0.15); border-color: var(--primary); }
         .category-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: var(--primary); transform: scaleX(0); transition: transform 0.4s ease; transform-origin: left; }
         .category-card:hover::before { transform: scaleX(1); }
