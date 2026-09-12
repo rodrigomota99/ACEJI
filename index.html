@@ -802,8 +802,8 @@
             { date: '2026-04-23', title: 'PL (Pão com Linguiça)', colorClass: 'color-red', location: 'Clique aqui para se inscrever', link: 'https://forms.gle/rGUxpqHKhj2w6qFa6' },
             { date: '2026-04-30', title: 'PL (Pão com Linguiça)', colorClass: 'color-red', location: 'Clique aqui para se inscrever', link: 'https://forms.gle/rGUxpqHKhj2w6qFa6' },
             { date: '2026-05-07', title: 'PL (Pão com Linguiça)', colorClass: 'color-red', location: 'Clique aqui para se inscrever', link: 'https://forms.gle/rGUxpqHKhj2w6qFa6' },
-            { date: '2026-11-08', title: 'JIFSC Gerais', colorClass: 'color-blue', location: 'Clique aqui para se inscrever', link: 'showJifsc()' },
-            { date: '2026-11-09', title: 'JIFSC Gerais', colorClass: 'color-blue', location: 'Clique aqui para se inscrever', link: 'showJifsc()' }
+            { date: '2026-11-07', title: 'JIFSC Gerais', colorClass: 'color-blue', location: 'Clique aqui para se inscrever', link: 'showJifsc()' },
+            { date: '2026-11-08', title: 'JIFSC Gerais', colorClass: 'color-blue', location: 'Clique aqui para se inscrever', link: 'showJifsc()' }
         ];
 
         let currentCalDate = new Date(2026, 3, 1); 
@@ -855,7 +855,7 @@
                     
                     let onclickAttr = '';
                     if (event.link) {
-                        if(event.link.includes('showTrilha')) {
+                        if(event.link.includes('show')) { // Cobre funções locais como showTrilha() e showJifsc()
                             onclickAttr = `onclick="${event.link}"`;
                         } else {
                             onclickAttr = `onclick="window.open('${event.link}', '_blank')"`;
@@ -913,7 +913,7 @@
                 let clickableClass = '';
                 
                 if (eventFound && eventFound.link) {
-                    if(eventFound.link.includes('showTrilha')) {
+                    if(eventFound.link.includes('show')) { // Cobre funções locais como showTrilha() e showJifsc()
                         onclickAttr = `onclick="${eventFound.link}"`;
                     } else {
                         onclickAttr = `onclick="window.open('${eventFound.link}', '_blank')"`;
