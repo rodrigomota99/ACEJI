@@ -467,21 +467,6 @@
                     <h2 class="section-title">Uniforme de Goleiro/Líbero</h2>
                     <div class="product-grid">
                         <div class="product-card">
-                            <div class="product-image-container" id="container-verde">
-                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%20Verde%20Frente.png" class="product-image" id="image-verde" onclick="openModalCurrentImage('verde')">
-                                <div class="zoom-icon" onclick="openModalCurrentImage('verde')"><i class="fas fa-search-plus"></i></div>
-                                <div class="flip-icon" onclick="flipImage('verde')"><i class="fas fa-sync-alt"></i></div>
-                            </div>
-                            <div class="flip-navigation">
-                                <button type="button" class="flip-btn" onclick="showFront('verde')"><i class="fas fa-arrow-left"></i> Frente</button>
-                                <button type="button" class="flip-btn" onclick="showBack('verde')">Verso <i class="fas fa-arrow-right"></i></button>
-                            </div>
-                            <div class="product-title">Goleiro Verde</div>
-                            <div class="product-price">R$ 65,00</div>
-                            <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_goleiro_verde" class="quantity" min="0" value="0">
-                        </div>
-                        
-                        <div class="product-card">
                             <div class="product-image-container" id="container-rosa">
                                 <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%20Rosa%20Frente.png" class="product-image" id="image-rosa" onclick="openModalCurrentImage('rosa')">
                                 <div class="zoom-icon" onclick="openModalCurrentImage('rosa')"><i class="fas fa-search-plus"></i></div>
@@ -955,7 +940,7 @@
         function calculateTotal() {
             orderTotal = 0;
             const prices = { 
-                linha: 65.00, goleiro_verde: 65.00, goleiro_rosa: 65.00,
+                linha: 65.00, goleiro_rosa: 65.00,
                 caneca: 45.00, tirante: 10.00, combo: 50.00
             };
             
@@ -996,7 +981,6 @@
                 notes: document.getElementById('notes').value,
                 quantities: {
                     linha: parseInt(document.getElementById('qty_linha').value) || 0,
-                    goleiro_verde: parseInt(document.getElementById('qty_goleiro_verde').value) || 0,
                     goleiro_rosa: parseInt(document.getElementById('qty_goleiro_rosa').value) || 0,
                     caneca: parseInt(document.getElementById('qty_caneca').value) || 0,
                     tirante: parseInt(document.getElementById('qty_tirante').value) || 0,
@@ -1072,7 +1056,6 @@
             
             let itensStr = '';
             if(orderData.quantities.linha > 0) itensStr += `${orderData.quantities.linha}x Camisa Linha; `;
-            if(orderData.quantities.goleiro_verde > 0) itensStr += `${orderData.quantities.goleiro_verde}x Goleiro Verde; `;
             if(orderData.quantities.goleiro_rosa > 0) itensStr += `${orderData.quantities.goleiro_rosa}x Goleiro Rosa; `;
             if(orderData.quantities.caneca > 0) itensStr += `${orderData.quantities.caneca}x Caneca Oficial; `;
             if(orderData.quantities.tirante > 0) itensStr += `${orderData.quantities.tirante}x Tirante; `;
@@ -1113,7 +1096,6 @@
             
             msg += `*Itens:*\n`;
             if(orderData.quantities.linha > 0) msg += `- Camisa Linha: ${orderData.quantities.linha}\n`;
-            if(orderData.quantities.goleiro_verde > 0) msg += `- Goleiro Verde: ${orderData.quantities.goleiro_verde}\n`;
             if(orderData.quantities.goleiro_rosa > 0) msg += `- Goleiro Rosa: ${orderData.quantities.goleiro_rosa}\n`;
             if(orderData.quantities.caneca > 0) msg += `- Caneca Oficial: ${orderData.quantities.caneca}\n`;
             if(orderData.quantities.tirante > 0) msg += `- Tirante: ${orderData.quantities.tirante}\n`;
@@ -1149,12 +1131,12 @@
         }
         function showFront(type) {
             const baseUrl = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/';
-            const map = { 'linha': 'Uniforme%201%20Frente.png', 'verde': 'Uniforme%20Verde%20Frente.png', 'rosa': 'Uniforme%20Rosa%20Frente.png' };
+            const map = { 'linha': 'Uniforme%201%20Frente.png', 'rosa': 'Uniforme%20Rosa%20Frente.png' };
             document.getElementById(`image-${type}`).src = baseUrl + map[type];
         }
         function showBack(type) {
             const baseUrl = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/';
-            const map = { 'linha': 'Uniforme%201%20Costas.png', 'verde': 'Uniforme%20Verde%20Costas.png', 'rosa': 'Uniforme%20Rosa%20Costas.png' };
+            const map = { 'linha': 'Uniforme%201%20Costas.png', 'rosa': 'Uniforme%20Rosa%20Costas.png' };
             document.getElementById(`image-${type}`).src = baseUrl + map[type];
         }
         
