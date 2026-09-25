@@ -487,7 +487,7 @@
                         
                         <div class="product-card">
                             <div class="product-image-container">
-                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Somente%20caneca.png" class="product-image" id="image-caneca" onclick="openModalCurrentImage('caneca')">
+                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Caneca%20novo.png" class="product-image" id="image-caneca" onclick="openModalCurrentImage('caneca')">
                                 <div class="zoom-icon" onclick="openModalCurrentImage('caneca')"><i class="fas fa-search-plus"></i></div>
                             </div>
                             <div class="product-title">Caneca Oficial</div>
@@ -507,7 +507,7 @@
 
                         <div class="product-card">
                             <div class="product-image-container">
-                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Caneca%20com%20Tirante.png" class="product-image" id="image-combo" onclick="openModalCurrentImage('combo')">
+                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/caneca%20e%20tirante%20novo.png" class="product-image" id="image-combo" onclick="openModalCurrentImage('combo')">
                                 <div class="zoom-icon" onclick="openModalCurrentImage('combo')"><i class="fas fa-search-plus"></i></div>
                             </div>
                             <div class="product-title">Combo (Caneca + Tirante)</div>
@@ -784,7 +784,8 @@
             { date: '2026-11-08', title: 'JIFSC Gerais', colorClass: 'color-blue', location: 'Clique aqui para se inscrever', link: 'showJifsc()' }
         ];
 
-        let currentCalDate = new Date(2026, 3, 1); 
+        const todayForCal = new Date();
+        let currentCalDate = new Date(todayForCal.getFullYear(), todayForCal.getMonth(), 1);
 
         function toggleEventView(viewType) {
             if(viewType === 'list') {
