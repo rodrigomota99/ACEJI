@@ -104,6 +104,13 @@
             height: 100%;
         }
         .category-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(46, 204, 113, 0.15); border-color: var(--primary); }
+        
+        /* Modificador para o card encerrado */
+        .category-card.closed-card:hover { border-color: var(--accent); box-shadow: 0 15px 30px rgba(231, 76, 60, 0.15); }
+        .category-card.closed-card::before { background: var(--accent); }
+        .category-card.closed-card:hover .icon-container { background-color: var(--accent); color: white; }
+        .category-card.closed-card:hover .btn-access { background-color: var(--accent); border-color: var(--accent); color: white; }
+
         .category-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: var(--primary); transform: scaleX(0); transition: transform 0.4s ease; transform-origin: left; }
         .category-card:hover::before { transform: scaleX(1); }
         
@@ -316,11 +323,11 @@
                     <span class="btn-access">Ver Produtos</span>
                 </div>
 
-                <div class="category-card" onclick="showJifsc()">
-                    <div class="icon-container"><i class="fas fa-trophy"></i></div>
+                <div class="category-card closed-card" onclick="showJifsc()">
+                    <div class="icon-container" style="color: var(--accent); background-color: rgba(231, 76, 60, 0.1);"><i class="fas fa-lock"></i></div>
                     <h3 class="category-title">JIFSC Gerais</h3>
-                    <p class="category-desc">Inscrição para as modalidades dos Jogos do IFSC.</p>
-                    <span class="btn-access">Inscrever-se</span>
+                    <p class="category-desc">Inscrições encerradas para as modalidades dos Jogos do IFSC.</p>
+                    <span class="btn-access" style="border-color: var(--accent); color: var(--accent);">Encerrado</span>
                 </div>
 
                 <div class="category-card" onclick="showEvents()">
@@ -328,6 +335,13 @@
                     <h3 class="category-title">Eventos</h3>
                     <p class="category-desc">Fique por dentro das datas e eventos da atlética.</p>
                     <span class="btn-access">Ver Calendário</span>
+                </div>
+                
+                <div class="category-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScG2QGpQ3HXJ5jugau2YCwrS-Tfy5X9-csNkyxgz--PRKeDow/viewform', '_blank')">
+                    <div class="icon-container"><i class="fas fa-running"></i></div>
+                    <h3 class="category-title">Seja um Atleta</h3>
+                    <p class="category-desc">Inscreva-se para representar o IFSC nos jogos.</p>
+                    <span class="btn-access">Inscrever-se</span>
                 </div>
 
             </div>
@@ -342,7 +356,7 @@
             </footer>
         </div>
 
-        <!-- ============================== INSCRIÇÃO JIFSC ============================== -->
+        <!-- ============================== INSCRIÇÃO JIFSC (ENCERRADA) ============================== -->
         <div id="jifsc-section">
             <header>
                 <button class="btn-back-menu" onclick="showMenu()">
@@ -357,66 +371,17 @@
                 </div>
             </header>
             
-            <div class="form-container">
-                <form id="jifscForm">
-                    <h2 class="section-title">Inscrição JIFSC Gerais 2026</h2>
-                    
-                    <div style="background: rgba(52, 152, 219, 0.1); padding: 15px; border-left: 4px solid var(--blue); border-radius: 4px; margin-bottom: 20px; font-size: 0.95rem; text-align: left; line-height: 1.5;">
-                        <strong>Atenção:</strong> Você pode se inscrever em mais de uma modalidade! No entanto, é necessário realizar <strong>uma inscrição por modalidade</strong>. (Ex: se você quer participar de 2 modalidades, precisará preencher e enviar este formulário 2 vezes).
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Modalidade *</label>
-                        <select id="jifscModalidade" required>
-                            <option value="">Selecione a modalidade...</option>
-                            <option value="Basquete 3x3 Feminino">Basquete 3x3 Feminino</option>
-                            <option value="Basquete 3x3 Masculino">Basquete 3x3 Masculino</option>
-                            <option value="Futsal Feminino">Futsal Feminino</option>
-                            <option value="Futsal Masculino">Futsal Masculino</option>
-                            <option value="Tênis de Mesa Feminino">Tênis de Mesa Feminino</option>
-                            <option value="Tênis de Mesa Masculino">Tênis de Mesa Masculino</option>
-                            <option value="Vôlei Misto">Vôlei Misto</option>
-                            <option value="Xadrez Feminino">Xadrez Feminino</option>
-                            <option value="Xadrez Masculino">Xadrez Masculino</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Nome Completo *</label>
-                        <input type="text" id="jifscNome" placeholder="Digite seu nome" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Telefone / WhatsApp *</label>
-                        <input type="tel" id="jifscTelefone" placeholder="(XX) 9XXXX-XXXX" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Curso *</label>
-                        <input type="text" id="jifscCurso" placeholder="Ex: Engenharia Elétrica" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Já tem o uniforme da ACEJI 2026? *</label>
-                        <select id="jifscUniforme" required onchange="toggleUniformType()">
-                            <option value="">Selecione...</option>
-                            <option value="Sim">Sim</option>
-                            <option value="Não">Não</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group" id="groupTipoUniforme" style="display: none; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; border-left: 3px solid var(--secondary);">
-                        <label style="color: var(--secondary);">Qual uniforme você tem? *</label>
-                        <select id="jifscTipoUniforme">
-                            <option value="">Selecione o modelo...</option>
-                            <option value="Possuo Ambos">Possuo Ambos</option>
-                            <option value="Preto, verde e vermelho">Preto, verde e vermelho</option>
-                            <option value="Rosa">Rosa</option>
-                        </select>
-                    </div>
-                    
-                    <button type="submit" class="btn-submit" id="btn-jifsc-submit">Confirmar Inscrição</button>
-                </form>
+            <div class="form-container" style="text-align: center;">
+                <h2 class="section-title" style="border-bottom: none; color: var(--accent); margin-bottom: 20px; font-size: 2rem;">
+                    <i class="fas fa-times-circle"></i> Inscrições Encerradas
+                </h2>
+                
+                <div style="background: rgba(231, 76, 60, 0.1); padding: 25px; border-left: 4px solid var(--accent); border-radius: 8px; margin-bottom: 30px; font-size: 1.1rem; text-align: center; line-height: 1.6;">
+                    As inscrições para as modalidades do <strong>JIFSC Gerais 2026</strong> foram oficialmente encerradas. <br><br>
+                    Agradecemos a todos os alunos atletas pelo interesse e participação!
+                </div>
+                
+                <button class="btn-submit" onclick="showMenu()" style="max-width: 250px; margin: 0 auto; background-color: var(--light); color: white;">Voltar ao Menu</button>
             </div>
             
             <footer style="text-align: center; margin-top: 20px; padding: 20px;">
@@ -467,6 +432,21 @@
                     <h2 class="section-title">Uniforme de Goleiro/Líbero</h2>
                     <div class="product-grid">
                         <div class="product-card">
+                            <div class="product-image-container" id="container-verde">
+                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%20Verde%20Frente.png" class="product-image" id="image-verde" onclick="openModalCurrentImage('verde')">
+                                <div class="zoom-icon" onclick="openModalCurrentImage('verde')"><i class="fas fa-search-plus"></i></div>
+                                <div class="flip-icon" onclick="flipImage('verde')"><i class="fas fa-sync-alt"></i></div>
+                            </div>
+                            <div class="flip-navigation">
+                                <button type="button" class="flip-btn" onclick="showFront('verde')"><i class="fas fa-arrow-left"></i> Frente</button>
+                                <button type="button" class="flip-btn" onclick="showBack('verde')">Verso <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                            <div class="product-title">Goleiro Verde</div>
+                            <div class="product-price">R$ 65,00</div>
+                            <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_goleiro_verde" class="quantity" min="0" value="0">
+                        </div>
+                        
+                        <div class="product-card">
                             <div class="product-image-container" id="container-rosa">
                                 <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%20Rosa%20Frente.png" class="product-image" id="image-rosa" onclick="openModalCurrentImage('rosa')">
                                 <div class="zoom-icon" onclick="openModalCurrentImage('rosa')"><i class="fas fa-search-plus"></i></div>
@@ -487,7 +467,7 @@
                         
                         <div class="product-card">
                             <div class="product-image-container">
-                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Caneca%20novo.png" class="product-image" id="image-caneca" onclick="openModalCurrentImage('caneca')">
+                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Somente%20caneca.png" class="product-image" id="image-caneca" onclick="openModalCurrentImage('caneca')">
                                 <div class="zoom-icon" onclick="openModalCurrentImage('caneca')"><i class="fas fa-search-plus"></i></div>
                             </div>
                             <div class="product-title">Caneca Oficial</div>
@@ -507,7 +487,7 @@
 
                         <div class="product-card">
                             <div class="product-image-container">
-                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/caneca%20e%20tirante%20novo.png" class="product-image" id="image-combo" onclick="openModalCurrentImage('combo')">
+                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Caneca%20com%20Tirante.png" class="product-image" id="image-combo" onclick="openModalCurrentImage('combo')">
                                 <div class="zoom-icon" onclick="openModalCurrentImage('combo')"><i class="fas fa-search-plus"></i></div>
                             </div>
                             <div class="product-title">Combo (Caneca + Tirante)</div>
@@ -708,84 +688,16 @@
             window.scrollTo(0,0);
         }
 
-        // --- LÓGICA DE INSCRIÇÃO JIFSC ---
-        
-        function toggleUniformType() {
-            const hasUniform = document.getElementById('jifscUniforme').value;
-            const typeGroup = document.getElementById('groupTipoUniforme');
-            const typeSelect = document.getElementById('jifscTipoUniforme');
-            
-            if (hasUniform === 'Sim') {
-                typeGroup.style.display = 'block';
-                typeSelect.required = true;
-            } else {
-                typeGroup.style.display = 'none';
-                typeSelect.required = false;
-                typeSelect.value = '';
-            }
-        }
-
-        document.getElementById('jifscForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const modalidade = document.getElementById('jifscModalidade').value;
-            const nome = document.getElementById('jifscNome').value;
-            const telefone = document.getElementById('jifscTelefone').value;
-            const curso = document.getElementById('jifscCurso').value;
-            const uniforme = document.getElementById('jifscUniforme').value;
-            const tipoUniforme = document.getElementById('jifscTipoUniforme').value;
-            const btnJifscSubmit = document.getElementById('btn-jifsc-submit');
-
-            btnJifscSubmit.textContent = "Enviando Inscrição...";
-            btnJifscSubmit.disabled = true;
-
-            const formData = new URLSearchParams();
-            formData.append('_subject', modalidade);
-            formData.append('_template', 'table');
-            formData.append('Evento', 'JIFSC Gerais 2026');
-            formData.append('Modalidade', modalidade);
-            formData.append('Nome Completo', nome);
-            formData.append('Telefone / WhatsApp', telefone);
-            formData.append('Curso', curso);
-            formData.append('Possui Uniforme ACEJI 2026?', uniforme);
-            
-            if (uniforme === 'Sim') {
-                formData.append('Modelo do Uniforme', tipoUniforme);
-            }
-
-            fetch('https://formsubmit.co/ajax/pedidosaceji@gmail.com', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('Inscrição para o JIFSC enviada com sucesso!');
-                document.getElementById('jifscForm').reset();
-                toggleUniformType();
-                showMenu();
-            })
-            .catch(error => {
-                console.error(error);
-                alert('Ocorreu um erro ao enviar a inscrição. Tente novamente mais tarde.');
-            })
-            .finally(() => {
-                btnJifscSubmit.textContent = "Confirmar Inscrição";
-                btnJifscSubmit.disabled = false;
-            });
-        });
-
         // --- LÓGICA DE EVENTOS (CALENDÁRIO E LISTA) ---
         const eventDates = [
             { date: '2026-04-23', title: 'PL (Pão com Linguiça)', colorClass: 'color-red', location: 'Clique aqui para se inscrever', link: 'https://forms.gle/rGUxpqHKhj2w6qFa6' },
             { date: '2026-04-30', title: 'PL (Pão com Linguiça)', colorClass: 'color-red', location: 'Clique aqui para se inscrever', link: 'https://forms.gle/rGUxpqHKhj2w6qFa6' },
             { date: '2026-05-07', title: 'PL (Pão com Linguiça)', colorClass: 'color-red', location: 'Clique aqui para se inscrever', link: 'https://forms.gle/rGUxpqHKhj2w6qFa6' },
-            { date: '2026-11-07', title: 'JIFSC Gerais', colorClass: 'color-blue', location: 'Clique aqui para se inscrever', link: 'showJifsc()' },
-            { date: '2026-11-08', title: 'JIFSC Gerais', colorClass: 'color-blue', location: 'Clique aqui para se inscrever', link: 'showJifsc()' }
+            { date: '2026-11-07', title: 'JIFSC Gerais', colorClass: 'color-blue', location: 'Acessar página de inscrição', link: 'showJifsc()' },
+            { date: '2026-11-08', title: 'JIFSC Gerais', colorClass: 'color-blue', location: 'Acessar página de inscrição', link: 'showJifsc()' }
         ];
 
-        const todayForCal = new Date();
-        let currentCalDate = new Date(todayForCal.getFullYear(), todayForCal.getMonth(), 1);
+        let currentCalDate = new Date(2026, 3, 1); 
 
         function toggleEventView(viewType) {
             if(viewType === 'list') {
@@ -834,7 +746,7 @@
                     
                     let onclickAttr = '';
                     if (event.link) {
-                        if(event.link.includes('show')) { // Cobre funções locais como showTrilha() e showJifsc()
+                        if(event.link.includes('show')) { 
                             onclickAttr = `onclick="${event.link}"`;
                         } else {
                             onclickAttr = `onclick="window.open('${event.link}', '_blank')"`;
@@ -892,7 +804,7 @@
                 let clickableClass = '';
                 
                 if (eventFound && eventFound.link) {
-                    if(eventFound.link.includes('show')) { // Cobre funções locais como showTrilha() e showJifsc()
+                    if(eventFound.link.includes('show')) { 
                         onclickAttr = `onclick="${eventFound.link}"`;
                     } else {
                         onclickAttr = `onclick="window.open('${eventFound.link}', '_blank')"`;
@@ -941,7 +853,7 @@
         function calculateTotal() {
             orderTotal = 0;
             const prices = { 
-                linha: 65.00, goleiro_rosa: 65.00,
+                linha: 65.00, goleiro_verde: 65.00, goleiro_rosa: 65.00,
                 caneca: 45.00, tirante: 10.00, combo: 50.00
             };
             
@@ -982,6 +894,7 @@
                 notes: document.getElementById('notes').value,
                 quantities: {
                     linha: parseInt(document.getElementById('qty_linha').value) || 0,
+                    goleiro_verde: parseInt(document.getElementById('qty_goleiro_verde').value) || 0,
                     goleiro_rosa: parseInt(document.getElementById('qty_goleiro_rosa').value) || 0,
                     caneca: parseInt(document.getElementById('qty_caneca').value) || 0,
                     tirante: parseInt(document.getElementById('qty_tirante').value) || 0,
@@ -1057,6 +970,7 @@
             
             let itensStr = '';
             if(orderData.quantities.linha > 0) itensStr += `${orderData.quantities.linha}x Camisa Linha; `;
+            if(orderData.quantities.goleiro_verde > 0) itensStr += `${orderData.quantities.goleiro_verde}x Goleiro Verde; `;
             if(orderData.quantities.goleiro_rosa > 0) itensStr += `${orderData.quantities.goleiro_rosa}x Goleiro Rosa; `;
             if(orderData.quantities.caneca > 0) itensStr += `${orderData.quantities.caneca}x Caneca Oficial; `;
             if(orderData.quantities.tirante > 0) itensStr += `${orderData.quantities.tirante}x Tirante; `;
@@ -1097,6 +1011,7 @@
             
             msg += `*Itens:*\n`;
             if(orderData.quantities.linha > 0) msg += `- Camisa Linha: ${orderData.quantities.linha}\n`;
+            if(orderData.quantities.goleiro_verde > 0) msg += `- Goleiro Verde: ${orderData.quantities.goleiro_verde}\n`;
             if(orderData.quantities.goleiro_rosa > 0) msg += `- Goleiro Rosa: ${orderData.quantities.goleiro_rosa}\n`;
             if(orderData.quantities.caneca > 0) msg += `- Caneca Oficial: ${orderData.quantities.caneca}\n`;
             if(orderData.quantities.tirante > 0) msg += `- Tirante: ${orderData.quantities.tirante}\n`;
@@ -1132,12 +1047,12 @@
         }
         function showFront(type) {
             const baseUrl = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/';
-            const map = { 'linha': 'Uniforme%201%20Frente.png', 'rosa': 'Uniforme%20Rosa%20Frente.png' };
+            const map = { 'linha': 'Uniforme%201%20Frente.png', 'verde': 'Uniforme%20Verde%20Frente.png', 'rosa': 'Uniforme%20Rosa%20Frente.png' };
             document.getElementById(`image-${type}`).src = baseUrl + map[type];
         }
         function showBack(type) {
             const baseUrl = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/';
-            const map = { 'linha': 'Uniforme%201%20Costas.png', 'rosa': 'Uniforme%20Rosa%20Costas.png' };
+            const map = { 'linha': 'Uniforme%201%20Costas.png', 'verde': 'Uniforme%20Verde%20Costas.png', 'rosa': 'Uniforme%20Rosa%20Costas.png' };
             document.getElementById(`image-${type}`).src = baseUrl + map[type];
         }
         
