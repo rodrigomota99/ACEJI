@@ -424,7 +424,7 @@
                                 <button type="button" class="flip-btn" onclick="showBack('linha')">Verso <i class="fas fa-arrow-right"></i></button>
                             </div>
                             <div class="product-title">Camisa de Linha</div>
-                            <div class="product-price">R\$ 65,00</div>
+                            <div class="product-price">R$ 65,00</div>
                             <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_linha" class="quantity" min="0" value="0">
                         </div>
                     </div>
@@ -442,7 +442,7 @@
                                 <button type="button" class="flip-btn" onclick="showBack('rosa')">Verso <i class="fas fa-arrow-right"></i></button>
                             </div>
                             <div class="product-title">Goleiro Rosa</div>
-                            <div class="product-price">R\$ 65,00</div>
+                            <div class="product-price">R$ 65,00</div>
                             <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_goleiro_rosa" class="quantity" min="0" value="0">
                         </div>
                     </div>
@@ -456,7 +456,7 @@
                                 <div class="zoom-icon" onclick="openModalCurrentImage('caneca')"><i class="fas fa-search-plus"></i></div>
                             </div>
                             <div class="product-title">Caneca Oficial</div>
-                            <div class="product-price">R\$ 45,00</div>
+                            <div class="product-price">R$ 45,00</div>
                             <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_caneca" class="quantity" min="0" value="0">
                         </div>
 
@@ -466,7 +466,7 @@
                                 <div class="zoom-icon" onclick="openModalCurrentImage('tirante')"><i class="fas fa-search-plus"></i></div>
                             </div>
                             <div class="product-title">Tirante</div>
-                            <div class="product-price">R\$ 10,00</div>
+                            <div class="product-price">R$ 10,00</div>
                             <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_tirante" class="quantity" min="0" value="0">
                         </div>
 
@@ -476,7 +476,7 @@
                                 <div class="zoom-icon" onclick="openModalCurrentImage('combo')"><i class="fas fa-search-plus"></i></div>
                             </div>
                             <div class="product-title">Combo (Caneca + Tirante)</div>
-                            <div class="product-price">R\$ 50,00</div>
+                            <div class="product-price">R$ 50,00</div>
                             <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_combo" class="quantity" min="0" value="0">
                         </div>
 
@@ -496,17 +496,17 @@
                     <div class="payment-options">
                         <div class="payment-option selected" id="option-full" onclick="selectPaymentOption('full')">
                             <h3>PIX Integral (100%)</h3>
-                            <div class="payment-option-value" id="full-payment-value">R\$ 0,00</div>
+                            <div class="payment-option-value" id="full-payment-value">R$ 0,00</div>
                             <p style="font-size: 0.9rem; margin-top:5px; color: var(--text);">Pagamento único e entrega prioritária.</p>
                         </div>
                         <div class="payment-option" id="option-half" onclick="selectPaymentOption('half')">
                             <h3>PIX Parcelado (50%)</h3>
-                            <div class="payment-option-value" id="half-payment-value">R\$ 0,00</div>
+                            <div class="payment-option-value" id="half-payment-value">R$ 0,00</div>
                             <p style="font-size: 0.9rem; margin-top:5px; color: var(--text);">50% agora via PIX, 50% na entrega.</p>
                         </div>
                         <div class="payment-option" id="option-credit" onclick="selectPaymentOption('credit')">
                             <h3>Cartão de Crédito</h3>
-                            <div class="payment-option-value" id="credit-payment-value">R\$ 0,00</div>
+                            <div class="payment-option-value" id="credit-payment-value">R$ 0,00</div>
                             <p style="font-size: 0.9rem; margin-top:5px; color: var(--text);">Link do Mercado Pago enviado via WhatsApp.</p>
                         </div>
                     </div>
@@ -518,9 +518,9 @@
             <div class="payment-page" id="payment-section">
                 <h2 style="color:var(--primary); margin-bottom:20px;" id="payment-title">Pagamento via PIX</h2>
                 <div style="background: rgba(50, 188, 173, 0.1); padding:15px; border-left:4px solid var(--pix); text-align:left; margin-bottom:20px;">
-                    <p><strong>Total: <span id="payment-total">R\$ 0,00</span></strong></p>
-                    <p id="msg-pay-now"><strong>Pagar Agora: <span id="payment-now">R\$ 0,00</span></strong></p>
-                    <p id="msg-half" style="display:none; margin-top:10px;">Restante a pagar na entrega: <span id="remaining-amount">R\$ 0,00</span></p>
+                    <p><strong>Total: <span id="payment-total">R$ 0,00</span></strong></p>
+                    <p id="msg-pay-now"><strong>Pagar Agora: <span id="payment-now">R$ 0,00</span></strong></p>
+                    <p id="msg-half" style="display:none; margin-top:10px;">Restante a pagar na entrega: <span id="remaining-amount">R$ 0,00</span></p>
                     <p id="msg-credit" style="display:none; margin-top:10px; color: var(--accent);"><strong>Atenção:</strong> Solicite o link do Mercado Pago ao ser redirecionado para o WhatsApp.</p>
                 </div>
                 
@@ -727,14 +727,14 @@
                     else if (event.colorClass === 'color-blue') { bgStyle = 'var(--blue)'; }
                     else { bgStyle = 'var(--primary)'; }
                     
-                    const dateStyle = `background: ${bgStyle}; color: ${textStyle};`;
+                    const dateStyle = 'background: ' + bgStyle + '; color: ' + textStyle + ';';
                     
                     let onclickAttr = '';
                     if (event.link) {
                         if(event.link.includes('show')) { 
-                            onclickAttr = `onclick="${event.link}"`;
+                            onclickAttr = 'onclick="' + event.link + '"';
                         } else {
-                            onclickAttr = `onclick="window.open('${event.link}', '_blank')"`;
+                            onclickAttr = 'onclick="window.open(\'' + event.link + '\', \'_blank\')"';
                         }
                     }
                     
@@ -742,24 +742,23 @@
                     const locationIcon = event.link ? 'fas fa-external-link-alt' : 'fas fa-info-circle';
                     const textColor = event.link ? 'color: var(--primary); font-weight: bold;' : '';
                     
-                    const cardHTML = `
-                        <div class="event-card" ${onclickAttr} style="${cursorStyle}">
-                            <div class="event-date" style="${dateStyle}">
-                                <span class="event-day">${dayNum}</span>
-                                <span class="event-month">${monthStr}</span>
-                            </div>
-                            <div class="event-details">
-                                <h3 class="event-title">${event.title}</h3>
-                                <p class="event-time-location" style="${textColor}"><i class="${locationIcon}"></i> ${event.location}</p>
-                            </div>
-                        </div>
-                    `;
+                    const cardHTML = 
+                        '<div class="event-card" ' + onclickAttr + ' style="' + cursorStyle + '">' +
+                            '<div class="event-date" style="' + dateStyle + '">' +
+                                '<span class="event-day">' + dayNum + '</span>' +
+                                '<span class="event-month">' + monthStr + '</span>' +
+                            '</div>' +
+                            '<div class="event-details">' +
+                                '<h3 class="event-title">' + event.title + '</h3>' +
+                                '<p class="event-time-location" style="' + textColor + '"><i class="' + locationIcon + '"></i> ' + event.location + '</p>' +
+                            '</div>' +
+                        '</div>';
                     listArea.innerHTML += cardHTML;
                 }
             });
 
             if (!hasUpcomingEvents) {
-                listArea.innerHTML = `<p style="text-align:center; color:var(--text); font-size: 1.1rem; margin-top:20px;">Nenhum evento próximo programado no momento.</p>`;
+                listArea.innerHTML = '<p style="text-align:center; color:var(--text); font-size: 1.1rem; margin-top:20px;">Nenhum evento próximo programado no momento.</p>';
             }
         }
 
@@ -767,7 +766,7 @@
             const year = currentCalDate.getFullYear();
             const month = currentCalDate.getMonth();
             const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-            document.getElementById('calendar-month-year').innerText = `${monthNames[month]} ${year}`;
+            document.getElementById('calendar-month-year').innerText = monthNames[month] + ' ' + year;
             
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -775,13 +774,13 @@
             calendarDaysArea.innerHTML = '';
             
             for (let i = 0; i < firstDay; i++) {
-                calendarDaysArea.innerHTML += `<div class="calendar-day empty"></div>`;
+                calendarDaysArea.innerHTML += '<div class="calendar-day empty"></div>';
             }
             
             for (let day = 1; day <= daysInMonth; day++) {
                 const formattedMonth = String(month + 1).padStart(2, '0');
                 const formattedDay = String(day).padStart(2, '0');
-                const dateStr = `${year}-${formattedMonth}-${formattedDay}`;
+                const dateStr = year + '-' + formattedMonth + '-' + formattedDay;
                 const eventFound = eventDates.find(e => e.date === dateStr);
                 
                 let onclickAttr = '';
@@ -790,22 +789,22 @@
                 
                 if (eventFound && eventFound.link) {
                     if(eventFound.link.includes('show')) { 
-                        onclickAttr = `onclick="${eventFound.link}"`;
+                        onclickAttr = 'onclick="' + eventFound.link + '"';
                     } else {
-                        onclickAttr = `onclick="window.open('${eventFound.link}', '_blank')"`;
+                        onclickAttr = 'onclick="window.open(\'' + eventFound.link + '\', \'_blank\')"';
                     }
                     cursorStyle = 'cursor: pointer;';
                     clickableClass = 'clickable';
                 }
                 
-                let dayHTML = `<div class="calendar-day ${eventFound ? 'has-event' : ''} ${clickableClass}" ${onclickAttr} style="${cursorStyle}">`;
-                dayHTML += `<span class="calendar-day-num">${day}</span>`;
+                let dayHTML = '<div class="calendar-day ' + (eventFound ? 'has-event' : '') + ' ' + clickableClass + '" ' + onclickAttr + ' style="' + cursorStyle + '">';
+                dayHTML += '<span class="calendar-day-num">' + day + '</span>';
                 
                 if(eventFound) {
-                    dayHTML += `<span class="event-badge ${eventFound.colorClass}">${eventFound.title}</span>`;
+                    dayHTML += '<span class="event-badge ' + eventFound.colorClass + '">' + eventFound.title + '</span>';
                 }
                 
-                dayHTML += `</div>`;
+                dayHTML += '</div>';
                 calendarDaysArea.innerHTML += dayHTML;
             }
         }
@@ -835,6 +834,10 @@
             });
         });
 
+        function formatCurrency(value) {
+            return value.toFixed(2).replace('.', ',');
+        }
+
         function calculateTotal() {
             orderTotal = 0;
             const prices = { 
@@ -843,25 +846,25 @@
             };
             
             for (const [key, price] of Object.entries(prices)) {
-                const qty = parseInt(document.getElementById(`qty_${key}`).value) || 0;
+                const qty = parseInt(document.getElementById('qty_' + key).value) || 0;
                 orderTotal += qty * price;
             }
             
             const btn = document.querySelector('#shop-section .btn-submit');
-            if(btn) btn.innerHTML = `Ir para Pagamento - Total: R$ ${orderTotal.toFixed(2)}`;
+            if(btn) btn.innerHTML = 'Ir para Pagamento - Total: R$ ' + formatCurrency(orderTotal);
             
             const fullEl = document.getElementById('full-payment-value');
-            if(fullEl) fullEl.textContent = `R$ ${orderTotal.toFixed(2)}`;
+            if(fullEl) fullEl.textContent = 'R$ ' + formatCurrency(orderTotal);
             const halfEl = document.getElementById('half-payment-value');
-            if(halfEl) halfEl.textContent = `R$ ${(orderTotal / 2).toFixed(2)} (50%)`;
+            if(halfEl) halfEl.textContent = 'R$ ' + formatCurrency(orderTotal / 2) + ' (50%)';
             const creditEl = document.getElementById('credit-payment-value');
-            if(creditEl) creditEl.textContent = `R$ ${orderTotal.toFixed(2)}`;
+            if(creditEl) creditEl.textContent = 'R$ ' + formatCurrency(orderTotal);
         }
 
         function selectPaymentOption(option) {
             selectedPaymentOption = option;
             document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
-            document.getElementById(`option-${option}`).classList.add('selected');
+            document.getElementById('option-' + option).classList.add('selected');
         }
 
         function processOrder() {
@@ -875,7 +878,7 @@
             paymentAmount = (selectedPaymentOption === 'half') ? orderTotal / 2 : orderTotal;
             
             orderData = {
-                name, email, phone, sizes,
+                name: name, email: email, phone: phone, sizes: sizes,
                 notes: document.getElementById('notes').value,
                 quantities: {
                     linha: parseInt(document.getElementById('qty_linha').value) || 0,
@@ -888,8 +891,8 @@
                 paymentAmount: paymentAmount
             };
 
-            document.getElementById('payment-total').textContent = `R$ ${orderTotal.toFixed(2)}`;
-            document.getElementById('payment-now').textContent = `R$ ${paymentAmount.toFixed(2)}`;
+            document.getElementById('payment-total').textContent = 'R$ ' + formatCurrency(orderTotal);
+            document.getElementById('payment-now').textContent = 'R$ ' + formatCurrency(paymentAmount);
             
             if (selectedPaymentOption === 'credit') {
                 document.getElementById('payment-title').textContent = "Pagamento via Cartão";
@@ -907,7 +910,7 @@
                 
                 if(selectedPaymentOption === 'half') {
                     document.getElementById('msg-half').style.display = 'block';
-                    document.getElementById('remaining-amount').textContent = `R$ ${(orderTotal/2).toFixed(2)}`;
+                    document.getElementById('remaining-amount').textContent = 'R$ ' + formatCurrency(orderTotal / 2);
                 } else {
                     document.getElementById('msg-half').style.display = 'none';
                 }
@@ -936,7 +939,7 @@
 
         function sendEmail(subjectPrefix) {
             const formData = new URLSearchParams();
-            formData.append('_subject', `${subjectPrefix} - ACEJI`);
+            formData.append('_subject', subjectPrefix + ' - ACEJI');
             formData.append('_template', 'table');
             
             formData.append('Cliente', orderData.name);
@@ -949,15 +952,15 @@
             else if (selectedPaymentOption === 'credit') payType = 'CARTÃO (MERCADO PAGO)';
             formData.append('Forma de Pagamento', payType);
             
-            formData.append('Total do Pedido', `R$ ${orderData.total.toFixed(2)}`);
-            formData.append('Valor Pago Agora', `R$ ${orderData.paymentAmount.toFixed(2)}`);
+            formData.append('Total do Pedido', 'R$ ' + formatCurrency(orderData.total));
+            formData.append('Valor Pago Agora', 'R$ ' + formatCurrency(orderData.paymentAmount));
             
             let itensStr = '';
-            if(orderData.quantities.linha > 0) itensStr += `${orderData.quantities.linha}x Camisa Linha; `;
-            if(orderData.quantities.goleiro_rosa > 0) itensStr += `${orderData.quantities.goleiro_rosa}x Goleiro Rosa; `;
-            if(orderData.quantities.caneca > 0) itensStr += `${orderData.quantities.caneca}x Caneca Oficial; `;
-            if(orderData.quantities.tirante > 0) itensStr += `${orderData.quantities.tirante}x Tirante; `;
-            if(orderData.quantities.combo > 0) itensStr += `${orderData.quantities.combo}x Combo (Caneca + Tirante); `;
+            if(orderData.quantities.linha > 0) itensStr += orderData.quantities.linha + 'x Camisa Linha; ';
+            if(orderData.quantities.goleiro_rosa > 0) itensStr += orderData.quantities.goleiro_rosa + 'x Goleiro Rosa; ';
+            if(orderData.quantities.caneca > 0) itensStr += orderData.quantities.caneca + 'x Caneca Oficial; ';
+            if(orderData.quantities.tirante > 0) itensStr += orderData.quantities.tirante + 'x Tirante; ';
+            if(orderData.quantities.combo > 0) itensStr += orderData.quantities.combo + 'x Combo (Caneca + Tirante); ';
             
             formData.append('Itens Comprados', itensStr || 'Nenhum item');
             
@@ -981,34 +984,34 @@
             else if (selectedPaymentOption === 'half') payType = 'PIX PARCELADO';
             else if (selectedPaymentOption === 'credit') payType = 'CARTÃO (MERCADO PAGO)';
             
-            let msg = `*PEDIDO LOJA ACEJI*\n\n`;
-            msg += `*Nome:* ${orderData.name}\n`;
-            msg += `*Pagamento:* ${payType}\n`;
-            msg += `*Total Pedido:* R$ ${orderData.total.toFixed(2)}\n`;
+            let msg = '*PEDIDO LOJA ACEJI*\n\n';
+            msg += '*Nome:* ' + orderData.name + '\n';
+            msg += '*Pagamento:* ' + payType + '\n';
+            msg += '*Total Pedido:* R$ ' + formatCurrency(orderData.total) + '\n';
             
             if (selectedPaymentOption !== 'credit') {
-                msg += `*Valor Pago Agora:* R$ ${orderData.paymentAmount.toFixed(2)}\n\n`;
+                msg += '*Valor Pago Agora:* R$ ' + formatCurrency(orderData.paymentAmount) + '\n\n';
             } else {
-                msg += `*Aguardando link de pagamento.*\n\n`;
+                msg += '*Aguardando link de pagamento.*\n\n';
             }
             
-            msg += `*Itens:*\n`;
-            if(orderData.quantities.linha > 0) msg += `- Camisa Linha: ${orderData.quantities.linha}\n`;
-            if(orderData.quantities.goleiro_rosa > 0) msg += `- Goleiro Rosa: ${orderData.quantities.goleiro_rosa}\n`;
-            if(orderData.quantities.caneca > 0) msg += `- Caneca Oficial: ${orderData.quantities.caneca}\n`;
-            if(orderData.quantities.tirante > 0) msg += `- Tirante: ${orderData.quantities.tirante}\n`;
-            if(orderData.quantities.combo > 0) msg += `- Combo (Caneca + Tirante): ${orderData.quantities.combo}\n`;
+            msg += '*Itens:*\n';
+            if(orderData.quantities.linha > 0) msg += '- Camisa Linha: ' + orderData.quantities.linha + '\n';
+            if(orderData.quantities.goleiro_rosa > 0) msg += '- Goleiro Rosa: ' + orderData.quantities.goleiro_rosa + '\n';
+            if(orderData.quantities.caneca > 0) msg += '- Caneca Oficial: ' + orderData.quantities.caneca + '\n';
+            if(orderData.quantities.tirante > 0) msg += '- Tirante: ' + orderData.quantities.tirante + '\n';
+            if(orderData.quantities.combo > 0) msg += '- Combo (Caneca + Tirante): ' + orderData.quantities.combo + '\n';
             
             if(orderData.sizes && orderData.sizes.trim() !== '') {
-                msg += `\n*Tamanhos:*\n${orderData.sizes}\n`;
+                msg += '\n*Tamanhos:*\n' + orderData.sizes + '\n';
             }
             
             if(orderData.notes && orderData.notes.trim() !== '') {
-                msg += `\n*Observações:*\n${orderData.notes}\n`;
+                msg += '\n*Observações:*\n' + orderData.notes + '\n';
             }
             
             const encodedMsg = encodeURIComponent(msg);
-            window.open(`https://wa.me/5541997122329?text=${encodedMsg}`, '_blank');
+            window.open('https://wa.me/5541997122329?text=' + encodedMsg, '_blank');
         }
 
         function copyPixKey() {
@@ -1018,24 +1021,24 @@
 
         // --- MANIPULAÇÃO DE IMAGENS ---
         function openModalCurrentImage(type) {
-            document.getElementById('modalImage').src = document.getElementById(`image-${type}`).src;
+            document.getElementById('modalImage').src = document.getElementById('image-' + type).src;
             document.getElementById('imageModal').style.display = 'block';
         }
         function closeModal() { document.getElementById('imageModal').style.display = 'none'; }
         
         function flipImage(type) {
-            const img = document.getElementById(`image-${type}`);
+            const img = document.getElementById('image-' + type);
             if(img.src.includes('Frente')) showBack(type); else showFront(type);
         }
         function showFront(type) {
             const baseUrl = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/';
             const map = { 'linha': 'Uniforme%201%20Frente.png', 'rosa': 'Uniforme%20Rosa%20Frente.png' };
-            document.getElementById(`image-${type}`).src = baseUrl + map[type];
+            document.getElementById('image-' + type).src = baseUrl + map[type];
         }
         function showBack(type) {
             const baseUrl = 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/';
             const map = { 'linha': 'Uniforme%201%20Costas.png', 'rosa': 'Uniforme%20Rosa%20Costas.png' };
-            document.getElementById(`image-${type}`).src = baseUrl + map[type];
+            document.getElementById('image-' + type).src = baseUrl + map[type];
         }
         
         window.onclick = function(e) { if(e.target == document.getElementById('imageModal')) closeModal(); }
