@@ -18,6 +18,7 @@
             --secondary: #F1C40F; 
             --accent: #E74C3C; 
             --blue: #3498DB;
+            --purple: #9B59B6;
             --light: #333333; 
             --dark: #FFFFFF; 
             --text: #E0E0E0;
@@ -105,7 +106,6 @@
         }
         .category-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(46, 204, 113, 0.15); border-color: var(--primary); }
         
-        /* Modificador para o card encerrado */
         .category-card.closed-card:hover { border-color: var(--accent); box-shadow: 0 15px 30px rgba(231, 76, 60, 0.15); }
         .category-card.closed-card::before { background: var(--accent); }
         .category-card.closed-card:hover .icon-container { background-color: var(--accent); color: white; }
@@ -133,24 +133,8 @@
         input[type="text"], input[type="email"], input[type="tel"], input[type="number"], select, textarea { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 4px; font-size: 16px; background-color: var(--bg-input); color: var(--text); }
         input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); }
         
-        .checkbox-container { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 15px; background: var(--bg-input); padding: 15px; border-radius: 8px; border: 1px solid var(--border); }
-        .checkbox-container input[type="checkbox"] { margin-top: 5px; width: 22px; height: 22px; accent-color: var(--primary); cursor: pointer;}
-        .checkbox-container label { font-weight: normal; margin-bottom: 0; color: var(--text); font-size: 0.95rem; cursor: pointer;}
-
-        .info-box { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 8px; border-left: 4px solid var(--primary); margin-bottom: 25px; font-size: 0.95rem; }
-        .info-box h3 { color: var(--secondary); margin-bottom: 10px; margin-top: 20px; font-size: 1.2rem; }
-        .info-box ul { margin-left: 20px; margin-top: 10px; margin-bottom: 15px; }
-        .info-box li { margin-bottom: 8px; }
-        .info-box p { margin-bottom: 12px; }
-
         .btn-submit { background-color: var(--primary); color: #121212; border: none; padding: 15px 30px; font-size: 18px; font-weight: bold; border-radius: 4px; cursor: pointer; display: block; width: 100%; transition: background-color 0.3s; margin-top: 20px; text-align: center; text-decoration: none;}
         .btn-submit:hover { background-color: #27AE60; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(46, 204, 113, 0.2); }
-        .btn-submit:disabled { background-color: #555; cursor: not-allowed; transform: none; box-shadow: none; }
-
-        .btn-whatsapp { background-color: #25D366; color: white; }
-        .btn-whatsapp:hover { background-color: #1EBE55; }
-        .btn-group { background-color: #3498DB; color: white; }
-        .btn-group:hover { background-color: #2980B9; }
 
         /* --- ESTILOS DA LOJA --- */
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px; }
@@ -178,6 +162,26 @@
         .payment-option { border: 2px solid var(--border); border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; background: var(--bg-input); }
         .payment-option.selected { border-color: var(--primary); background-color: rgba(46, 204, 113, 0.1); box-shadow: 0 4px 12px rgba(46, 204, 113, 0.15); }
         .payment-option-value { font-size: 1.3rem; font-weight: bold; color: var(--primary); }
+
+        /* --- TABELAS E GRUPOS JIFSC --- */
+        .table-responsive { overflow-x: auto; margin-bottom: 40px; border-radius: 8px; border: 1px solid var(--border); }
+        .jifsc-table { width: 100%; border-collapse: collapse; background: var(--bg-input); color: var(--text); min-width: 600px; }
+        .jifsc-table th, .jifsc-table td { border: 1px solid var(--border); padding: 12px; text-align: center; font-size: 0.9rem; }
+        .jifsc-table th { background: linear-gradient(135deg, #8E44AD, #6C3483); color: white; font-weight: bold; text-transform: uppercase; font-size: 1rem; }
+        .jifsc-table td { background: var(--bg-container); }
+        .jifsc-table .highlight-jve { background-color: var(--primary); color: #121212; font-weight: bold; box-shadow: inset 0 0 10px rgba(0,0,0,0.2); }
+        .jifsc-table tr:hover td { background-color: rgba(255,255,255,0.05); }
+        .jifsc-table tr:hover .highlight-jve { background-color: #27AE60; }
+        
+        .group-header-title { color: var(--dark); font-size: 1.5rem; margin-top: 30px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .group-header-title i { color: var(--purple); }
+
+        .matchups-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .matchup-card { background: var(--bg-container); border: 1px solid var(--border); border-left: 4px solid var(--primary); padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        .matchup-card h3 { color: var(--primary); margin-bottom: 12px; font-size: 1.1rem; border-bottom: 1px solid var(--border); padding-bottom: 8px;}
+        .matchup-card ul { list-style: none; padding: 0; }
+        .matchup-card li { margin-bottom: 8px; font-weight: 500; display: flex; align-items: center; gap: 10px; font-size: 0.95rem;}
+        .matchup-card li i { color: var(--accent); font-size: 0.8rem; }
 
         /* --- PAGAMENTO E CONFIRMAÇÃO --- */
         .payment-page, .confirmation-page { display: none; text-align: center; padding: 40px 20px; }
@@ -323,11 +327,11 @@
                     <span class="btn-access">Ver Produtos</span>
                 </div>
 
-                <div class="category-card closed-card" onclick="showJifsc()">
-                    <div class="icon-container" style="color: var(--accent); background-color: rgba(231, 76, 60, 0.1);"><i class="fas fa-lock"></i></div>
+                <div class="category-card" onclick="showJifsc()">
+                    <div class="icon-container" style="color: var(--accent); background-color: rgba(231, 76, 60, 0.1);"><i class="fas fa-trophy"></i></div>
                     <h3 class="category-title">JIFSC Gerais</h3>
-                    <p class="category-desc">Inscrições encerradas para as modalidades dos Jogos do IFSC.</p>
-                    <span class="btn-access" style="border-color: var(--accent); color: var(--accent);">Encerrado</span>
+                    <p class="category-desc">Veja os grupos e enfrentamentos das nossas modalidades.</p>
+                    <span class="btn-access" style="border-color: var(--accent); color: var(--accent);">Ver Tabelas</span>
                 </div>
 
                 <div class="category-card" onclick="showEvents()">
@@ -356,7 +360,7 @@
             </footer>
         </div>
 
-        <!-- ============================== INSCRIÇÃO JIFSC (ENCERRADA) ============================== -->
+        <!-- ============================== INSCRIÇÃO JIFSC E GRUPOS ============================== -->
         <div id="jifsc-section">
             <header>
                 <button class="btn-back-menu" onclick="showMenu()">
@@ -371,14 +375,215 @@
                 </div>
             </header>
             
-            <div class="form-container" style="text-align: center;">
-                <h2 class="section-title" style="border-bottom: none; color: var(--accent); margin-bottom: 20px; font-size: 2rem;">
-                    <i class="fas fa-times-circle"></i> Inscrições Encerradas
+            <div class="form-container">
+                <h2 class="section-title">
+                    <i class="fas fa-calendar-check"></i> Inscrições Encerradas
                 </h2>
                 
-                <div style="background: rgba(231, 76, 60, 0.1); padding: 25px; border-left: 4px solid var(--accent); border-radius: 8px; margin-bottom: 30px; font-size: 1.1rem; text-align: center; line-height: 1.6;">
-                    As inscrições para as modalidades do <strong>JIFSC Gerais 2026</strong> foram oficialmente encerradas. <br><br>
-                    Agradecemos a todos os alunos atletas pelo interesse e participação!
+                <div style="background: rgba(231, 76, 60, 0.1); padding: 20px; border-left: 4px solid var(--accent); border-radius: 8px; margin-bottom: 40px; font-size: 1rem; line-height: 1.6;">
+                    As inscrições para as modalidades do <strong>JIFSC Gerais 2026</strong> foram oficialmente encerradas. Confira abaixo os grupos e os confrontos da nossa atlética!
+                </div>
+
+                <!-- ENFRENTAMENTOS JOINVILLE -->
+                <h2 class="section-title"><i class="fas fa-fist-raised"></i> Enfrentamentos - Joinville</h2>
+                <div class="matchups-container">
+                    <div class="matchup-card">
+                        <h3>Basquete 3x3 Masculino</h3>
+                        <ul>
+                            <li><i class="fas fa-times"></i> Canoinhas</li>
+                            <li><i class="fas fa-times"></i> Garopaba</li>
+                        </ul>
+                    </div>
+                    <div class="matchup-card">
+                        <h3>Futsal Feminino</h3>
+                        <ul>
+                            <li><i class="fas fa-times"></i> Xanxerê</li>
+                            <li><i class="fas fa-times"></i> Jaraguá do Sul-Rau</li>
+                        </ul>
+                    </div>
+                    <div class="matchup-card">
+                        <h3>Futsal Masculino</h3>
+                        <ul>
+                            <li><i class="fas fa-times"></i> Caçador</li>
+                            <li><i class="fas fa-times"></i> São Carlos</li>
+                            <li><i class="fas fa-times"></i> Jaraguá do Sul-Rau</li>
+                        </ul>
+                    </div>
+                    <div class="matchup-card">
+                        <h3>Vôlei Misto</h3>
+                        <ul>
+                            <li><i class="fas fa-times"></i> Jaraguá do Sul-Centro</li>
+                            <li><i class="fas fa-times"></i> São José</li>
+                            <li><i class="fas fa-times"></i> Garopaba</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- TABELAS DE GRUPOS -->
+                <h2 class="section-title"><i class="fas fa-users"></i> Grupos JIFSC 2026</h2>
+                
+                <h3 class="group-header-title"><i class="fas fa-basketball-ball"></i> Basquete 3x3 Masculino</h3>
+                <div class="table-responsive">
+                    <table class="jifsc-table">
+                        <thead>
+                            <tr>
+                                <th>Grupo A</th>
+                                <th>Grupo B</th>
+                                <th>Grupo C</th>
+                                <th>Grupo D</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>LAGES</td>
+                                <td>SÃO LOURENÇO DO OESTE</td>
+                                <td>CANOINHAS</td>
+                                <td>SÃO JOSÉ</td>
+                            </tr>
+                            <tr>
+                                <td>CHAPECÓ</td>
+                                <td>JARAGUÁ DO SUL-RAU</td>
+                                <td class="highlight-jve">JOINVILLE</td>
+                                <td>CRICIÚMA</td>
+                            </tr>
+                            <tr>
+                                <td>FLORIANÓPOLIS-CENTRO</td>
+                                <td>FLORIANÓPOLIS-CONTINENTE</td>
+                                <td>GAROPABA</td>
+                                <td>GASPAR</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="group-header-title"><i class="fas fa-futbol"></i> Futsal Feminino</h3>
+                <div class="table-responsive">
+                    <table class="jifsc-table">
+                        <thead>
+                            <tr>
+                                <th>Grupo A</th>
+                                <th>Grupo B</th>
+                                <th>Grupo C</th>
+                                <th>Grupo D</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>FLORIANÓPOLIS-CONTINENTE</td>
+                                <td>URUPEMA</td>
+                                <td>SÃO MIGUEL DO OESTE</td>
+                                <td>XANXERÊ</td>
+                            </tr>
+                            <tr>
+                                <td>CHAPECÓ</td>
+                                <td>LAGES</td>
+                                <td>ARARANGUÁ</td>
+                                <td>JARAGUÁ DO SUL-RAU</td>
+                            </tr>
+                            <tr>
+                                <td>FLORIANÓPOLIS-CENTRO</td>
+                                <td>GASPAR</td>
+                                <td>ITAJAÍ</td>
+                                <td class="highlight-jve">JOINVILLE</td>
+                            </tr>
+                            <tr>
+                                <td>SÃO JOSÉ</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="group-header-title"><i class="fas fa-futbol"></i> Futsal Masculino</h3>
+                <div class="table-responsive">
+                    <table class="jifsc-table">
+                        <thead>
+                            <tr>
+                                <th>Grupo A</th>
+                                <th>Grupo B</th>
+                                <th>Grupo C</th>
+                                <th>Grupo D</th>
+                                <th>Grupo E</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SÃO JOSÉ</td>
+                                <td>GAROPABA</td>
+                                <td>CAÇADOR</td>
+                                <td>LAGES</td>
+                                <td>ITAJAÍ</td>
+                            </tr>
+                            <tr>
+                                <td>TUBARÃO</td>
+                                <td>SÃO MIGUEL DO OESTE</td>
+                                <td>SÃO CARLOS</td>
+                                <td>PALHOÇA</td>
+                                <td>CANOINHAS</td>
+                            </tr>
+                            <tr>
+                                <td>FLORIANÓPOLIS-CONTINENTE</td>
+                                <td>CRICIÚMA</td>
+                                <td>JARAGUÁ DO SUL-RAU</td>
+                                <td>XANXERÊ</td>
+                                <td>FLORIANÓPOLIS-CENTRO</td>
+                            </tr>
+                            <tr>
+                                <td>GASPAR</td>
+                                <td>JARAGUÁ DO SUL-CENTRO</td>
+                                <td class="highlight-jve">JOINVILLE</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="group-header-title"><i class="fas fa-volleyball-ball"></i> Vôlei Misto</h3>
+                <div class="table-responsive">
+                    <table class="jifsc-table">
+                        <thead>
+                            <tr>
+                                <th>Grupo A</th>
+                                <th>Grupo B</th>
+                                <th>Grupo C</th>
+                                <th>Grupo D</th>
+                                <th>Grupo E</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SÃO LOURENÇO DO OESTE</td>
+                                <td>JARAGUÁ DO SUL-CENTRO</td>
+                                <td>LAGES</td>
+                                <td>GASPAR</td>
+                                <td>FLORIANÓPOLIS-CONTINENTE</td>
+                            </tr>
+                            <tr>
+                                <td>SÃO CARLOS</td>
+                                <td class="highlight-jve">JOINVILLE</td>
+                                <td>SÃO MIGUEL DO OESTE</td>
+                                <td>PALHOÇA</td>
+                                <td>TUBARÃO</td>
+                            </tr>
+                            <tr>
+                                <td>ARARANGUÁ</td>
+                                <td>SÃO JOSÉ</td>
+                                <td>CAÇADOR</td>
+                                <td>CHAPECÓ</td>
+                                <td>CANOINHAS</td>
+                            </tr>
+                            <tr>
+                                <td>CRICIÚMA</td>
+                                <td>GAROPABA</td>
+                                <td>ITAJAÍ</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 
                 <button class="btn-submit" onclick="showMenu()" style="max-width: 250px; margin: 0 auto; background-color: var(--light); color: white;">Voltar ao Menu</button>
