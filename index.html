@@ -224,7 +224,7 @@
         .close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .close:hover { color: var(--primary); }
         
-        /* Modal de Gestão - CORRIGIDO O OVERFLOW */
+        /* Modal de Gestão */
         .member-modal-content { 
             background: var(--bg-container); 
             margin: 5% auto; 
@@ -449,7 +449,8 @@
                         </div>
                         <div class="roster-card">
                             <h3><i class="fas fa-users"></i> Relacionados</h3>
-                            <ul><li>Montanha <span class="player-number">28</span></li><li>R Mota <span class="player-number">9</span></li><li>M Onofre <span class="player-number">5</span></li><li>Trentini <span class="player-number">12</span></li><li>Mateus B <span class="player-number">14</span></li><li>H Sena <span class="player-number">7</span></li><li>Gabbe <span class="player-number">69</span></li><li>Fetter <span class="player-number">22</span></li><li>Amanda <span class="player-number">25</span></li><li>Day <span class="player-number">32</span></li><li>Victor <span class="player-number">10</span></li></ul>
+                            <!-- ADICIONADO A TAG (C) NO MONTANHA -->
+                            <ul><li>Montanha <span class="player-pos">(C)</span> <span class="player-number">28</span></li><li>R Mota <span class="player-number">9</span></li><li>M Onofre <span class="player-number">5</span></li><li>Trentini <span class="player-number">12</span></li><li>Mateus B <span class="player-number">14</span></li><li>H Sena <span class="player-number">7</span></li><li>Gabbe <span class="player-number">69</span></li><li>Fetter <span class="player-number">22</span></li><li>Amanda <span class="player-number">25</span></li><li>Day <span class="player-number">32</span></li><li>Victor <span class="player-number">10</span></li></ul>
                         </div>
                     </div>
                     <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos</h3>
@@ -725,7 +726,10 @@
             { date: '2026-11-07', title: 'JIFSC Gerais', colorClass: 'color-blue', location: 'Acessar página de inscrição', link: 'showJifsc()' },
             { date: '2026-11-08', title: 'JIFSC Gerais', colorClass: 'color-blue', location: 'Acessar página de inscrição', link: 'showJifsc()' }
         ];
-        let currentCalDate = new Date(2026, 3, 1); 
+        
+        // CORREÇÃO APLICADA AQUI: Inicia com o mês atual da pessoa
+        let currentCalDate = new Date(); 
+        currentCalDate.setDate(1); // Garante que o cálculo do mês não dê problema nos dias 31
 
         function toggleEventView(viewType) {
             if(viewType === 'list') {
