@@ -89,7 +89,6 @@
         .btn-access { margin-top: auto; background-color: transparent; color: var(--primary); border: 2px solid var(--primary); padding: 8px 20px; border-radius: 20px; font-weight: bold; transition: all 0.3s; }
         .category-card:hover .btn-access { background-color: var(--primary); color: #121212; }
 
-        /* ABA DE EVENTOS INCLUÍDA NO DISPLAY: NONE INICIAL PARA CORRIGIR O BUG */
         #shop-section, #jifsc-section, #gestao-section, #events-section { display: none; }
         
         .form-container { padding: 30px; text-align: left; }
@@ -256,6 +255,15 @@
             .product-grid { grid-template-columns: 1fr; gap: 15px; margin-bottom: 20px; }
             .info-grid { grid-template-columns: 1fr; }
             .roster-card ul { grid-template-columns: 1fr 1fr; }
+            
+            /* CORREÇÕES PARA O CALENDÁRIO CABER NO CELULAR */
+            #events-calendar { padding: 15px 10px; } /* Reduz o padding lateral do container geral */
+            .calendar-days { gap: 4px; } /* Reduz o espaço entre os quadrados dos dias */
+            .calendar-day { padding: 4px; min-height: 70px; } /* Reduz o tamanho e margens de cada dia */
+            .calendar-weekdays { font-size: 0.75rem; margin-bottom: 5px; } /* Ajusta o tamanho da fonte dos dias da semana (Dom, Seg...) */
+            .calendar-day-num { font-size: 0.9rem; } /* Ajusta o número do dia */
+            .calendar-month-year { font-size: 1.4rem; } /* Ajusta o título do mês */
+            .event-badge { font-size: 0.6rem; padding: 2px; margin-top: 2px; } /* Ajusta a tag de evento caso haja */
         }
     </style>
 </head>
