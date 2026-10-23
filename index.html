@@ -89,7 +89,8 @@
         .btn-access { margin-top: auto; background-color: transparent; color: var(--primary); border: 2px solid var(--primary); padding: 8px 20px; border-radius: 20px; font-weight: bold; transition: all 0.3s; }
         .category-card:hover .btn-access { background-color: var(--primary); color: #121212; }
 
-        #shop-section, #jifsc-section, #gestao-section { display: none; }
+        /* ABA DE EVENTOS INCLUÍDA NO DISPLAY: NONE INICIAL PARA CORRIGIR O BUG */
+        #shop-section, #jifsc-section, #gestao-section, #events-section { display: none; }
         
         .form-container { padding: 30px; text-align: left; }
         .section-title { color: var(--primary); border-bottom: 2px solid var(--secondary); padding-bottom: 5px; margin: 15px 0 15px; }
@@ -449,7 +450,6 @@
                         </div>
                         <div class="roster-card">
                             <h3><i class="fas fa-users"></i> Relacionados</h3>
-                            <!-- ADICIONADO A TAG (C) NO MONTANHA -->
                             <ul><li>Montanha <span class="player-pos">(C)</span> <span class="player-number">28</span></li><li>R Mota <span class="player-number">9</span></li><li>M Onofre <span class="player-number">5</span></li><li>Trentini <span class="player-number">12</span></li><li>Mateus B <span class="player-number">14</span></li><li>H Sena <span class="player-number">7</span></li><li>Gabbe <span class="player-number">69</span></li><li>Fetter <span class="player-number">22</span></li><li>Amanda <span class="player-number">25</span></li><li>Day <span class="player-number">32</span></li><li>Victor <span class="player-number">10</span></li></ul>
                         </div>
                     </div>
@@ -727,9 +727,8 @@
             { date: '2026-11-08', title: 'JIFSC Gerais', colorClass: 'color-blue', location: 'Acessar página de inscrição', link: 'showJifsc()' }
         ];
         
-        // CORREÇÃO APLICADA AQUI: Inicia com o mês atual da pessoa
         let currentCalDate = new Date(); 
-        currentCalDate.setDate(1); // Garante que o cálculo do mês não dê problema nos dias 31
+        currentCalDate.setDate(1); 
 
         function toggleEventView(viewType) {
             if(viewType === 'list') {
