@@ -224,8 +224,21 @@
         .close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .close:hover { color: var(--primary); }
         
-        /* Modal de Gestão */
-        .member-modal-content { background: var(--bg-container); margin: 5% auto; padding: 40px 30px; border-radius: 15px; max-width: 500px; text-align: center; border: 2px solid var(--primary); position: relative; animation: fadeInSmooth 0.3s; }
+        /* Modal de Gestão - CORRIGIDO O OVERFLOW */
+        .member-modal-content { 
+            background: var(--bg-container); 
+            margin: 5% auto; 
+            padding: 40px 30px 30px; 
+            border-radius: 15px; 
+            max-width: 500px; 
+            text-align: center; 
+            border: 2px solid var(--primary); 
+            position: relative; 
+            animation: fadeInSmooth 0.3s; 
+            overflow-y: auto; 
+            max-height: 80vh; 
+        }
+        
         .member-modal-img { width: 200px; height: 200px; border-radius: 50%; object-fit: cover; border: 5px solid var(--primary); margin-bottom: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
         .member-modal-name { font-size: 2rem; color: var(--dark); font-weight: bold; margin-bottom: 5px; }
         .member-modal-role { font-size: 1.1rem; color: var(--secondary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; font-weight: bold; }
