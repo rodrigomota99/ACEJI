@@ -157,6 +157,13 @@
         .matchup-card li i { color: var(--accent); font-size: 0.9rem; margin: 0 10px; }
         .roster-card ul { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
         .roster-card li { background: var(--bg-input); padding: 8px 12px; border-radius: 4px; font-size: 0.95rem; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        
+        /* CSS NOVO: Efeito e estilos para fotos do elenco */
+        .player-avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px; transition: transform 0.3s ease; cursor: pointer; border: 1px solid var(--primary); }
+        .player-avatar:hover, .player-avatar:active { transform: scale(3); z-index: 10; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .roster-card li.has-avatar { display: flex; align-items: center; justify-content: space-between; padding-left: 5px; }
+        .roster-card li.has-avatar > div { display: flex; align-items: center; }
+
         .player-number { background: var(--secondary); color: #121212; font-weight: bold; padding: 2px 6px; border-radius: 4px; font-size: 0.85rem; }
         .player-pos { color: var(--primary); font-size: 0.8rem; font-weight: bold; margin-left: 5px; }
 
@@ -404,331 +411,352 @@
 
 
         <!-- ============================== SECÃO JIFSC ============================== -->
-        <div id="jifsc-section">
-            <header>
-                <button class="btn-back-menu" onclick="showMenu()"><i class="fas fa-arrow-left"></i> Menu</button>
-                <div class="logo-container" onclick="showMenu()">
-                    <div class="logo-img"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Escudo.png" alt="Logo ACEJI"></div>
-                    <div class="logo-aceji" style="font-size: 1.5rem;">JIFSC GERAIS</div>
-                </div>
-            </header>
-            
-            <div class="form-container">
-                <div class="modality-tabs">
-                    <button class="tab-btn active" onclick="showModality('tab-futsal-masc')">Futsal Masc</button>
-                    <button class="tab-btn" onclick="showModality('tab-futsal-fem')">Futsal Fem</button>
-                    <button class="tab-btn" onclick="showModality('tab-volei')">Vôlei Misto</button>
-                    <button class="tab-btn" onclick="showModality('tab-basquete-masc')">Basq. Masc</button>
-                    <button class="tab-btn" onclick="showModality('tab-basquete-fem')">Basq. Fem</button>
-                    <button class="tab-btn" onclick="showModality('tab-tenis')">Tênis de Mesa</button>
-                    <button class="tab-btn" onclick="showModality('tab-xadrez')">Xadrez</button>
-                </div>
+        <style>
+    /* Estilos novos para os avatares das jogadoras */
+    .player-avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px; transition: transform 0.3s ease; cursor: pointer; border: 1px solid var(--primary); }
+    .player-avatar:hover, .player-avatar:active { transform: scale(3); z-index: 10; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+    .roster-card li.has-avatar { display: flex; align-items: center; justify-content: space-between; padding-left: 5px; }
+    .roster-card li.has-avatar > div { display: flex; align-items: center; }
+</style>
 
-                <!-- FUTSAL MASCULINO -->
-                <div id="tab-futsal-masc" class="modality-content active">
-                    <h3 class="group-header-title"><i class="fas fa-futbol"></i> Futsal Masculino</h3>
-                    <div class="info-grid">
-                        <div class="matchup-card">
-                            <h3><i class="fas fa-fist-raised"></i> Enfrentamentos (Fase de Grupos)</h3>
-                            <ul>
-                                <li>Jaraguá - RAU <i class="fas fa-times"></i> Joinville</li>
-                                <li>Caçador <i class="fas fa-times"></i> Joinville</li>
-                                <li>Joinville <i class="fas fa-times"></i> São Carlos</li>
-                            </ul>
-                        </div>
-                        <div class="roster-card">
-                            <h3><i class="fas fa-users"></i> Relacionados</h3>
-                            <ul><li>Tadeu <span class="player-number">67</span></li><li>Willian <span class="player-number">7</span></li><li>Vini Branco <span class="player-number">12</span></li><li>Figueiredo <span class="player-number">50</span></li><li>Vini Silva <span class="player-number">5</span></li><li>Rengel <span class="player-pos">(C)</span> <span class="player-number">8</span></li><li>Matheus Pitz <span class="player-number">14</span></li><li>A Schotten <span class="player-number">80</span></li><li>Rafael <span class="player-number">10</span></li><li>Ruan <span class="player-pos">(G)</span> <span class="player-number">99</span></li></ul>
-                        </div>
-                    </div>
-                    <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos</h3>
-                    <div class="table-responsive">
-                        <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th><th>Grupo E</th><th>Grupo F</th></tr></thead>
-                        <tbody><tr><td>SÃO JOSÉ</td><td>CRICIÚMA</td><td>CAÇADOR</td><td>LAGES</td><td>ITAJAÍ</td><td>URUPEMA</td></tr><tr><td>TUBARÃO</td><td>GAROPABA</td><td>SÃO CARLOS</td><td>PALHOÇA</td><td>CANOINHAS</td><td>CHAPECÓ</td></tr><tr><td>FLN - CONTINENTE</td><td>JARAGUÁ - CENTRO</td><td>JARAGUÁ - RAU</td><td>XANXERÊ</td><td>FLN - CENTRO</td><td>ARARANGUÁ</td></tr><tr><td>GASPAR</td><td>S.M.O.</td><td class="highlight-jve">JOINVILLE</td><td></td><td></td><td></td></tr></tbody></table>
-                    </div>
-                    <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
-                    <div class="bracket-wrapper">
-                        <div class="bracket-container">
-                            <div class="bracket-column">
-                                <div class="bracket-round-title">Semifinal</div>
-                                <div class="bracket-match">
-                                    <div class="bracket-team">Venc 32 <span class="bracket-score">-</span></div>
-                                    <div class="bracket-team">Venc 33 <span class="bracket-score">-</span></div>
-                                </div>
-                                <div class="bracket-match">
-                                    <div class="bracket-team">Venc 34 <span class="bracket-score">-</span></div>
-                                    <div class="bracket-team">Venc 35 <span class="bracket-score">-</span></div>
-                                </div>
-                            </div>
-                            <div class="bracket-column" style="justify-content: center;">
-                                <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
-                                <div class="bracket-match final-match">
-                                    <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
-                                    <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FUTSAL FEMININO -->
-                <div id="tab-futsal-fem" class="modality-content">
-                    <h3 class="group-header-title"><i class="fas fa-futbol"></i> Futsal Feminino</h3>
-                    <div class="info-grid">
-                        <div class="matchup-card">
-                            <h3><i class="fas fa-fist-raised"></i> Enfrentamentos (Fase de Grupos)</h3>
-                            <ul>
-                                <li>Xanxerê <i class="fas fa-times"></i> Joinville</li>
-                                <li>Jaraguá - RAU <i class="fas fa-times"></i> Joinville</li>
-                            </ul>
-                        </div>
-                        <div class="roster-card">
-                            <h3><i class="fas fa-users"></i> Relacionados</h3>
-                            <ul><li>Jana <span class="player-pos">(C)</span> <span class="player-number">10</span></li><li>J. Carvalho <span class="player-number">8</span></li><li>Agra <span class="player-number">12</span></li><li>Pompeu <span class="player-number">21</span></li><li>Karol <span class="player-number">11</span></li><li>Maria Maia <span class="player-pos">(G)</span> <span class="player-number">1</span></li><li>Sabrina <span class="player-number">13</span></li><li>Lari <span class="player-number">4</span></li><li>Indara Magalhães <span class="player-number">27</span></li><li>Day <span class="player-number">9</span></li><li>Rodrigo Mota <span class="player-pos">(Téc)</span></li></ul>
-                        </div>
-                    </div>
-                    <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos</h3>
-                    <div class="table-responsive">
-                        <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th></tr></thead>
-                        <tbody><tr><td>FLN - CONTINENTE</td><td>URUPEMA</td><td>S.M.O.</td><td>XANXERÊ</td></tr><tr><td>CHAPECÓ</td><td>LAGES</td><td>ARARANGUÁ</td><td>JARAGUÁ - RAU</td></tr><tr><td>FLN - CENTRO</td><td>GASPAR</td><td>ITAJAÍ</td><td class="highlight-jve">JOINVILLE</td></tr><tr><td>SÃO JOSÉ</td><td></td><td></td><td></td></tr></tbody></table>
-                    </div>
-                    <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
-                    <div class="bracket-wrapper">
-                        <div class="bracket-container">
-                            <div class="bracket-column">
-                                <div class="bracket-round-title">Semifinal</div>
-                                <div class="bracket-match">
-                                    <div class="bracket-team">Venc 16 <span class="bracket-score">-</span></div>
-                                    <div class="bracket-team">Venc 17 <span class="bracket-score">-</span></div>
-                                </div>
-                                <div class="bracket-match">
-                                    <div class="bracket-team">Venc 18 <span class="bracket-score">-</span></div>
-                                    <div class="bracket-team">Venc 19 <span class="bracket-score">-</span></div>
-                                </div>
-                            </div>
-                            <div class="bracket-column" style="justify-content: center;">
-                                <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
-                                <div class="bracket-match final-match">
-                                    <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
-                                    <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- VÔLEI MISTO -->
-                <div id="tab-volei" class="modality-content">
-                    <h3 class="group-header-title"><i class="fas fa-volleyball-ball"></i> Vôlei Misto</h3>
-                    <div class="info-grid">
-                        <div class="matchup-card">
-                            <h3><i class="fas fa-fist-raised"></i> Enfrentamentos (Fase de Grupos)</h3>
-                            <ul>
-                                <li>Jaraguá - Centro <i class="fas fa-times"></i> Joinville</li>
-                                <li>Joinville <i class="fas fa-times"></i> São José</li>
-                                <li>Garopaba <i class="fas fa-times"></i> Joinville</li>
-                            </ul>
-                        </div>
-                        <div class="roster-card">
-                            <h3><i class="fas fa-users"></i> Relacionados</h3>
-                            <ul><li>Montanha <span class="player-pos">(C)</span> <span class="player-number">28</span></li><li>R Mota <span class="player-number">9</span></li><li>M Onofre <span class="player-number">5</span></li><li>Trentini <span class="player-number">12</span></li><li>Mateus B <span class="player-number">14</span></li><li>H Sena <span class="player-number">7</span></li><li>Gabbe <span class="player-number">69</span></li><li>Fetter <span class="player-number">22</span></li><li>Amanda <span class="player-number">25</span></li><li>Day <span class="player-number">32</span></li><li>Victor <span class="player-number">10</span></li></ul>
-                        </div>
-                    </div>
-                    <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos</h3>
-                    <div class="table-responsive">
-                        <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th><th>Grupo E</th><th>Grupo F</th></tr></thead>
-                        <tbody><tr><td>S.L.O.</td><td>JARAGUÁ - CENTRO</td><td>LAGES</td><td>GASPAR</td><td>FLN - CONTINENTE</td><td>JARAGUÁ - RAU</td></tr><tr><td>SÃO CARLOS</td><td class="highlight-jve">JOINVILLE</td><td>S.M.O.</td><td>PALHOÇA</td><td>TUBARÃO</td><td>XANXERÊ</td></tr><tr><td>ARARANGUÁ</td><td>SÃO JOSÉ</td><td>CAÇADOR</td><td>CHAPECÓ</td><td>CANOINHAS</td><td>FLN - CENTRO</td></tr><tr><td>CRICIÚMA</td><td>GAROPABA</td><td>ITAJAÍ</td><td></td><td></td><td></td></tr></tbody></table>
-                    </div>
-                    <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
-                    <div class="bracket-wrapper">
-                        <div class="bracket-container">
-                            <div class="bracket-column">
-                                <div class="bracket-round-title">Semifinal</div>
-                                <div class="bracket-match">
-                                    <div class="bracket-team">Venc 32 <span class="bracket-score">-</span></div>
-                                    <div class="bracket-team">Venc 33 <span class="bracket-score">-</span></div>
-                                </div>
-                                <div class="bracket-match">
-                                    <div class="bracket-team">Venc 34 <span class="bracket-score">-</span></div>
-                                    <div class="bracket-team">Venc 35 <span class="bracket-score">-</span></div>
-                                </div>
-                            </div>
-                            <div class="bracket-column" style="justify-content: center;">
-                                <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
-                                <div class="bracket-match final-match">
-                                    <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
-                                    <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- BASQUETE MASC -->
-                <div id="tab-basquete-masc" class="modality-content">
-                    <h3 class="group-header-title"><i class="fas fa-basketball-ball"></i> Basquete 3x3 Masculino</h3>
-                    <div class="info-grid">
-                        <div class="matchup-card">
-                            <h3><i class="fas fa-fist-raised"></i> Enfrentamentos (Fase de Grupos)</h3>
-                            <ul>
-                                <li>Canoinhas <i class="fas fa-times"></i> Joinville</li>
-                                <li>Joinville <i class="fas fa-times"></i> Garopaba</li>
-                            </ul>
-                        </div>
-                        <div class="roster-card">
-                            <h3><i class="fas fa-users"></i> Relacionados</h3>
-                            <ul><li>JP <span class="player-number">14</span></li><li>Pegoretti <span class="player-number">8</span></li><li>CJ <span class="player-number">19</span></li><li>Fetter <span class="player-number">22</span></li></ul>
-                        </div>
-                    </div>
-                    <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos</h3>
-                    <div class="table-responsive">
-                        <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th></tr></thead>
-                        <tbody><tr><td>LAGES</td><td>S.L.O.</td><td>CANOINHAS</td><td>SÃO JOSÉ</td></tr><tr><td>CHAPECÓ</td><td>JARAGUÁ - RAU</td><td class="highlight-jve">JOINVILLE</td><td>CRICIÚMA</td></tr><tr><td>FLN - CENTRO</td><td>FLN - CONTINENTE</td><td>GAROPABA</td><td>GASPAR</td></tr></tbody></table>
-                    </div>
-                    <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
-                    <div class="bracket-wrapper">
-                        <div class="bracket-container">
-                            <div class="bracket-column">
-                                <div class="bracket-round-title">Semifinal</div>
-                                <div class="bracket-match">
-                                    <div class="bracket-team">Venc 13 <span class="bracket-score">-</span></div>
-                                    <div class="bracket-team">Venc 14 <span class="bracket-score">-</span></div>
-                                </div>
-                                <div class="bracket-match">
-                                    <div class="bracket-team">Venc 15 <span class="bracket-score">-</span></div>
-                                    <div class="bracket-team">Venc 16 <span class="bracket-score">-</span></div>
-                                </div>
-                            </div>
-                            <div class="bracket-column" style="justify-content: center;">
-                                <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
-                                <div class="bracket-match final-match">
-                                    <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
-                                    <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- BASQUETE FEM -->
-                <div id="tab-basquete-fem" class="modality-content">
-                    <h3 class="group-header-title"><i class="fas fa-basketball-ball"></i> Basquete 3x3 Feminino</h3>
-                    <div class="info-grid">
-                        <div class="matchup-card">
-                            <h3><i class="fas fa-fist-raised"></i> Enfrentamentos (Fase de Grupos)</h3>
-                            <ul>
-                                <li>São José <i class="fas fa-times"></i> Joinville</li>
-                                <li>Joinville <i class="fas fa-times"></i> FLN - Centro</li>
-                            </ul>
-                        </div>
-                        <div class="roster-card">
-                            <h3><i class="fas fa-users"></i> Relacionados</h3>
-                            <ul><li>Agra <span class="player-number">12</span></li><li>Pompeu <span class="player-number">21</span></li><li>Jana <span class="player-number">10</span></li><li>Amanda <span class="player-number">7</span></li></ul>
-                        </div>
-                    </div>
-                    <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos</h3>
-                    <div class="table-responsive">
-                        <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th></tr></thead>
-                        <tbody><tr><td>CHAPECÓ</td><td>SÃO JOSÉ</td></tr><tr><td>CRICIÚMA</td><td class="highlight-jve">JOINVILLE</td></tr><tr><td>GASPAR</td><td>FLN - CENTRO</td></tr></tbody></table>
-                    </div>
-                    <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
-                    <div class="bracket-wrapper">
-                        <div class="bracket-container">
-                            <div class="bracket-column" style="justify-content: center;">
-                                <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
-                                <div class="bracket-match final-match">
-                                    <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
-                                    <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TÊNIS DE MESA -->
-                <div id="tab-tenis" class="modality-content">
-                    <h3 class="group-header-title"><i class="fas fa-table-tennis"></i> Tênis de Mesa</h3>
-                    <div class="info-grid">
-                        <div class="roster-card">
-                            <h3><i class="fas fa-male"></i> Masculino</h3>
-                            <ul><li>Dhomini <span class="player-pos">(Joinville 1)</span></li><li>Douglas <span class="player-pos">(Joinville 2)</span></li></ul>
-                        </div>
-                        <div class="roster-card" style="border-left-color: var(--instagram);">
-                            <h3 style="color: var(--instagram);"><i class="fas fa-female"></i> Feminino</h3>
-                            <ul><li>Emily Amanda <span class="player-pos">(Joinville 1)</span></li><li>Helen <span class="player-pos">(Joinville 2)</span></li></ul>
-                        </div>
-                    </div>
-                    
-                    <div class="matchup-card" style="margin-bottom: 30px;">
-                        <h3><i class="fas fa-fist-raised"></i> Enfrentamentos (Joinville)</h3>
-                        <ul>
-                            <li>Araranguá 1 <i class="fas fa-times"></i> Joinville 2 <span class="player-pos">(Fem)</span></li>
-                            <li>Joinville 2 <i class="fas fa-times"></i> FLN-Continente 1 <span class="player-pos">(Fem)</span></li>
-                            <li>Canoinhas 1 <i class="fas fa-times"></i> Joinville 1 <span class="player-pos">(Fem)</span></li>
-                            <li>Araranguá 2 <i class="fas fa-times"></i> Joinville 1 <span class="player-pos">(Fem)</span></li>
-                            <li>Joinville 2 <i class="fas fa-times"></i> FLN-Continente 1 <span class="player-pos">(Masc)</span></li>
-                            <li>FLN-Continente 1 <i class="fas fa-times"></i> Joinville 1 <span class="player-pos">(Masc)</span></li>
-                            <li>Joinville 2 <i class="fas fa-times"></i> Joinville 1 <span class="player-pos">(Masc)</span></li>
-                        </ul>
-                    </div>
-
-                    <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
-                    <div class="bracket-wrapper">
-                        <div class="bracket-container">
-                            <div class="bracket-column">
-                                <div class="bracket-round-title">Semifinal</div>
-                                <div class="bracket-match">
-                                    <div class="bracket-team">Venc. Quartas 1 <span class="bracket-score">-</span></div>
-                                    <div class="bracket-team">Venc. Quartas 2 <span class="bracket-score">-</span></div>
-                                </div>
-                                <div class="bracket-match">
-                                    <div class="bracket-team">Venc. Quartas 3 <span class="bracket-score">-</span></div>
-                                    <div class="bracket-team">Venc. Quartas 4 <span class="bracket-score">-</span></div>
-                                </div>
-                            </div>
-                            <div class="bracket-column" style="justify-content: center;">
-                                <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
-                                <div class="bracket-match final-match">
-                                    <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
-                                    <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- XADREZ -->
-                <div id="tab-xadrez" class="modality-content">
-                    <h3 class="group-header-title"><i class="fas fa-chess-knight"></i> Xadrez</h3>
-                    <div class="info-grid">
-                        <div class="roster-card">
-                            <h3><i class="fas fa-male"></i> Masculino</h3>
-                            <ul><li>Luis</li><li>CJ</li></ul>
-                        </div>
-                        <div class="roster-card" style="border-left-color: var(--instagram);">
-                            <h3 style="color: var(--instagram);"><i class="fas fa-female"></i> Feminino</h3>
-                            <ul><li>Agnes</li><li>J. Carvalho</li></ul>
-                        </div>
-                    </div>
-                    
-                    <div class="matchup-card" style="margin-bottom: 30px;">
-                        <h3><i class="fas fa-clock"></i> Cronograma - Sistema Suíço</h3>
-                        <ul>
-                            <li>07/11 - 14h00: 1ª Rodada</li>
-                            <li>07/11 - 15h00: 2ª Rodada</li>
-                            <li>07/11 - 16h00: 3ª Rodada</li>
-                            <li>08/11 - 08h00: 4ª Rodada</li>
-                            <li>08/11 - 09h00: 5ª Rodada</li>
-                            <li>08/11 - 10h00: 6ª Rodada</li>
-                        </ul>
-                    </div>
-                    
-                </div>
-
-                <button class="btn-submit" onclick="showMenu()" style="max-width: 250px; margin: 0 auto; background-color: var(--light); color: white;">Voltar ao Menu</button>
-            </div>
-            <footer style="text-align: center; margin-top: 20px; padding: 20px;"><p>ACEJI - A.A.A.CULTURAL E ESPORTIVA | IFSC JOINVILLE &copy; 2026</p></footer>
+<!-- ============================== SECÃO JIFSC ============================== -->
+<div id="jifsc-section">
+    <header>
+        <button class="btn-back-menu" onclick="showMenu()"><i class="fas fa-arrow-left"></i> Menu</button>
+        <div class="logo-container" onclick="showMenu()">
+            <div class="logo-img"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Escudo.png" alt="Logo ACEJI"></div>
+            <div class="logo-aceji" style="font-size: 1.5rem;">JIFSC GERAIS</div>
         </div>
+    </header>
+    
+    <div class="form-container">
+        <div class="modality-tabs">
+            <button class="tab-btn active" onclick="showModality('tab-futsal-masc')">Futsal Masc</button>
+            <button class="tab-btn" onclick="showModality('tab-futsal-fem')">Futsal Fem</button>
+            <button class="tab-btn" onclick="showModality('tab-volei')">Vôlei Misto</button>
+            <button class="tab-btn" onclick="showModality('tab-basquete-masc')">Basq. Masc</button>
+            <button class="tab-btn" onclick="showModality('tab-basquete-fem')">Basq. Fem</button>
+            <button class="tab-btn" onclick="showModality('tab-tenis')">Tênis de Mesa</button>
+            <button class="tab-btn" onclick="showModality('tab-xadrez')">Xadrez</button>
+        </div>
+
+        <!-- FUTSAL MASCULINO -->
+        <div id="tab-futsal-masc" class="modality-content active">
+            <h3 class="group-header-title"><i class="fas fa-futbol"></i> Futsal Masculino</h3>
+            <div class="info-grid">
+                <div class="matchup-card">
+                    <h3><i class="fas fa-clock"></i> Enfrentamentos (Fase de Grupos)</h3>
+                    <ul>
+                        <li>12:50: Jaraguá - RAU <i class="fas fa-times"></i> Joinville</li>
+                        <li>15:30: Caçador <i class="fas fa-times"></i> Joinville</li>
+                        <li>17:50: Joinville <i class="fas fa-times"></i> São Carlos</li>
+                    </ul>
+                </div>
+                <div class="roster-card">
+                    <h3><i class="fas fa-users"></i> Relacionados</h3>
+                    <ul><li>Tadeu <span class="player-number">67</span></li><li>Willian <span class="player-number">7</span></li><li>Vini Branco <span class="player-number">12</span></li><li>Figueiredo <span class="player-number">50</span></li><li>Vini Silva <span class="player-number">5</span></li><li>Rengel <span class="player-pos">(C)</span> <span class="player-number">8</span></li><li>Matheus Pitz <span class="player-number">14</span></li><li>A Schotten <span class="player-number">80</span></li><li>Rafael <span class="player-number">10</span></li><li>Ruan <span class="player-pos">(G)</span> <span class="player-number">99</span></li></ul>
+                </div>
+            </div>
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos</h3>
+            <div class="table-responsive">
+                <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th><th>Grupo E</th><th>Grupo F</th></tr></thead>
+                <tbody><tr><td>SÃO JOSÉ</td><td>CRICIÚMA</td><td>CAÇADOR</td><td>LAGES</td><td>ITAJAÍ</td><td>URUPEMA</td></tr><tr><td>TUBARÃO</td><td>GAROPABA</td><td>SÃO CARLOS</td><td>PALHOÇA</td><td>CANOINHAS</td><td>CHAPECÓ</td></tr><tr><td>FLN - CONTINENTE</td><td>JARAGUÁ - CENTRO</td><td>JARAGUÁ - RAU</td><td>XANXERÊ</td><td>FLN - CENTRO</td><td>ARARANGUÁ</td></tr><tr><td>GASPAR</td><td>S.M.O.</td><td class="highlight-jve">JOINVILLE</td><td></td><td></td><td></td></tr></tbody></table>
+            </div>
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
+            <div class="bracket-wrapper">
+                <div class="bracket-container">
+                    <div class="bracket-column">
+                        <div class="bracket-round-title">Semifinal</div>
+                        <div class="bracket-match">
+                            <div class="bracket-team">Venc 32 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Venc 33 <span class="bracket-score">-</span></div>
+                        </div>
+                        <div class="bracket-match">
+                            <div class="bracket-team">Venc 34 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Venc 35 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                    <div class="bracket-column" style="justify-content: center;">
+                        <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
+                        <div class="bracket-match final-match">
+                            <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FUTSAL FEMININO -->
+        <div id="tab-futsal-fem" class="modality-content">
+            <h3 class="group-header-title"><i class="fas fa-futbol"></i> Futsal Feminino</h3>
+            <div class="info-grid">
+                <div class="matchup-card">
+                    <h3><i class="fas fa-clock"></i> Enfrentamentos (Fase de Grupos)</h3>
+                    <ul>
+                        <li>14:30: Jaraguá - RAU <i class="fas fa-times"></i> Joinville</li>
+                        <li>16:10: Xanxerê <i class="fas fa-times"></i> Joinville</li>
+                    </ul>
+                </div>
+                <div class="roster-card">
+                    <h3><i class="fas fa-users"></i> Relacionados</h3>
+                    <ul>
+                        <li class="has-avatar"><div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Jana.png" class="player-avatar" alt="Jana"> Jana <span class="player-pos">(C)</span></div> <span class="player-number">10</span></li>
+                        <li class="has-avatar"><div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Jessica%20Carvalho.png" class="player-avatar" alt="J. Carvalho"> J. Carvalho</div> <span class="player-number">8</span></li>
+                        <li class="has-avatar"><div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Agra.png" class="player-avatar" alt="Agra"> Agra</div> <span class="player-number">12</span></li>
+                        <li class="has-avatar"><div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Rafa.png" class="player-avatar" alt="Pompeu"> Pompeu</div> <span class="player-number">21</span></li>
+                        <li class="has-avatar"><div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Karol.png" class="player-avatar" alt="Karol"> Karol</div> <span class="player-number">11</span></li>
+                        <li class="has-avatar"><div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Maria%20Maia.png" class="player-avatar" alt="Maria Maia"> Maria Maia <span class="player-pos">(G)</span></div> <span class="player-number">1</span></li>
+                        <li class="has-avatar"><div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Sabrina.png" class="player-avatar" alt="Sabrina"> Sabrina</div> <span class="player-number">13</span></li>
+                        <li class="has-avatar"><div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Lari.png" class="player-avatar" alt="Lari"> Lari</div> <span class="player-number">4</span></li>
+                        <li>Indara Magalhães <span class="player-number">27</span></li>
+                        <li class="has-avatar"><div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Day.png" class="player-avatar" alt="Day"> Day</div> <span class="player-number">9</span></li>
+                        <li class="has-avatar"><div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Rodrigo%20Mota.png" class="player-avatar" alt="Rodrigo Mota"> Rodrigo Mota <span class="player-pos">(Téc)</span></div></li>
+                    </ul>
+                </div>
+            </div>
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos</h3>
+            <div class="table-responsive">
+                <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th></tr></thead>
+                <tbody><tr><td>FLN - CONTINENTE</td><td>URUPEMA</td><td>S.M.O.</td><td>XANXERÊ</td></tr><tr><td>CHAPECÓ</td><td>LAGES</td><td>ARARANGUÁ</td><td>JARAGUÁ - RAU</td></tr><tr><td>FLN - CENTRO</td><td>GASPAR</td><td>ITAJAÍ</td><td class="highlight-jve">JOINVILLE</td></tr><tr><td>SÃO JOSÉ</td><td></td><td></td><td></td></tr></tbody></table>
+            </div>
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
+            <div class="bracket-wrapper">
+                <div class="bracket-container">
+                    <div class="bracket-column">
+                        <div class="bracket-round-title">Semifinal</div>
+                        <div class="bracket-match">
+                            <div class="bracket-team">Venc 16 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Venc 17 <span class="bracket-score">-</span></div>
+                        </div>
+                        <div class="bracket-match">
+                            <div class="bracket-team">Venc 18 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Venc 19 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                    <div class="bracket-column" style="justify-content: center;">
+                        <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
+                        <div class="bracket-match final-match">
+                            <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VÔLEI MISTO -->
+        <div id="tab-volei" class="modality-content">
+            <h3 class="group-header-title"><i class="fas fa-volleyball-ball"></i> Vôlei Misto</h3>
+            <div class="info-grid">
+                <div class="matchup-card">
+                    <h3><i class="fas fa-clock"></i> Enfrentamentos (Fase de Grupos)</h3>
+                    <ul>
+                        <li>12:00: Jaraguá - Centro <i class="fas fa-times"></i> Joinville</li>
+                        <li>14:30: Joinville <i class="fas fa-times"></i> São José</li>
+                        <li>16:30: Garopaba <i class="fas fa-times"></i> Joinville</li>
+                    </ul>
+                </div>
+                <div class="roster-card">
+                    <h3><i class="fas fa-users"></i> Relacionados</h3>
+                    <ul><li>Montanha <span class="player-pos">(C)</span> <span class="player-number">28</span></li><li>R Mota <span class="player-number">9</span></li><li>M Onofre <span class="player-number">5</span></li><li>Trentini <span class="player-number">12</span></li><li>Mateus B <span class="player-number">14</span></li><li>H Sena <span class="player-number">7</span></li><li>Gabbe <span class="player-number">69</span></li><li>Fetter <span class="player-number">22</span></li><li>Amanda <span class="player-number">25</span></li><li>Day <span class="player-number">32</span></li><li>Victor <span class="player-number">10</span></li></ul>
+                </div>
+            </div>
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos</h3>
+            <div class="table-responsive">
+                <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th><th>Grupo E</th><th>Grupo F</th></tr></thead>
+                <tbody><tr><td>S.L.O.</td><td>JARAGUÁ - CENTRO</td><td>LAGES</td><td>GASPAR</td><td>FLN - CONTINENTE</td><td>JARAGUÁ - RAU</td></tr><tr><td>SÃO CARLOS</td><td class="highlight-jve">JOINVILLE</td><td>S.M.O.</td><td>PALHOÇA</td><td>TUBARÃO</td><td>XANXERÊ</td></tr><tr><td>ARARANGUÁ</td><td>SÃO JOSÉ</td><td>CAÇADOR</td><td>CHAPECÓ</td><td>CANOINHAS</td><td>FLN - CENTRO</td></tr><tr><td>CRICIÚMA</td><td>GAROPABA</td><td>ITAJAÍ</td><td></td><td></td><td></td></tr></tbody></table>
+            </div>
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
+            <div class="bracket-wrapper">
+                <div class="bracket-container">
+                    <div class="bracket-column">
+                        <div class="bracket-round-title">Semifinal</div>
+                        <div class="bracket-match">
+                            <div class="bracket-team">Venc 32 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Venc 33 <span class="bracket-score">-</span></div>
+                        </div>
+                        <div class="bracket-match">
+                            <div class="bracket-team">Venc 34 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Venc 35 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                    <div class="bracket-column" style="justify-content: center;">
+                        <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
+                        <div class="bracket-match final-match">
+                            <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BASQUETE MASC -->
+        <div id="tab-basquete-masc" class="modality-content">
+            <h3 class="group-header-title"><i class="fas fa-basketball-ball"></i> Basquete 3x3 Masculino</h3>
+            <div class="info-grid">
+                <div class="matchup-card">
+                    <h3><i class="fas fa-clock"></i> Enfrentamentos (Fase de Grupos)</h3>
+                    <ul>
+                        <li>12:00: Canoinhas <i class="fas fa-times"></i> Joinville</li>
+                        <li>13:00: Joinville <i class="fas fa-times"></i> Garopaba</li>
+                    </ul>
+                </div>
+                <div class="roster-card">
+                    <h3><i class="fas fa-users"></i> Relacionados</h3>
+                    <ul><li>Jhonny <span class="player-pos">(C)</span></li><li>JP <span class="player-number">14</span></li><li>Pegoretti <span class="player-number">8</span></li><li>CJ <span class="player-number">19</span></li><li>Fetter <span class="player-number">22</span></li></ul>
+                </div>
+            </div>
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos</h3>
+            <div class="table-responsive">
+                <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th></tr></thead>
+                <tbody><tr><td>LAGES</td><td>S.L.O.</td><td>CANOINHAS</td><td>SÃO JOSÉ</td></tr><tr><td>CHAPECÓ</td><td>JARAGUÁ - RAU</td><td class="highlight-jve">JOINVILLE</td><td>CRICIÚMA</td></tr><tr><td>FLN - CENTRO</td><td>FLN - CONTINENTE</td><td>GAROPABA</td><td>GASPAR</td></tr></tbody></table>
+            </div>
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
+            <div class="bracket-wrapper">
+                <div class="bracket-container">
+                    <div class="bracket-column">
+                        <div class="bracket-round-title">Semifinal</div>
+                        <div class="bracket-match">
+                            <div class="bracket-team">Venc 13 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Venc 14 <span class="bracket-score">-</span></div>
+                        </div>
+                        <div class="bracket-match">
+                            <div class="bracket-team">Venc 15 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Venc 16 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                    <div class="bracket-column" style="justify-content: center;">
+                        <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
+                        <div class="bracket-match final-match">
+                            <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BASQUETE FEM -->
+        <div id="tab-basquete-fem" class="modality-content">
+            <h3 class="group-header-title"><i class="fas fa-basketball-ball"></i> Basquete 3x3 Feminino</h3>
+            <div class="info-grid">
+                <div class="matchup-card">
+                    <h3><i class="fas fa-clock"></i> Enfrentamentos (Fase de Grupos)</h3>
+                    <ul>
+                        <li>11:45: São José <i class="fas fa-times"></i> Joinville</li>
+                        <li>12:15: Joinville <i class="fas fa-times"></i> FLN - Centro</li>
+                    </ul>
+                </div>
+                <div class="roster-card">
+                    <h3><i class="fas fa-users"></i> Relacionados</h3>
+                    <ul><li>Agra <span class="player-number">12</span></li><li>Pompeu <span class="player-number">21</span></li><li>Jana <span class="player-pos">(C)</span> <span class="player-number">10</span></li><li>Amanda <span class="player-number">7</span></li></ul>
+                </div>
+            </div>
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos</h3>
+            <div class="table-responsive">
+                <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th></tr></thead>
+                <tbody><tr><td>CHAPECÓ</td><td>SÃO JOSÉ</td></tr><tr><td>CRICIÚMA</td><td class="highlight-jve">JOINVILLE</td></tr><tr><td>GASPAR</td><td>FLN - CENTRO</td></tr></tbody></table>
+            </div>
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
+            <div class="bracket-wrapper">
+                <div class="bracket-container">
+                    <div class="bracket-column" style="justify-content: center;">
+                        <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
+                        <div class="bracket-match final-match">
+                            <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TÊNIS DE MESA -->
+        <div id="tab-tenis" class="modality-content">
+            <h3 class="group-header-title"><i class="fas fa-table-tennis"></i> Tênis de Mesa</h3>
+            <div class="info-grid">
+                <div class="roster-card">
+                    <h3><i class="fas fa-male"></i> Masculino</h3>
+                    <ul><li>Dhomini</li><li>Douglas</li></ul>
+                </div>
+                <div class="roster-card" style="border-left-color: var(--instagram);">
+                    <h3 style="color: var(--instagram);"><i class="fas fa-female"></i> Feminino</h3>
+                    <ul><li>Emily Amanda</li><li>Helen</li></ul>
+                </div>
+            </div>
+            
+            <div class="matchup-card" style="margin-bottom: 30px;">
+                <h3><i class="fas fa-clock"></i> Enfrentamentos</h3>
+                <ul>
+                    <li>11:45: Araranguá 1 <i class="fas fa-times"></i> Helen <span class="player-pos">(Fem)</span></li>
+                    <li>12:30: Douglas <i class="fas fa-times"></i> FLN-Continente 1 <span class="player-pos">(Masc)</span></li>
+                    <li>12:45: Helen <i class="fas fa-times"></i> FLN-Continente 1 <span class="player-pos">(Fem)</span></li>
+                    <li>13:00: Canoinhas 1 <i class="fas fa-times"></i> Emily Amanda <span class="player-pos">(Fem)</span></li>
+                    <li>14:00: S.L.O. 1 <i class="fas fa-times"></i> Emily Amanda <span class="player-pos">(Fem)</span></li>
+                    <li>14:00: FLN-Continente 1 <i class="fas fa-times"></i> Dhomini <span class="player-pos">(Masc)</span></li>
+                    <li>15:15: Douglas <i class="fas fa-times"></i> Dhomini <span class="player-pos">(Masc)</span></li>
+                </ul>
+            </div>
+
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
+            <div class="bracket-wrapper">
+                <div class="bracket-container">
+                    <div class="bracket-column">
+                        <div class="bracket-round-title">Semifinal</div>
+                        <div class="bracket-match">
+                            <div class="bracket-team">Venc. Quartas 1 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Venc. Quartas 2 <span class="bracket-score">-</span></div>
+                        </div>
+                        <div class="bracket-match">
+                            <div class="bracket-team">Venc. Quartas 3 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Venc. Quartas 4 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                    <div class="bracket-column" style="justify-content: center;">
+                        <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
+                        <div class="bracket-match final-match">
+                            <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- XADREZ -->
+        <div id="tab-xadrez" class="modality-content">
+            <h3 class="group-header-title"><i class="fas fa-chess-knight"></i> Xadrez</h3>
+            <div class="info-grid">
+                <div class="roster-card">
+                    <h3><i class="fas fa-male"></i> Masculino</h3>
+                    <ul><li>Luis</li><li>CJ</li></ul>
+                </div>
+                <div class="roster-card" style="border-left-color: var(--instagram);">
+                    <h3 style="color: var(--instagram);"><i class="fas fa-female"></i> Feminino</h3>
+                    <ul><li>Agnes</li><li>J. Carvalho</li></ul>
+                </div>
+            </div>
+            
+            <div class="matchup-card" style="margin-bottom: 30px;">
+                <h3><i class="fas fa-clock"></i> Cronograma - Sistema Suíço</h3>
+                <ul>
+                    <li>07/11 - 14h00: 1ª Rodada</li>
+                    <li>07/11 - 15h00: 2ª Rodada</li>
+                    <li>07/11 - 16h00: 3ª Rodada</li>
+                    <li>08/11 - 08h00: 4ª Rodada</li>
+                    <li>08/11 - 09h00: 5ª Rodada</li>
+                    <li>08/11 - 10h00: 6ª Rodada</li>
+                </ul>
+            </div>
+            
+        </div>
+
+        <button class="btn-submit" onclick="showMenu()" style="max-width: 250px; margin: 0 auto; background-color: var(--light); color: white;">Voltar ao Menu</button>
+    </div>
+    <footer style="text-align: center; margin-top: 20px; padding: 20px;"><p>ACEJI - A.A.A.CULTURAL E ESPORTIVA | IFSC JOINVILLE &copy; 2026</p></footer>
+</div>
 
         <!-- ============================== LOJA DE PRODUTOS ============================== -->
         <div id="shop-section">
