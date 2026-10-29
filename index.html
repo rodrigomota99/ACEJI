@@ -412,19 +412,31 @@
 
         <!-- ============================== SECÃO JIFSC ============================== -->
         <style>
-    /* Estilos novos e atualizados para os avatares (maiores e retangulares) */
+    /* Ajustes para Mobile - Evitar cortes de nomes nos confrontos */
+    @media (max-width: 600px) {
+        .matchup-card ul li {
+            font-size: 0.85rem;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.4;
+            padding: 8px 0;
+        }
+        .matchup-card h3 { font-size: 1.1rem; }
+    }
+
+    /* Estilos atualizados para os avatares (Maiores e Retangulares na vertical) */
     .player-avatar { 
         width: 50px; 
-        height: 50px; 
-        border-radius: 4px; /* Retangular com cantos levemente arredondados */
+        height: 70px; /* Retangular vertical */
+        border-radius: 6px; 
         object-fit: cover; 
-        margin-right: 10px; 
+        margin-right: 12px; 
         transition: transform 0.3s ease; 
         cursor: pointer; 
         border: 2px solid var(--primary); 
     }
-    .player-avatar:hover, .player-avatar:active { 
-        transform: scale(2.5); /* Efeito de ampliação */
+    .player-avatar:hover { 
+        transform: scale(1.6); /* Efeito de ampliação ao passar o mouse */
         z-index: 10; 
         position: relative; 
         box-shadow: 0 6px 15px rgba(0,0,0,0.6); 
@@ -433,12 +445,52 @@
         display: flex; 
         align-items: center; 
         justify-content: space-between; 
-        padding: 5px 12px; /* Ajuste para acomodar a foto maior */
+        padding: 6px 10px;
+        cursor: pointer;
     }
-    .roster-card li.has-avatar > div { 
-        display: flex; 
-        align-items: center; 
+    .roster-card li.has-avatar:hover { background-color: rgba(0,0,0,0.05); border-radius: 5px; }
+    .roster-card li.has-avatar > div { display: flex; align-items: center; }
+
+    /* Estilos do Modal da Foto (Lightbox) */
+    .modal-foto {
+        display: none; 
+        position: fixed; 
+        z-index: 99999; 
+        left: 0; top: 0; 
+        width: 100%; height: 100%; 
+        background-color: rgba(0,0,0,0.85);
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(5px);
     }
+    .modal-foto-content {
+        background-color: var(--light);
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        max-width: 90%;
+        width: 320px;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .modal-foto-content img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        border: 3px solid var(--primary);
+    }
+    .modal-foto-nome { margin: 15px 0 5px 0; color: #333; font-size: 1.4rem; }
+    .modal-foto-numero { margin: 0; color: var(--primary); font-size: 1.2rem; font-weight: bold; }
+    .close-modal {
+        position: absolute;
+        top: 10px; right: 15px;
+        color: #888;
+        font-size: 30px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    .close-modal:hover { color: var(--primary); }
 </style>
 
 <!-- ============================== SECÃO JIFSC ============================== -->
@@ -476,7 +528,18 @@
                 </div>
                 <div class="roster-card">
                     <h3><i class="fas fa-users"></i> Relacionados</h3>
-                    <ul><li>Tadeu <span class="player-number">67</span></li><li>Willian <span class="player-number">7</span></li><li>Vini Branco <span class="player-number">12</span></li><li>Figueiredo <span class="player-number">50</span></li><li>Vini Silva <span class="player-number">5</span></li><li>Rengel <span class="player-pos">(C)</span> <span class="player-number">8</span></li><li>Matheus Pitz <span class="player-number">14</span></li><li>A Schotten <span class="player-number">80</span></li><li>Rafael <span class="player-number">10</span></li><li>Ruan <span class="player-pos">(G)</span> <span class="player-number">99</span></li></ul>
+                    <ul>
+                        <li>Vini Silva <span class="player-number">5</span></li>
+                        <li>Willian <span class="player-number">7</span></li>
+                        <li>Rengel <span class="player-pos">(C)</span> <span class="player-number">8</span></li>
+                        <li>Rafael <span class="player-number">10</span></li>
+                        <li>Vini Branco <span class="player-number">12</span></li>
+                        <li>Matheus Pitz <span class="player-number">14</span></li>
+                        <li>Figueiredo <span class="player-number">50</span></li>
+                        <li>Tadeu <span class="player-number">67</span></li>
+                        <li>A Schotten <span class="player-number">80</span></li>
+                        <li>Ruan <span class="player-pos">(G)</span> <span class="player-number">99</span></li>
+                    </ul>
                 </div>
             </div>
             <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos</h3>
@@ -521,19 +584,41 @@
                     </ul>
                 </div>
                 <div class="roster-card">
-                    <h3><i class="fas fa-users"></i> Relacionados</h3>
+                    <h3><i class="fas fa-users"></i> Relacionadas</h3>
                     <ul>
-                        <li class="has-avatar"><div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Jana.png" class="player-avatar" alt="Jana"> Jana <span class="player-pos">(C)</span></div> <span class="player-number">10</span></li>
-                        <li class="has-avatar"><div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Jessica%20Carvalho.png" class="player-avatar" alt="J. Carvalho"> J. Carvalho</div> <span class="player-number">8</span></li>
-                        <li class="has-avatar"><div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Agra.png" class="player-avatar" alt="Agra"> Agra</div> <span class="player-number">12</span></li>
-                        <li class="has-avatar"><div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Rafa.png" class="player-avatar" alt="Pompeu"> Pompeu</div> <span class="player-number">21</span></li>
-                        <li class="has-avatar"><div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Karol.png" class="player-avatar" alt="Karol"> Karol</div> <span class="player-number">11</span></li>
-                        <li class="has-avatar"><div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Maria%20Maia.png" class="player-avatar" alt="Maria Maia"> Maria Maia <span class="player-pos">(G)</span></div> <span class="player-number">1</span></li>
-                        <li class="has-avatar"><div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Sabrina.png" class="player-avatar" alt="Sabrina"> Sabrina</div> <span class="player-number">13</span></li>
-                        <li class="has-avatar"><div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Lari.png" class="player-avatar" alt="Lari"> Lari</div> <span class="player-number">4</span></li>
-                        <li>Indara Magalhães <span class="player-number">27</span></li>
-                        <li class="has-avatar"><div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Day.png" class="player-avatar" alt="Day"> Day</div> <span class="player-number">9</span></li>
-                        <li class="has-avatar"><div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Rodrigo%20Mota.png" class="player-avatar" alt="Rodrigo Mota"> Rodrigo Mota <span class="player-pos">(Téc)</span></div></li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Maria%20Maia.png', 'Maria Maia', '1')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Maria%20Maia.png" class="player-avatar" alt="Maria Maia"> Maria Maia <span class="player-pos">(G)</span></div> <span class="player-number">1</span>
+                        </li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Lari.png', 'Lari', '4')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Lari.png" class="player-avatar" alt="Lari"> Lari</div> <span class="player-number">4</span>
+                        </li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Jessica%20Carvalho.png', 'J. Carvalho', '8')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Jessica%20Carvalho.png" class="player-avatar" alt="J. Carvalho"> J. Carvalho</div> <span class="player-number">8</span>
+                        </li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Day.png', 'Day', '9')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Day.png" class="player-avatar" alt="Day"> Day</div> <span class="player-number">9</span>
+                        </li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Jana.png', 'Jana', '10')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Jana.png" class="player-avatar" alt="Jana"> Jana <span class="player-pos">(C)</span></div> <span class="player-number">10</span>
+                        </li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Karol.png', 'Karol', '11')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Karol.png" class="player-avatar" alt="Karol"> Karol</div> <span class="player-number">11</span>
+                        </li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Agra.png', 'Agra', '12')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Agra.png" class="player-avatar" alt="Agra"> Agra</div> <span class="player-number">12</span>
+                        </li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Sabrina.png', 'Sabrina', '13')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Sabrina.png" class="player-avatar" alt="Sabrina"> Sabrina</div> <span class="player-number">13</span>
+                        </li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Rafa.png', 'Pompeu', '21')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Rafa.png" class="player-avatar" alt="Pompeu"> Pompeu</div> <span class="player-number">21</span>
+                        </li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Indara.png', 'Indara Magalhães', '27')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Indara.png" class="player-avatar" alt="Indara"> Indara Magalhães</div> <span class="player-number">27</span>
+                        </li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Rodrigo%20Mota.png', 'Rodrigo Mota', 'Téc')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Rodrigo%20Mota.png" class="player-avatar" alt="Rodrigo Mota"> Rodrigo Mota <span class="player-pos">(Téc)</span></div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -581,7 +666,19 @@
                 </div>
                 <div class="roster-card">
                     <h3><i class="fas fa-users"></i> Relacionados</h3>
-                    <ul><li>Montanha <span class="player-pos">(C)</span> <span class="player-number">28</span></li><li>R Mota <span class="player-number">9</span></li><li>M Onofre <span class="player-number">5</span></li><li>Trentini <span class="player-number">12</span></li><li>Mateus B <span class="player-number">14</span></li><li>H Sena <span class="player-number">7</span></li><li>Gabbe <span class="player-number">69</span></li><li>Fetter <span class="player-number">22</span></li><li>Amanda <span class="player-number">25</span></li><li>Day <span class="player-number">32</span></li><li>Victor <span class="player-number">10</span></li></ul>
+                    <ul>
+                        <li>M Onofre <span class="player-number">5</span></li>
+                        <li>H Sena <span class="player-number">7</span></li>
+                        <li>R Mota <span class="player-number">9</span></li>
+                        <li>Victor <span class="player-number">10</span></li>
+                        <li>Trentini <span class="player-number">12</span></li>
+                        <li>Mateus B <span class="player-number">14</span></li>
+                        <li>Fetter <span class="player-number">22</span></li>
+                        <li>Amanda <span class="player-number">25</span></li>
+                        <li>Montanha <span class="player-pos">(C)</span> <span class="player-number">28</span></li>
+                        <li>Day <span class="player-number">32</span></li>
+                        <li>Gabbe <span class="player-number">69</span></li>
+                    </ul>
                 </div>
             </div>
             <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos</h3>
@@ -627,7 +724,12 @@
                 </div>
                 <div class="roster-card">
                     <h3><i class="fas fa-users"></i> Relacionados</h3>
-                    <ul><li>Jhonny <span class="player-pos">(C)</span></li><li>JP <span class="player-number">14</span></li><li>Pegoretti <span class="player-number">8</span></li><li>CJ <span class="player-number">19</span></li><li>Fetter <span class="player-number">22</span></li></ul>
+                    <ul>
+                        <li>Pegoretti <span class="player-pos">(C)</span> <span class="player-number">8</span></li>
+                        <li>JP <span class="player-number">14</span></li>
+                        <li>CJ <span class="player-number">19</span></li>
+                        <li>Fetter <span class="player-number">22</span></li>
+                    </ul>
                 </div>
             </div>
             <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos</h3>
@@ -672,8 +774,13 @@
                     </ul>
                 </div>
                 <div class="roster-card">
-                    <h3><i class="fas fa-users"></i> Relacionados</h3>
-                    <ul><li>Agra <span class="player-number">12</span></li><li>Pompeu <span class="player-number">21</span></li><li>Jana <span class="player-pos">(C)</span> <span class="player-number">10</span></li><li>Amanda <span class="player-number">7</span></li></ul>
+                    <h3><i class="fas fa-users"></i> Relacionadas</h3>
+                    <ul>
+                        <li>Amanda <span class="player-number">7</span></li>
+                        <li>Jana <span class="player-pos">(C)</span> <span class="player-number">10</span></li>
+                        <li>Agra <span class="player-number">12</span></li>
+                        <li>Pompeu <span class="player-number">21</span></li>
+                    </ul>
                 </div>
             </div>
             <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos</h3>
@@ -704,7 +811,7 @@
                     <ul><li>Dhomini</li><li>Douglas</li></ul>
                 </div>
                 <div class="roster-card" style="border-left-color: var(--instagram);">
-                    <h3 style="color: var(--instagram);"><i class="fas fa-female"></i> Feminino</h3>
+                    <h3 style="color: var(--instagram);"><i class="fas fa-users"></i> Femininas Relacionadas</h3>
                     <ul><li>Emily Amanda</li><li>Helen</li></ul>
                 </div>
             </div>
@@ -749,10 +856,10 @@
             <div class="info-grid">
                 <div class="roster-card">
                     <h3><i class="fas fa-male"></i> Masculino</h3>
-                    <ul><li>Luis</li><li>CJ</li></ul>
+                    <ul><li>CJ</li><li>Luis</li></ul>
                 </div>
                 <div class="roster-card" style="border-left-color: var(--instagram);">
-                    <h3 style="color: var(--instagram);"><i class="fas fa-female"></i> Feminino</h3>
+                    <h3 style="color: var(--instagram);"><i class="fas fa-users"></i> Femininas Relacionadas</h3>
                     <ul><li>Agnes</li><li>J. Carvalho</li></ul>
                 </div>
             </div>
@@ -775,6 +882,38 @@
     </div>
     <footer style="text-align: center; margin-top: 20px; padding: 20px;"><p>ACEJI - A.A.A.CULTURAL E ESPORTIVA | IFSC JOINVILLE &copy; 2026</p></footer>
 </div>
+
+<!-- Modal para Visualização da Foto -->
+<div id="modalFotoAtleta" class="modal-foto" onclick="fecharFotoModal()">
+    <div class="modal-foto-content" onclick="event.stopPropagation()">
+        <span class="close-modal" onclick="fecharFotoModal()">&times;</span>
+        <img id="imgModalAtleta" src="" alt="Foto da Atleta">
+        <h3 id="nomeModalAtleta" class="modal-foto-nome"></h3>
+        <p id="numModalAtleta" class="modal-foto-numero"></p>
+    </div>
+</div>
+
+<script>
+    // Função para abrir o Modal com a foto da atleta
+    function abrirFotoModal(srcImagem, nome, numero) {
+        document.getElementById('imgModalAtleta').src = srcImagem;
+        document.getElementById('nomeModalAtleta').innerText = nome;
+        
+        // Verifica se é número ou texto (ex: Téc)
+        if (numero) {
+            document.getElementById('numModalAtleta').innerText = (numero === 'Téc') ? 'Técnico' : 'Nº ' + numero;
+        } else {
+            document.getElementById('numModalAtleta').innerText = '';
+        }
+        
+        document.getElementById('modalFotoAtleta').style.display = 'flex';
+    }
+
+    // Função para fechar o Modal
+    function fecharFotoModal() {
+        document.getElementById('modalFotoAtleta').style.display = 'none';
+    }
+</script>
 
         <!-- ============================== LOJA DE PRODUTOS ============================== -->
         <div id="shop-section">
