@@ -355,8 +355,8 @@
                 
                 <div class="product-grid">
                     
-                    <div class="member-card" onclick="openMemberModal('Rodrigo', 'Presidente', 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Rodrigo%20Mota.png', 'Cria da Eletroeletrônica e estudante de Engenharia Elétrica, o Rodrigo assumiu a Presidência da ACEJI com a responsabilidade de liderar a nossa Atlética e fazer as coisas acontecerem. Muito envolvido com o dia a dia do IFSC, ele usa toda a sua bagagem para coordenar a nossa equipe e representar os estudantes com foco e seriedade. Tranquilo no trato e parceiro de todo mundo, o Rodrigo sabe a hora exata de cobrar organização dos setores, mas é o primeiro a fechar com a galera e curtir a resenha no pós-jogo. Se a nossa Atlética tá gigante, estruturada e com a vibe lá no alto, o mérito principal é do nosso Presidente.')">
-                        <div class="member-img-container"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Rodrigo%20Mota.png" alt="Rodrigo" class="member-img"></div>
+                    <div class="member-card" onclick="openMemberModal('Rodrigo', 'Presidente', 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Rodrigo%20(2).png', 'Cria da Eletroeletrônica e estudante de Engenharia Elétrica, o Rodrigo assumiu a Presidência da ACEJI com a responsabilidade de liderar a nossa Atlética e fazer as coisas acontecerem. Muito envolvido com o dia a dia do IFSC, ele usa toda a sua bagagem para coordenar a nossa equipe e representar os estudantes com foco e seriedade. Tranquilo no trato e parceiro de todo mundo, o Rodrigo sabe a hora exata de cobrar organização dos setores, mas é o primeiro a fechar com a galera e curtir a resenha no pós-jogo. Se a nossa Atlética tá gigante, estruturada e com a vibe lá no alto, o mérito principal é do nosso Presidente.')">
+                        <div class="member-img-container"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Rodrigo%20(2).png" alt="Rodrigo" class="member-img"></div>
                         <div class="member-name">Rodrigo</div>
                         <div class="member-role">Presidente</div>
                     </div>
@@ -479,8 +479,6 @@
         border-radius: 8px;
         border: 3px solid var(--primary);
     }
-    .modal-foto-nome { margin: 15px 0 5px 0; color: #333; font-size: 1.4rem; }
-    .modal-foto-numero { margin: 0; color: var(--primary); font-size: 1.2rem; font-weight: bold; }
     .close-modal {
         position: absolute;
         top: 10px; right: 15px;
@@ -888,8 +886,8 @@
     <div class="modal-foto-content" onclick="event.stopPropagation()">
         <span class="close-modal" onclick="fecharFotoModal()">&times;</span>
         <img id="imgModalAtleta" src="" alt="Foto da Atleta">
-        <h3 id="nomeModalAtleta" class="modal-foto-nome"></h3>
-        <p id="numModalAtleta" class="modal-foto-numero"></p>
+        <!-- Nome e Número unificados na mesma linha -->
+        <h3 id="nomeModalAtleta" class="modal-foto-nome" style="color: #000; font-weight: bold; margin-top: 15px; text-align: center; width: 100%;"></h3>
     </div>
 </div>
 
@@ -897,15 +895,14 @@
     // Função para abrir o Modal com a foto da atleta
     function abrirFotoModal(srcImagem, nome, numero) {
         document.getElementById('imgModalAtleta').src = srcImagem;
-        document.getElementById('nomeModalAtleta').innerText = nome;
         
-        // Verifica se é número ou texto (ex: Téc)
+        // Junta o nome e o número no mesmo texto
+        let textoNomeNumero = nome;
         if (numero) {
-            document.getElementById('numModalAtleta').innerText = (numero === 'Téc') ? 'Técnico' : 'Nº ' + numero;
-        } else {
-            document.getElementById('numModalAtleta').innerText = '';
+            textoNomeNumero += (numero === 'Téc') ? ' (Técnico)' : ' - Nº ' + numero;
         }
         
+        document.getElementById('nomeModalAtleta').innerText = textoNomeNumero;
         document.getElementById('modalFotoAtleta').style.display = 'flex';
     }
 
@@ -914,6 +911,143 @@
         document.getElementById('modalFotoAtleta').style.display = 'none';
     }
 </script>
+
+        <!-- ============================== LOJA DE PRODUTOS ============================== -->
+        <div id="shop-section">
+            <header>
+                <button class="btn-back-menu" onclick="showMenu()"><i class="fas fa-arrow-left"></i> Menu</button>
+                <div class="logo-container" onclick="showMenu()">
+                    <div class="logo-img"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Escudo.png" alt="Logo ACEJI"></div>
+                    <div class="logo-aceji">PRODUTOS OFICIAIS</div>
+                </div>
+            </header>
+            
+            <div class="form-container" id="form-content">
+                <form id="uniformOrderForm">
+                    <h2 class="section-title">Dados Pessoais</h2>
+                    <div class="form-group"><label>Nome Completo *</label><input type="text" id="name" required></div>
+                    <div class="form-group"><label>E-mail *</label><input type="email" id="email" required></div>
+                    <div class="form-group"><label>Telefone *</label><input type="tel" id="phone" required></div>
+                    
+                    <h2 class="section-title">Uniforme de Linha</h2>
+                    <div class="product-grid">
+                        <div class="product-card">
+                            <div class="product-image-container" id="container-linha">
+                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%201%20Frente.png" class="product-image" id="image-linha" onclick="openModalCurrentImage('linha')">
+                                <div class="zoom-icon" onclick="openModalCurrentImage('linha')"><i class="fas fa-search-plus"></i></div>
+                                <div class="flip-icon" onclick="flipImage('linha')"><i class="fas fa-sync-alt"></i></div>
+                            </div>
+                            <div class="flip-navigation">
+                                <button type="button" class="flip-btn" onclick="showFront('linha')"><i class="fas fa-arrow-left"></i> Frente</button>
+                                <button type="button" class="flip-btn" onclick="showBack('linha')">Verso <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                            <div class="product-title">Camisa de Linha</div>
+                            <div class="product-price">R$ 65,00</div>
+                            <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_linha" class="quantity" min="0" value="0">
+                        </div>
+                    </div>
+                    
+                    <h2 class="section-title">Uniforme de Goleiro/Líbero</h2>
+                    <div class="product-grid">
+                        <div class="product-card">
+                            <div class="product-image-container" id="container-rosa">
+                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%20Rosa%20Frente.png" class="product-image" id="image-rosa" onclick="openModalCurrentImage('rosa')">
+                                <div class="zoom-icon" onclick="openModalCurrentImage('rosa')"><i class="fas fa-search-plus"></i></div>
+                                <div class="flip-icon" onclick="flipImage('rosa')"><i class="fas fa-sync-alt"></i></div>
+                            </div>
+                            <div class="flip-navigation">
+                                <button type="button" class="flip-btn" onclick="showFront('rosa')"><i class="fas fa-arrow-left"></i> Frente</button>
+                                <button type="button" class="flip-btn" onclick="showBack('rosa')">Verso <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                            <div class="product-title">Goleiro Rosa</div>
+                            <div class="product-price">R$ 65,00</div>
+                            <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_goleiro_rosa" class="quantity" min="0" value="0">
+                        </div>
+                    </div>
+
+                    <h2 class="section-title">Acessórios</h2>
+                    <div class="product-grid">
+                        <div class="product-card">
+                            <div class="product-image-container">
+                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Caneca%20novo.png" class="product-image" id="image-caneca" onclick="openModalCurrentImage('caneca')">
+                                <div class="zoom-icon" onclick="openModalCurrentImage('caneca')"><i class="fas fa-search-plus"></i></div>
+                            </div>
+                            <div class="product-title">Caneca Oficial</div>
+                            <div class="product-price">R$ 45,00</div>
+                            <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_caneca" class="quantity" min="0" value="0">
+                        </div>
+                        <div class="product-card">
+                            <div class="product-image-container">
+                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/FRENTE.png" class="product-image" id="image-tirante" onclick="openModalCurrentImage('tirante')">
+                                <div class="zoom-icon" onclick="openModalCurrentImage('tirante')"><i class="fas fa-search-plus"></i></div>
+                            </div>
+                            <div class="product-title">Tirante</div>
+                            <div class="product-price">R$ 10,00</div>
+                            <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_tirante" class="quantity" min="0" value="0">
+                        </div>
+                        <div class="product-card">
+                            <div class="product-image-container">
+                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/caneca%20e%20tirante%20novo.png" class="product-image" id="image-combo" onclick="openModalCurrentImage('combo')">
+                                <div class="zoom-icon" onclick="openModalCurrentImage('combo')"><i class="fas fa-search-plus"></i></div>
+                            </div>
+                            <div class="product-title">Combo (Caneca + Tirante)</div>
+                            <div class="product-price">R$ 50,00</div>
+                            <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_combo" class="quantity" min="0" value="0">
+                        </div>
+                    </div>
+                    
+                    <h2 class="section-title">Tamanhos e Observações</h2>
+                    <div class="form-group"><label>Tamanhos necessários (especificar)</label><textarea id="sizes" rows="3"></textarea></div>
+                    <div class="form-group"><label>Observações:</label><textarea id="notes" rows="3"></textarea></div>
+                    
+                    <h2 class="section-title">Opções de Pagamento</h2>
+                    <div class="payment-options">
+                        <div class="payment-option selected" id="option-full" onclick="selectPaymentOption('full')">
+                            <h3>PIX Integral (100%)</h3><div class="payment-option-value" id="full-payment-value">R$ 0,00</div><p style="font-size: 0.9rem; margin-top:5px; color: var(--text);">Pagamento único.</p>
+                        </div>
+                        <div class="payment-option" id="option-half" onclick="selectPaymentOption('half')">
+                            <h3>PIX Parcelado (50%)</h3><div class="payment-option-value" id="half-payment-value">R$ 0,00</div><p style="font-size: 0.9rem; margin-top:5px; color: var(--text);">50% agora, 50% na entrega.</p>
+                        </div>
+                        <div class="payment-option" id="option-credit" onclick="selectPaymentOption('credit')">
+                            <h3>Cartão de Crédito</h3><div class="payment-option-value" id="credit-payment-value">R$ 0,00</div><p style="font-size: 0.9rem; margin-top:5px; color: var(--text);">Link pelo WhatsApp.</p>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit">Ir para Pagamento</button>
+                </form>
+            </div>
+            
+            <div class="payment-page" id="payment-section">
+                <h2 style="color:var(--primary); margin-bottom:20px;" id="payment-title">Pagamento via PIX</h2>
+                <div style="background: rgba(50, 188, 173, 0.1); padding:15px; border-left:4px solid var(--pix); text-align:left; margin-bottom:20px;">
+                    <p><strong>Total: <span id="payment-total">R$ 0,00</span></strong></p>
+                    <p id="msg-pay-now"><strong>Pagar Agora: <span id="payment-now">R$ 0,00</span></strong></p>
+                    <p id="msg-half" style="display:none; margin-top:10px;">Restante a pagar na entrega: <span id="remaining-amount">R$ 0,00</span></p>
+                    <p id="msg-credit" style="display:none; margin-top:10px; color: var(--accent);"><strong>Atenção:</strong> Solicite o link no WhatsApp.</p>
+                </div>
+                <div id="pix-details-area">
+                    <div class="pix-container">
+                        <div class="qrcode-image"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/QR%20CODE%20LUIS.jpeg" alt="QR Code"></div>
+                        <div style="background:var(--bg-page); padding:10px; border:1px dashed var(--pix); margin-top:15px;">
+                            <p style="font-weight:bold; word-break:break-all;" id="pix-key">atleticaaceji@gmail.com</p>
+                            <button onclick="copyPixKey()" style="background:var(--pix); color:white; border:none; padding:5px 10px; margin-top:10px; cursor:pointer; border-radius:4px;">Copiar Chave</button>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-submit" style="background-color:var(--success);" id="btn-confirm-payment" onclick="confirmPayment()">Confirmar Pagamento</button>
+                <button onclick="backToForm()" style="background:none; border:none; color:var(--text); margin-top:15px; cursor:pointer; text-decoration:underline;">Voltar e corrigir dados</button>
+            </div>
+            
+            <div class="confirmation-page" id="confirmation-section">
+                <div style="font-size:80px; color:var(--success); margin-bottom:20px;"><i class="fas fa-check-circle"></i></div>
+                <h2 style="color:var(--primary);">Pedido Realizado!</h2>
+                <div style="background: rgba(46, 204, 113, 0.1); padding:20px; border-radius:8px; margin:20px 0;">
+                    <p>O WhatsApp da atlética abrirá automaticamente com seu pedido.</p>
+                    <p><strong>Por favor, envie a mensagem e anexe o comprovante.</strong></p>
+                </div>
+                <button class="btn-submit" onclick="showMenu()">Voltar ao Menu Principal</button>
+            </div>
+            <footer style="text-align: center; margin-top: 20px; padding: 20px;"><p>ACEJI - A.A.A.CULTURAL E ESPORTIVA | IFSC JOINVILLE &copy; 2026</p></footer>
+        </div>
 
         <!-- ============================== EVENTOS / CALENDÁRIO ============================== -->
         <div id="events-section">
