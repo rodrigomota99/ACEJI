@@ -479,6 +479,8 @@
         border-radius: 8px;
         border: 3px solid var(--primary);
     }
+    .modal-foto-nome { margin: 15px 0 5px 0; color: #333; font-size: 1.4rem; }
+    .modal-foto-numero { margin: 0; color: var(--primary); font-size: 1.2rem; font-weight: bold; }
     .close-modal {
         position: absolute;
         top: 10px; right: 15px;
@@ -886,8 +888,8 @@
     <div class="modal-foto-content" onclick="event.stopPropagation()">
         <span class="close-modal" onclick="fecharFotoModal()">&times;</span>
         <img id="imgModalAtleta" src="" alt="Foto da Atleta">
-        <!-- Nome e Número unificados na mesma linha -->
-        <h3 id="nomeModalAtleta" class="modal-foto-nome" style="color: #000; font-weight: bold; margin-top: 15px; text-align: center; width: 100%;"></h3>
+        <h3 id="nomeModalAtleta" class="modal-foto-nome"></h3>
+        <p id="numModalAtleta" class="modal-foto-numero"></p>
     </div>
 </div>
 
@@ -895,14 +897,15 @@
     // Função para abrir o Modal com a foto da atleta
     function abrirFotoModal(srcImagem, nome, numero) {
         document.getElementById('imgModalAtleta').src = srcImagem;
+        document.getElementById('nomeModalAtleta').innerText = nome;
         
-        // Junta o nome e o número no mesmo texto
-        let textoNomeNumero = nome;
+        // Verifica se é número ou texto (ex: Téc)
         if (numero) {
-            textoNomeNumero += (numero === 'Téc') ? ' (Técnico)' : ' - Nº ' + numero;
+            document.getElementById('numModalAtleta').innerText = (numero === 'Téc') ? 'Técnico' : 'Nº ' + numero;
+        } else {
+            document.getElementById('numModalAtleta').innerText = '';
         }
         
-        document.getElementById('nomeModalAtleta').innerText = textoNomeNumero;
         document.getElementById('modalFotoAtleta').style.display = 'flex';
     }
 
