@@ -412,11 +412,33 @@
 
         <!-- ============================== SECÃO JIFSC ============================== -->
         <style>
-    /* Estilos novos para os avatares das jogadoras */
-    .player-avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px; transition: transform 0.3s ease; cursor: pointer; border: 1px solid var(--primary); }
-    .player-avatar:hover, .player-avatar:active { transform: scale(3); z-index: 10; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-    .roster-card li.has-avatar { display: flex; align-items: center; justify-content: space-between; padding-left: 5px; }
-    .roster-card li.has-avatar > div { display: flex; align-items: center; }
+    /* Estilos novos e atualizados para os avatares (maiores e retangulares) */
+    .player-avatar { 
+        width: 50px; 
+        height: 50px; 
+        border-radius: 4px; /* Retangular com cantos levemente arredondados */
+        object-fit: cover; 
+        margin-right: 10px; 
+        transition: transform 0.3s ease; 
+        cursor: pointer; 
+        border: 2px solid var(--primary); 
+    }
+    .player-avatar:hover, .player-avatar:active { 
+        transform: scale(2.5); /* Efeito de ampliação */
+        z-index: 10; 
+        position: relative; 
+        box-shadow: 0 6px 15px rgba(0,0,0,0.6); 
+    }
+    .roster-card li.has-avatar { 
+        display: flex; 
+        align-items: center; 
+        justify-content: space-between; 
+        padding: 5px 12px; /* Ajuste para acomodar a foto maior */
+    }
+    .roster-card li.has-avatar > div { 
+        display: flex; 
+        align-items: center; 
+    }
 </style>
 
 <!-- ============================== SECÃO JIFSC ============================== -->
@@ -690,12 +712,12 @@
             <div class="matchup-card" style="margin-bottom: 30px;">
                 <h3><i class="fas fa-clock"></i> Enfrentamentos</h3>
                 <ul>
-                    <li>11:45: Araranguá 1 <i class="fas fa-times"></i> Helen <span class="player-pos">(Fem)</span></li>
-                    <li>12:30: Douglas <i class="fas fa-times"></i> FLN-Continente 1 <span class="player-pos">(Masc)</span></li>
-                    <li>12:45: Helen <i class="fas fa-times"></i> FLN-Continente 1 <span class="player-pos">(Fem)</span></li>
-                    <li>13:00: Canoinhas 1 <i class="fas fa-times"></i> Emily Amanda <span class="player-pos">(Fem)</span></li>
-                    <li>14:00: S.L.O. 1 <i class="fas fa-times"></i> Emily Amanda <span class="player-pos">(Fem)</span></li>
-                    <li>14:00: FLN-Continente 1 <i class="fas fa-times"></i> Dhomini <span class="player-pos">(Masc)</span></li>
+                    <li>11:45: Natalia Elias Da Rosa (Araranguá 1) <i class="fas fa-times"></i> Helen <span class="player-pos">(Fem)</span></li>
+                    <li>12:30: Douglas <i class="fas fa-times"></i> Rafael De Avila Pereira (FLN-Continente 1) <span class="player-pos">(Masc)</span></li>
+                    <li>12:45: Helen <i class="fas fa-times"></i> Amabily Melany Araujo (FLN-Continente 1) <span class="player-pos">(Fem)</span></li>
+                    <li>13:00: Ana Julia De Oliveira Dias (Canoinhas 1) <i class="fas fa-times"></i> Emily Amanda <span class="player-pos">(Fem)</span></li>
+                    <li>14:00: Grazieli Maciel Gos (S.L.O. 1) <i class="fas fa-times"></i> Emily Amanda <span class="player-pos">(Fem)</span></li>
+                    <li>14:00: Rafael De Avila Pereira (FLN-Continente 1) <i class="fas fa-times"></i> Dhomini <span class="player-pos">(Masc)</span></li>
                     <li>15:15: Douglas <i class="fas fa-times"></i> Dhomini <span class="player-pos">(Masc)</span></li>
                 </ul>
             </div>
@@ -704,14 +726,10 @@
             <div class="bracket-wrapper">
                 <div class="bracket-container">
                     <div class="bracket-column">
-                        <div class="bracket-round-title">Semifinal</div>
+                        <div class="bracket-round-title">Oitavas e Quartas</div>
                         <div class="bracket-match">
-                            <div class="bracket-team">Venc. Quartas 1 <span class="bracket-score">-</span></div>
-                            <div class="bracket-team">Venc. Quartas 2 <span class="bracket-score">-</span></div>
-                        </div>
-                        <div class="bracket-match">
-                            <div class="bracket-team">Venc. Quartas 3 <span class="bracket-score">-</span></div>
-                            <div class="bracket-team">Venc. Quartas 4 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Fases Eliminatórias <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">A Definir <span class="bracket-score">-</span></div>
                         </div>
                     </div>
                     <div class="bracket-column" style="justify-content: center;">
