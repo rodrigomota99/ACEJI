@@ -412,21 +412,40 @@
 
         <!-- ============================== SECÃO JIFSC ============================== -->
         <style>
-    /* Ajustes para Mobile - Evitar cortes de nomes nos confrontos */
-    @media (max-width: 600px) {
+    /* Ajustes CRÍTICOS para Mobile - Evitar cortes de nomes e quebras estranhas */
+    @media (max-width: 768px) {
         .matchup-card ul li {
-            font-size: 0.85rem;
-            white-space: normal;
-            word-break: break-word;
-            line-height: 1.4;
-            padding: 8px 0;
+            font-size: 0.95rem !important;
+            white-space: normal !important;
+            word-break: normal !important; /* Remove quebra no meio da palavra ("Dougla s") */
+            line-height: 1.5 !important;
+            padding: 12px 5px !important;
+            display: flex !important;
+            flex-direction: column !important; /* Empilha os times um embaixo do outro no celular */
+            align-items: center !important;
+            text-align: center !important;
         }
-        .matchup-card h3 { font-size: 1.1rem; }
+        .matchup-card ul li i.fa-times {
+            margin: 8px 0 !important;
+            font-size: 1.2rem !important;
+            color: var(--primary) !important;
+        }
+        .roster-card ul {
+            display: grid !important;
+            grid-template-columns: 1fr !important; /* Força 1 coluna na lista para não cortar nomes grandes */
+            gap: 10px !important;
+        }
+        .roster-card li {
+            white-space: normal !important;
+            overflow: visible !important;
+            padding: 8px 15px !important;
+        }
     }
 
     /* Estilos atualizados para os avatares (Maiores e Retangulares na vertical) */
     .player-avatar { 
         width: 50px; 
+        min-width: 50px; /* Evita encolher no grid */
         height: 70px; /* Retangular vertical */
         border-radius: 6px; 
         object-fit: cover; 
@@ -445,11 +464,10 @@
         display: flex; 
         align-items: center; 
         justify-content: space-between; 
-        padding: 6px 10px;
         cursor: pointer;
     }
     .roster-card li.has-avatar:hover { background-color: rgba(0,0,0,0.05); border-radius: 5px; }
-    .roster-card li.has-avatar > div { display: flex; align-items: center; }
+    .roster-card li.has-avatar > div { display: flex; align-items: center; white-space: normal; }
 
     /* Estilos do Modal da Foto (Lightbox) */
     .modal-foto {
