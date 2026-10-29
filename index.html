@@ -411,7 +411,477 @@
 
 
         <!-- ============================== SECÃO JIFSC ============================== -->
-        <!-- Modal para Visualização da Foto -->
+        <style>
+    /* Ajustes para Mobile - Evitar cortes de nomes nos confrontos */
+    @media (max-width: 600px) {
+        .matchup-card ul li {
+            font-size: 0.85rem;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.4;
+            padding: 8px 0;
+        }
+        .matchup-card h3 { font-size: 1.1rem; }
+    }
+
+    /* Estilos atualizados para os avatares (Maiores e Retangulares na vertical) */
+    .player-avatar { 
+        width: 50px; 
+        height: 70px; /* Retangular vertical */
+        border-radius: 6px; 
+        object-fit: cover; 
+        margin-right: 12px; 
+        transition: transform 0.3s ease; 
+        cursor: pointer; 
+        border: 2px solid var(--primary); 
+    }
+    .player-avatar:hover { 
+        transform: scale(1.6); /* Efeito de ampliação ao passar o mouse */
+        z-index: 10; 
+        position: relative; 
+        box-shadow: 0 6px 15px rgba(0,0,0,0.6); 
+    }
+    .roster-card li.has-avatar { 
+        display: flex; 
+        align-items: center; 
+        justify-content: space-between; 
+        padding: 6px 10px;
+        cursor: pointer;
+    }
+    .roster-card li.has-avatar:hover { background-color: rgba(0,0,0,0.05); border-radius: 5px; }
+    .roster-card li.has-avatar > div { display: flex; align-items: center; }
+
+    /* Estilos do Modal da Foto (Lightbox) */
+    .modal-foto {
+        display: none; 
+        position: fixed; 
+        z-index: 99999; 
+        left: 0; top: 0; 
+        width: 100%; height: 100%; 
+        background-color: rgba(0,0,0,0.85);
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(5px);
+    }
+    .modal-foto-content {
+        background-color: var(--light);
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        max-width: 90%;
+        width: 320px;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .modal-foto-content img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        border: 3px solid var(--primary);
+    }
+    .close-modal {
+        position: absolute;
+        top: 10px; right: 15px;
+        color: #888;
+        font-size: 30px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    .close-modal:hover { color: var(--primary); }
+</style>
+
+<!-- ============================== SECÃO JIFSC ============================== -->
+<div id="jifsc-section">
+    <header>
+        <button class="btn-back-menu" onclick="showMenu()"><i class="fas fa-arrow-left"></i> Menu</button>
+        <div class="logo-container" onclick="showMenu()">
+            <div class="logo-img"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Escudo.png" alt="Logo ACEJI"></div>
+            <div class="logo-aceji" style="font-size: 1.5rem;">JIFSC GERAIS</div>
+        </div>
+    </header>
+    
+    <div class="form-container">
+        <div class="modality-tabs">
+            <button class="tab-btn active" onclick="showModality('tab-futsal-masc')">Futsal Masc</button>
+            <button class="tab-btn" onclick="showModality('tab-futsal-fem')">Futsal Fem</button>
+            <button class="tab-btn" onclick="showModality('tab-volei')">Vôlei Misto</button>
+            <button class="tab-btn" onclick="showModality('tab-basquete-masc')">Basq. Masc</button>
+            <button class="tab-btn" onclick="showModality('tab-basquete-fem')">Basq. Fem</button>
+            <button class="tab-btn" onclick="showModality('tab-tenis')">Tênis de Mesa</button>
+            <button class="tab-btn" onclick="showModality('tab-xadrez')">Xadrez</button>
+        </div>
+
+        <!-- FUTSAL MASCULINO -->
+        <div id="tab-futsal-masc" class="modality-content active">
+            <h3 class="group-header-title"><i class="fas fa-futbol"></i> Futsal Masculino</h3>
+            <div class="info-grid">
+                <div class="matchup-card">
+                    <h3><i class="fas fa-clock"></i> Enfrentamentos (Fase de Grupos)</h3>
+                    <ul>
+                        <li>12:50: Jaraguá - RAU <i class="fas fa-times"></i> Joinville</li>
+                        <li>15:30: Caçador <i class="fas fa-times"></i> Joinville</li>
+                        <li>17:50: Joinville <i class="fas fa-times"></i> São Carlos</li>
+                    </ul>
+                </div>
+                <div class="roster-card">
+                    <h3><i class="fas fa-users"></i> Relacionados</h3>
+                    <ul>
+                        <li>Vini Silva <span class="player-number">5</span></li>
+                        <li>Willian <span class="player-number">7</span></li>
+                        <li>Rengel <span class="player-pos">(C)</span> <span class="player-number">8</span></li>
+                        <li>Rafael <span class="player-number">10</span></li>
+                        <li>Vini Branco <span class="player-number">12</span></li>
+                        <li>Matheus Pitz <span class="player-number">14</span></li>
+                        <li>Figueiredo <span class="player-number">50</span></li>
+                        <li>Tadeu <span class="player-number">67</span></li>
+                        <li>A Schotten <span class="player-number">80</span></li>
+                        <li>Ruan <span class="player-pos">(G)</span> <span class="player-number">99</span></li>
+                    </ul>
+                </div>
+            </div>
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos</h3>
+            <div class="table-responsive">
+                <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th><th>Grupo E</th><th>Grupo F</th></tr></thead>
+                <tbody><tr><td>SÃO JOSÉ</td><td>CRICIÚMA</td><td>CAÇADOR</td><td>LAGES</td><td>ITAJAÍ</td><td>URUPEMA</td></tr><tr><td>TUBARÃO</td><td>GAROPABA</td><td>SÃO CARLOS</td><td>PALHOÇA</td><td>CANOINHAS</td><td>CHAPECÓ</td></tr><tr><td>FLN - CONTINENTE</td><td>JARAGUÁ - CENTRO</td><td>JARAGUÁ - RAU</td><td>XANXERÊ</td><td>FLN - CENTRO</td><td>ARARANGUÁ</td></tr><tr><td>GASPAR</td><td>S.M.O.</td><td class="highlight-jve">JOINVILLE</td><td></td><td></td><td></td></tr></tbody></table>
+            </div>
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
+            <div class="bracket-wrapper">
+                <div class="bracket-container">
+                    <div class="bracket-column">
+                        <div class="bracket-round-title">Semifinal</div>
+                        <div class="bracket-match">
+                            <div class="bracket-team">Venc 32 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Venc 33 <span class="bracket-score">-</span></div>
+                        </div>
+                        <div class="bracket-match">
+                            <div class="bracket-team">Venc 34 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Venc 35 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                    <div class="bracket-column" style="justify-content: center;">
+                        <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
+                        <div class="bracket-match final-match">
+                            <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FUTSAL FEMININO -->
+        <div id="tab-futsal-fem" class="modality-content">
+            <h3 class="group-header-title"><i class="fas fa-futbol"></i> Futsal Feminino</h3>
+            <div class="info-grid">
+                <div class="matchup-card">
+                    <h3><i class="fas fa-clock"></i> Enfrentamentos (Fase de Grupos)</h3>
+                    <ul>
+                        <li>14:30: Jaraguá - RAU <i class="fas fa-times"></i> Joinville</li>
+                        <li>16:10: Xanxerê <i class="fas fa-times"></i> Joinville</li>
+                    </ul>
+                </div>
+                <div class="roster-card">
+                    <h3><i class="fas fa-users"></i> Relacionadas</h3>
+                    <ul>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Maria%20Maia.png', 'Maria Maia', '1')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Maria%20Maia.png" class="player-avatar" alt="Maria Maia"> Maria Maia <span class="player-pos">(G)</span></div> <span class="player-number">1</span>
+                        </li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Lari.png', 'Lari', '4')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Lari.png" class="player-avatar" alt="Lari"> Lari</div> <span class="player-number">4</span>
+                        </li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Jessica%20Carvalho.png', 'J. Carvalho', '8')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Jessica%20Carvalho.png" class="player-avatar" alt="J. Carvalho"> J. Carvalho</div> <span class="player-number">8</span>
+                        </li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Day.png', 'Day', '9')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Day.png" class="player-avatar" alt="Day"> Day</div> <span class="player-number">9</span>
+                        </li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Jana.png', 'Jana', '10')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Jana.png" class="player-avatar" alt="Jana"> Jana <span class="player-pos">(C)</span></div> <span class="player-number">10</span>
+                        </li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Karol.png', 'Karol', '11')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Karol.png" class="player-avatar" alt="Karol"> Karol</div> <span class="player-number">11</span>
+                        </li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Agra.png', 'Agra', '12')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Agra.png" class="player-avatar" alt="Agra"> Agra</div> <span class="player-number">12</span>
+                        </li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Sabrina.png', 'Sabrina', '13')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Sabrina.png" class="player-avatar" alt="Sabrina"> Sabrina</div> <span class="player-number">13</span>
+                        </li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Rafa.png', 'Pompeu', '21')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Rafa.png" class="player-avatar" alt="Pompeu"> Pompeu</div> <span class="player-number">21</span>
+                        </li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Indara.png', 'Indara Magalhães', '27')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Indara.png" class="player-avatar" alt="Indara"> Indara Magalhães</div> <span class="player-number">27</span>
+                        </li>
+                        <li class="has-avatar" onclick="abrirFotoModal('https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Rodrigo%20Mota.png', 'Rodrigo Mota', 'Téc')">
+                            <div><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Rodrigo%20Mota.png" class="player-avatar" alt="Rodrigo Mota"> Rodrigo Mota <span class="player-pos">(Téc)</span></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos</h3>
+            <div class="table-responsive">
+                <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th></tr></thead>
+                <tbody><tr><td>FLN - CONTINENTE</td><td>URUPEMA</td><td>S.M.O.</td><td>XANXERÊ</td></tr><tr><td>CHAPECÓ</td><td>LAGES</td><td>ARARANGUÁ</td><td>JARAGUÁ - RAU</td></tr><tr><td>FLN - CENTRO</td><td>GASPAR</td><td>ITAJAÍ</td><td class="highlight-jve">JOINVILLE</td></tr><tr><td>SÃO JOSÉ</td><td></td><td></td><td></td></tr></tbody></table>
+            </div>
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
+            <div class="bracket-wrapper">
+                <div class="bracket-container">
+                    <div class="bracket-column">
+                        <div class="bracket-round-title">Semifinal</div>
+                        <div class="bracket-match">
+                            <div class="bracket-team">Venc 16 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Venc 17 <span class="bracket-score">-</span></div>
+                        </div>
+                        <div class="bracket-match">
+                            <div class="bracket-team">Venc 18 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Venc 19 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                    <div class="bracket-column" style="justify-content: center;">
+                        <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
+                        <div class="bracket-match final-match">
+                            <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VÔLEI MISTO -->
+        <div id="tab-volei" class="modality-content">
+            <h3 class="group-header-title"><i class="fas fa-volleyball-ball"></i> Vôlei Misto</h3>
+            <div class="info-grid">
+                <div class="matchup-card">
+                    <h3><i class="fas fa-clock"></i> Enfrentamentos (Fase de Grupos)</h3>
+                    <ul>
+                        <li>12:00: Jaraguá - Centro <i class="fas fa-times"></i> Joinville</li>
+                        <li>14:30: Joinville <i class="fas fa-times"></i> São José</li>
+                        <li>16:30: Garopaba <i class="fas fa-times"></i> Joinville</li>
+                    </ul>
+                </div>
+                <div class="roster-card">
+                    <h3><i class="fas fa-users"></i> Relacionados</h3>
+                    <ul>
+                        <li>M Onofre <span class="player-number">5</span></li>
+                        <li>H Sena <span class="player-number">7</span></li>
+                        <li>R Mota <span class="player-number">9</span></li>
+                        <li>Victor <span class="player-number">10</span></li>
+                        <li>Trentini <span class="player-number">12</span></li>
+                        <li>Mateus B <span class="player-number">14</span></li>
+                        <li>Fetter <span class="player-number">22</span></li>
+                        <li>Amanda <span class="player-number">25</span></li>
+                        <li>Montanha <span class="player-pos">(C)</span> <span class="player-number">28</span></li>
+                        <li>Day <span class="player-number">32</span></li>
+                        <li>Gabbe <span class="player-number">69</span></li>
+                    </ul>
+                </div>
+            </div>
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos</h3>
+            <div class="table-responsive">
+                <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th><th>Grupo E</th><th>Grupo F</th></tr></thead>
+                <tbody><tr><td>S.L.O.</td><td>JARAGUÁ - CENTRO</td><td>LAGES</td><td>GASPAR</td><td>FLN - CONTINENTE</td><td>JARAGUÁ - RAU</td></tr><tr><td>SÃO CARLOS</td><td class="highlight-jve">JOINVILLE</td><td>S.M.O.</td><td>PALHOÇA</td><td>TUBARÃO</td><td>XANXERÊ</td></tr><tr><td>ARARANGUÁ</td><td>SÃO JOSÉ</td><td>CAÇADOR</td><td>CHAPECÓ</td><td>CANOINHAS</td><td>FLN - CENTRO</td></tr><tr><td>CRICIÚMA</td><td>GAROPABA</td><td>ITAJAÍ</td><td></td><td></td><td></td></tr></tbody></table>
+            </div>
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
+            <div class="bracket-wrapper">
+                <div class="bracket-container">
+                    <div class="bracket-column">
+                        <div class="bracket-round-title">Semifinal</div>
+                        <div class="bracket-match">
+                            <div class="bracket-team">Venc 32 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Venc 33 <span class="bracket-score">-</span></div>
+                        </div>
+                        <div class="bracket-match">
+                            <div class="bracket-team">Venc 34 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Venc 35 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                    <div class="bracket-column" style="justify-content: center;">
+                        <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
+                        <div class="bracket-match final-match">
+                            <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BASQUETE MASC -->
+        <div id="tab-basquete-masc" class="modality-content">
+            <h3 class="group-header-title"><i class="fas fa-basketball-ball"></i> Basquete 3x3 Masculino</h3>
+            <div class="info-grid">
+                <div class="matchup-card">
+                    <h3><i class="fas fa-clock"></i> Enfrentamentos (Fase de Grupos)</h3>
+                    <ul>
+                        <li>12:00: Canoinhas <i class="fas fa-times"></i> Joinville</li>
+                        <li>13:00: Joinville <i class="fas fa-times"></i> Garopaba</li>
+                    </ul>
+                </div>
+                <div class="roster-card">
+                    <h3><i class="fas fa-users"></i> Relacionados</h3>
+                    <ul>
+                        <li>Pegoretti <span class="player-pos">(C)</span> <span class="player-number">8</span></li>
+                        <li>JP <span class="player-number">14</span></li>
+                        <li>CJ <span class="player-number">19</span></li>
+                        <li>Fetter <span class="player-number">22</span></li>
+                    </ul>
+                </div>
+            </div>
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos</h3>
+            <div class="table-responsive">
+                <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th></tr></thead>
+                <tbody><tr><td>LAGES</td><td>S.L.O.</td><td>CANOINHAS</td><td>SÃO JOSÉ</td></tr><tr><td>CHAPECÓ</td><td>JARAGUÁ - RAU</td><td class="highlight-jve">JOINVILLE</td><td>CRICIÚMA</td></tr><tr><td>FLN - CENTRO</td><td>FLN - CONTINENTE</td><td>GAROPABA</td><td>GASPAR</td></tr></tbody></table>
+            </div>
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
+            <div class="bracket-wrapper">
+                <div class="bracket-container">
+                    <div class="bracket-column">
+                        <div class="bracket-round-title">Semifinal</div>
+                        <div class="bracket-match">
+                            <div class="bracket-team">Venc 13 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Venc 14 <span class="bracket-score">-</span></div>
+                        </div>
+                        <div class="bracket-match">
+                            <div class="bracket-team">Venc 15 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Venc 16 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                    <div class="bracket-column" style="justify-content: center;">
+                        <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
+                        <div class="bracket-match final-match">
+                            <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BASQUETE FEM -->
+        <div id="tab-basquete-fem" class="modality-content">
+            <h3 class="group-header-title"><i class="fas fa-basketball-ball"></i> Basquete 3x3 Feminino</h3>
+            <div class="info-grid">
+                <div class="matchup-card">
+                    <h3><i class="fas fa-clock"></i> Enfrentamentos (Fase de Grupos)</h3>
+                    <ul>
+                        <li>11:45: São José <i class="fas fa-times"></i> Joinville</li>
+                        <li>12:15: Joinville <i class="fas fa-times"></i> FLN - Centro</li>
+                    </ul>
+                </div>
+                <div class="roster-card">
+                    <h3><i class="fas fa-users"></i> Relacionadas</h3>
+                    <ul>
+                        <li>Amanda <span class="player-number">7</span></li>
+                        <li>Jana <span class="player-pos">(C)</span> <span class="player-number">10</span></li>
+                        <li>Agra <span class="player-number">12</span></li>
+                        <li>Pompeu <span class="player-number">21</span></li>
+                    </ul>
+                </div>
+            </div>
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos</h3>
+            <div class="table-responsive">
+                <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th></tr></thead>
+                <tbody><tr><td>CHAPECÓ</td><td>SÃO JOSÉ</td></tr><tr><td>CRICIÚMA</td><td class="highlight-jve">JOINVILLE</td></tr><tr><td>GASPAR</td><td>FLN - CENTRO</td></tr></tbody></table>
+            </div>
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
+            <div class="bracket-wrapper">
+                <div class="bracket-container">
+                    <div class="bracket-column" style="justify-content: center;">
+                        <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
+                        <div class="bracket-match final-match">
+                            <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TÊNIS DE MESA -->
+        <div id="tab-tenis" class="modality-content">
+            <h3 class="group-header-title"><i class="fas fa-table-tennis"></i> Tênis de Mesa</h3>
+            <div class="info-grid">
+                <div class="roster-card">
+                    <h3><i class="fas fa-male"></i> Masculino</h3>
+                    <ul><li>Dhomini</li><li>Douglas</li></ul>
+                </div>
+                <div class="roster-card" style="border-left-color: var(--instagram);">
+                    <h3 style="color: var(--instagram);"><i class="fas fa-users"></i> Femininas Relacionadas</h3>
+                    <ul><li>Emily Amanda</li><li>Helen</li></ul>
+                </div>
+            </div>
+            
+            <div class="matchup-card" style="margin-bottom: 30px;">
+                <h3><i class="fas fa-clock"></i> Enfrentamentos</h3>
+                <ul>
+                    <li>11:45: Natalia Elias Da Rosa (Araranguá 1) <i class="fas fa-times"></i> Helen <span class="player-pos">(Fem)</span></li>
+                    <li>12:30: Douglas <i class="fas fa-times"></i> Rafael De Avila Pereira (FLN-Continente 1) <span class="player-pos">(Masc)</span></li>
+                    <li>12:45: Helen <i class="fas fa-times"></i> Amabily Melany Araujo (FLN-Continente 1) <span class="player-pos">(Fem)</span></li>
+                    <li>13:00: Ana Julia De Oliveira Dias (Canoinhas 1) <i class="fas fa-times"></i> Emily Amanda <span class="player-pos">(Fem)</span></li>
+                    <li>14:00: Grazieli Maciel Gos (S.L.O. 1) <i class="fas fa-times"></i> Emily Amanda <span class="player-pos">(Fem)</span></li>
+                    <li>14:00: Rafael De Avila Pereira (FLN-Continente 1) <i class="fas fa-times"></i> Dhomini <span class="player-pos">(Masc)</span></li>
+                    <li>15:15: Douglas <i class="fas fa-times"></i> Dhomini <span class="player-pos">(Masc)</span></li>
+                </ul>
+            </div>
+
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
+            <div class="bracket-wrapper">
+                <div class="bracket-container">
+                    <div class="bracket-column">
+                        <div class="bracket-round-title">Oitavas e Quartas</div>
+                        <div class="bracket-match">
+                            <div class="bracket-team">Fases Eliminatórias <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">A Definir <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                    <div class="bracket-column" style="justify-content: center;">
+                        <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
+                        <div class="bracket-match final-match">
+                            <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
+                            <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- XADREZ -->
+        <div id="tab-xadrez" class="modality-content">
+            <h3 class="group-header-title"><i class="fas fa-chess-knight"></i> Xadrez</h3>
+            <div class="info-grid">
+                <div class="roster-card">
+                    <h3><i class="fas fa-male"></i> Masculino</h3>
+                    <ul><li>CJ</li><li>Luis</li></ul>
+                </div>
+                <div class="roster-card" style="border-left-color: var(--instagram);">
+                    <h3 style="color: var(--instagram);"><i class="fas fa-users"></i> Femininas Relacionadas</h3>
+                    <ul><li>Agnes</li><li>J. Carvalho</li></ul>
+                </div>
+            </div>
+            
+            <div class="matchup-card" style="margin-bottom: 30px;">
+                <h3><i class="fas fa-clock"></i> Cronograma - Sistema Suíço</h3>
+                <ul>
+                    <li>07/11 - 14h00: 1ª Rodada</li>
+                    <li>07/11 - 15h00: 2ª Rodada</li>
+                    <li>07/11 - 16h00: 3ª Rodada</li>
+                    <li>08/11 - 08h00: 4ª Rodada</li>
+                    <li>08/11 - 09h00: 5ª Rodada</li>
+                    <li>08/11 - 10h00: 6ª Rodada</li>
+                </ul>
+            </div>
+            
+        </div>
+
+        <button class="btn-submit" onclick="showMenu()" style="max-width: 250px; margin: 0 auto; background-color: var(--light); color: white;">Voltar ao Menu</button>
+    </div>
+    <footer style="text-align: center; margin-top: 20px; padding: 20px;"><p>ACEJI - A.A.A.CULTURAL E ESPORTIVA | IFSC JOINVILLE &copy; 2026</p></footer>
+</div>
+
+<!-- Modal para Visualização da Foto -->
 <div id="modalFotoAtleta" class="modal-foto" onclick="fecharFotoModal()">
     <div class="modal-foto-content" onclick="event.stopPropagation()">
         <span class="close-modal" onclick="fecharFotoModal()">&times;</span>
@@ -441,143 +911,6 @@
         document.getElementById('modalFotoAtleta').style.display = 'none';
     }
 </script>
-
-        <!-- ============================== LOJA DE PRODUTOS ============================== -->
-        <div id="shop-section">
-            <header>
-                <button class="btn-back-menu" onclick="showMenu()"><i class="fas fa-arrow-left"></i> Menu</button>
-                <div class="logo-container" onclick="showMenu()">
-                    <div class="logo-img"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Escudo.png" alt="Logo ACEJI"></div>
-                    <div class="logo-aceji">PRODUTOS OFICIAIS</div>
-                </div>
-            </header>
-            
-            <div class="form-container" id="form-content">
-                <form id="uniformOrderForm">
-                    <h2 class="section-title">Dados Pessoais</h2>
-                    <div class="form-group"><label>Nome Completo *</label><input type="text" id="name" required></div>
-                    <div class="form-group"><label>E-mail *</label><input type="email" id="email" required></div>
-                    <div class="form-group"><label>Telefone *</label><input type="tel" id="phone" required></div>
-                    
-                    <h2 class="section-title">Uniforme de Linha</h2>
-                    <div class="product-grid">
-                        <div class="product-card">
-                            <div class="product-image-container" id="container-linha">
-                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%201%20Frente.png" class="product-image" id="image-linha" onclick="openModalCurrentImage('linha')">
-                                <div class="zoom-icon" onclick="openModalCurrentImage('linha')"><i class="fas fa-search-plus"></i></div>
-                                <div class="flip-icon" onclick="flipImage('linha')"><i class="fas fa-sync-alt"></i></div>
-                            </div>
-                            <div class="flip-navigation">
-                                <button type="button" class="flip-btn" onclick="showFront('linha')"><i class="fas fa-arrow-left"></i> Frente</button>
-                                <button type="button" class="flip-btn" onclick="showBack('linha')">Verso <i class="fas fa-arrow-right"></i></button>
-                            </div>
-                            <div class="product-title">Camisa de Linha</div>
-                            <div class="product-price">R$ 65,00</div>
-                            <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_linha" class="quantity" min="0" value="0">
-                        </div>
-                    </div>
-                    
-                    <h2 class="section-title">Uniforme de Goleiro/Líbero</h2>
-                    <div class="product-grid">
-                        <div class="product-card">
-                            <div class="product-image-container" id="container-rosa">
-                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%20Rosa%20Frente.png" class="product-image" id="image-rosa" onclick="openModalCurrentImage('rosa')">
-                                <div class="zoom-icon" onclick="openModalCurrentImage('rosa')"><i class="fas fa-search-plus"></i></div>
-                                <div class="flip-icon" onclick="flipImage('rosa')"><i class="fas fa-sync-alt"></i></div>
-                            </div>
-                            <div class="flip-navigation">
-                                <button type="button" class="flip-btn" onclick="showFront('rosa')"><i class="fas fa-arrow-left"></i> Frente</button>
-                                <button type="button" class="flip-btn" onclick="showBack('rosa')">Verso <i class="fas fa-arrow-right"></i></button>
-                            </div>
-                            <div class="product-title">Goleiro Rosa</div>
-                            <div class="product-price">R$ 65,00</div>
-                            <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_goleiro_rosa" class="quantity" min="0" value="0">
-                        </div>
-                    </div>
-
-                    <h2 class="section-title">Acessórios</h2>
-                    <div class="product-grid">
-                        <div class="product-card">
-                            <div class="product-image-container">
-                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Caneca%20novo.png" class="product-image" id="image-caneca" onclick="openModalCurrentImage('caneca')">
-                                <div class="zoom-icon" onclick="openModalCurrentImage('caneca')"><i class="fas fa-search-plus"></i></div>
-                            </div>
-                            <div class="product-title">Caneca Oficial</div>
-                            <div class="product-price">R$ 45,00</div>
-                            <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_caneca" class="quantity" min="0" value="0">
-                        </div>
-                        <div class="product-card">
-                            <div class="product-image-container">
-                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/FRENTE.png" class="product-image" id="image-tirante" onclick="openModalCurrentImage('tirante')">
-                                <div class="zoom-icon" onclick="openModalCurrentImage('tirante')"><i class="fas fa-search-plus"></i></div>
-                            </div>
-                            <div class="product-title">Tirante</div>
-                            <div class="product-price">R$ 10,00</div>
-                            <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_tirante" class="quantity" min="0" value="0">
-                        </div>
-                        <div class="product-card">
-                            <div class="product-image-container">
-                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/caneca%20e%20tirante%20novo.png" class="product-image" id="image-combo" onclick="openModalCurrentImage('combo')">
-                                <div class="zoom-icon" onclick="openModalCurrentImage('combo')"><i class="fas fa-search-plus"></i></div>
-                            </div>
-                            <div class="product-title">Combo (Caneca + Tirante)</div>
-                            <div class="product-price">R$ 50,00</div>
-                            <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_combo" class="quantity" min="0" value="0">
-                        </div>
-                    </div>
-                    
-                    <h2 class="section-title">Tamanhos e Observações</h2>
-                    <div class="form-group"><label>Tamanhos necessários (especificar)</label><textarea id="sizes" rows="3"></textarea></div>
-                    <div class="form-group"><label>Observações:</label><textarea id="notes" rows="3"></textarea></div>
-                    
-                    <h2 class="section-title">Opções de Pagamento</h2>
-                    <div class="payment-options">
-                        <div class="payment-option selected" id="option-full" onclick="selectPaymentOption('full')">
-                            <h3>PIX Integral (100%)</h3><div class="payment-option-value" id="full-payment-value">R$ 0,00</div><p style="font-size: 0.9rem; margin-top:5px; color: var(--text);">Pagamento único.</p>
-                        </div>
-                        <div class="payment-option" id="option-half" onclick="selectPaymentOption('half')">
-                            <h3>PIX Parcelado (50%)</h3><div class="payment-option-value" id="half-payment-value">R$ 0,00</div><p style="font-size: 0.9rem; margin-top:5px; color: var(--text);">50% agora, 50% na entrega.</p>
-                        </div>
-                        <div class="payment-option" id="option-credit" onclick="selectPaymentOption('credit')">
-                            <h3>Cartão de Crédito</h3><div class="payment-option-value" id="credit-payment-value">R$ 0,00</div><p style="font-size: 0.9rem; margin-top:5px; color: var(--text);">Link pelo WhatsApp.</p>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn-submit">Ir para Pagamento</button>
-                </form>
-            </div>
-            
-            <div class="payment-page" id="payment-section">
-                <h2 style="color:var(--primary); margin-bottom:20px;" id="payment-title">Pagamento via PIX</h2>
-                <div style="background: rgba(50, 188, 173, 0.1); padding:15px; border-left:4px solid var(--pix); text-align:left; margin-bottom:20px;">
-                    <p><strong>Total: <span id="payment-total">R$ 0,00</span></strong></p>
-                    <p id="msg-pay-now"><strong>Pagar Agora: <span id="payment-now">R$ 0,00</span></strong></p>
-                    <p id="msg-half" style="display:none; margin-top:10px;">Restante a pagar na entrega: <span id="remaining-amount">R$ 0,00</span></p>
-                    <p id="msg-credit" style="display:none; margin-top:10px; color: var(--accent);"><strong>Atenção:</strong> Solicite o link no WhatsApp.</p>
-                </div>
-                <div id="pix-details-area">
-                    <div class="pix-container">
-                        <div class="qrcode-image"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/QR%20CODE%20LUIS.jpeg" alt="QR Code"></div>
-                        <div style="background:var(--bg-page); padding:10px; border:1px dashed var(--pix); margin-top:15px;">
-                            <p style="font-weight:bold; word-break:break-all;" id="pix-key">atleticaaceji@gmail.com</p>
-                            <button onclick="copyPixKey()" style="background:var(--pix); color:white; border:none; padding:5px 10px; margin-top:10px; cursor:pointer; border-radius:4px;">Copiar Chave</button>
-                        </div>
-                    </div>
-                </div>
-                <button class="btn-submit" style="background-color:var(--success);" id="btn-confirm-payment" onclick="confirmPayment()">Confirmar Pagamento</button>
-                <button onclick="backToForm()" style="background:none; border:none; color:var(--text); margin-top:15px; cursor:pointer; text-decoration:underline;">Voltar e corrigir dados</button>
-            </div>
-            
-            <div class="confirmation-page" id="confirmation-section">
-                <div style="font-size:80px; color:var(--success); margin-bottom:20px;"><i class="fas fa-check-circle"></i></div>
-                <h2 style="color:var(--primary);">Pedido Realizado!</h2>
-                <div style="background: rgba(46, 204, 113, 0.1); padding:20px; border-radius:8px; margin:20px 0;">
-                    <p>O WhatsApp da atlética abrirá automaticamente com seu pedido.</p>
-                    <p><strong>Por favor, envie a mensagem e anexe o comprovante.</strong></p>
-                </div>
-                <button class="btn-submit" onclick="showMenu()">Voltar ao Menu Principal</button>
-            </div>
-            <footer style="text-align: center; margin-top: 20px; padding: 20px;"><p>ACEJI - A.A.A.CULTURAL E ESPORTIVA | IFSC JOINVILLE &copy; 2026</p></footer>
-        </div>
 
         <!-- ============================== EVENTOS / CALENDÁRIO ============================== -->
         <div id="events-section">
