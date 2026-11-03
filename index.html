@@ -355,8 +355,8 @@
                 
                 <div class="product-grid">
                     
-                    <div class="member-card" onclick="openMemberModal('Rodrigo', 'Presidente', 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Rodrigo%20Mota.png', 'Cria da Eletroeletrônica e estudante de Engenharia Elétrica, o Rodrigo assumiu a Presidência da ACEJI com a responsabilidade de liderar a nossa Atlética e fazer as coisas acontecerem. Muito envolvido com o dia a dia do IFSC, ele usa toda a sua bagagem para coordenar a nossa equipe e representar os estudantes com foco e seriedade. Tranquilo no trato e parceiro de todo mundo, o Rodrigo sabe a hora exata de cobrar organização dos setores, mas é o primeiro a fechar com a galera e curtir a resenha no pós-jogo. Se a nossa Atlética tá gigante, estruturada e com a vibe lá no alto, o mérito principal é do nosso Presidente.')">
-                        <div class="member-img-container"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Atletas-JIFSC-2026/Rodrigo%20Mota.png" class="member-img"></div>
+                    <div class="member-card" onclick="openMemberModal('Rodrigo', 'Presidente', 'https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Rodrigo%20(2).png', 'Cria da Eletroeletrônica e estudante de Engenharia Elétrica, o Rodrigo assumiu a Presidência da ACEJI com a responsabilidade de liderar a nossa Atlética e fazer as coisas acontecerem. Muito envolvido com o dia a dia do IFSC, ele usa toda a sua bagagem para coordenar a nossa equipe e representar os estudantes com foco e seriedade. Tranquilo no trato e parceiro de todo mundo, o Rodrigo sabe a hora exata de cobrar organização dos setores, mas é o primeiro a fechar com a galera e curtir a resenha no pós-jogo. Se a nossa Atlética tá gigante, estruturada e com a vibe lá no alto, o mérito principal é do nosso Presidente.')">
+                        <div class="member-img-container"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Rodrigo%20(2).png" alt="Rodrigo" class="member-img"></div>
                         <div class="member-name">Rodrigo</div>
                         <div class="member-role">Presidente</div>
                     </div>
@@ -417,11 +417,11 @@
         .matchup-card ul li {
             font-size: 0.95rem !important;
             white-space: normal !important;
-            word-break: normal !important; /* Remove quebra no meio da palavra ("Dougla s") */
+            word-break: normal !important; 
             line-height: 1.5 !important;
             padding: 12px 5px !important;
             display: flex !important;
-            flex-direction: column !important; /* Empilha os times um embaixo do outro no celular */
+            flex-direction: column !important; 
             align-items: center !important;
             text-align: center !important;
         }
@@ -432,7 +432,7 @@
         }
         .roster-card ul {
             display: grid !important;
-            grid-template-columns: 1fr !important; /* Força 1 coluna na lista para não cortar nomes grandes */
+            grid-template-columns: 1fr !important; 
             gap: 10px !important;
         }
         .roster-card li {
@@ -442,11 +442,11 @@
         }
     }
 
-    /* Estilos atualizados para os avatares (Maiores e Retangulares na vertical) */
+    /* Estilos das Fotos dos Atletas */
     .player-avatar { 
         width: 50px; 
-        min-width: 50px; /* Evita encolher no grid */
-        height: 70px; /* Retangular vertical */
+        min-width: 50px;
+        height: 70px; 
         border-radius: 6px; 
         object-fit: cover; 
         margin-right: 12px; 
@@ -455,7 +455,7 @@
         border: 2px solid var(--primary); 
     }
     .player-avatar:hover { 
-        transform: scale(1.6); /* Efeito de ampliação ao passar o mouse */
+        transform: scale(1.6); 
         z-index: 10; 
         position: relative; 
         box-shadow: 0 6px 15px rgba(0,0,0,0.6); 
@@ -469,8 +469,41 @@
     .roster-card li.has-avatar:hover { background-color: rgba(0,0,0,0.05); border-radius: 5px; }
     .roster-card li.has-avatar > div { display: flex; align-items: center; white-space: normal; }
 
-    /* Estilos do Modal da Foto (Lightbox) */
-    .modal-foto {
+    /* Estilos dos Confrontos Interativos (Cards) */
+    .match-item {
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #fcfcfc;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .match-item:hover {
+        background-color: #fff;
+        border-color: var(--primary);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transform: translateY(-2px);
+    }
+    .match-details-hint {
+        font-size: 0.8rem;
+        color: #888;
+        margin-top: 8px;
+        background: #eee;
+        padding: 4px 10px;
+        border-radius: 20px;
+    }
+    .match-item:hover .match-details-hint {
+        background: var(--primary);
+        color: white;
+    }
+
+    /* Estilos dos Modais (Foto e Partida) */
+    .modal-overlay {
         display: none; 
         position: fixed; 
         z-index: 99999; 
@@ -481,17 +514,17 @@
         justify-content: center;
         backdrop-filter: blur(5px);
     }
-    .modal-foto-content {
+    .modal-content-box {
         background-color: var(--light);
         padding: 20px;
         border-radius: 10px;
         text-align: center;
         max-width: 90%;
-        width: 320px;
+        width: 350px;
         position: relative;
         box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-    .modal-foto-content img {
+    .modal-content-box img {
         width: 100%;
         height: auto;
         border-radius: 8px;
@@ -507,6 +540,38 @@
         transition: color 0.2s;
     }
     .close-modal:hover { color: var(--primary); }
+
+    /* Painel da Partida */
+    .match-score-board {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin: 20px 0;
+        color: #333;
+    }
+    .match-status {
+        font-size: 0.85rem;
+        color: #fff;
+        background: var(--secondary);
+        padding: 4px 10px;
+        border-radius: 4px;
+        display: inline-block;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .match-timeline {
+        text-align: left;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #ddd;
+        font-size: 0.95rem;
+        color: #444;
+        background: #f9f9f9;
+        border-radius: 8px;
+        padding: 15px;
+    }
 </style>
 
 <!-- ============================== SECÃO JIFSC ============================== -->
@@ -536,10 +601,22 @@
             <div class="info-grid">
                 <div class="matchup-card">
                     <h3><i class="fas fa-clock"></i> Enfrentamentos (Fase de Grupos)</h3>
-                    <ul>
-                        <li>12:50: Jaraguá - RAU <i class="fas fa-times"></i> Joinville</li>
-                        <li>15:30: Caçador <i class="fas fa-times"></i> Joinville</li>
-                        <li>17:50: Joinville <i class="fas fa-times"></i> São Carlos</li>
+                    <ul style="list-style: none; padding: 0;">
+                        <li class="match-item" onclick="abrirModalPartida('Jaraguá - RAU', 'Joinville', '12:50', 'Fase de Grupos')">
+                            <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 12:50</span>
+                            <span>Jaraguá - RAU <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> Joinville</span>
+                            <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
+                        </li>
+                        <li class="match-item" onclick="abrirModalPartida('Caçador', 'Joinville', '15:30', 'Fase de Grupos')">
+                            <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 15:30</span>
+                            <span>Caçador <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> Joinville</span>
+                            <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
+                        </li>
+                        <li class="match-item" onclick="abrirModalPartida('Joinville', 'São Carlos', '17:50', 'Fase de Grupos')">
+                            <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 17:50</span>
+                            <span>Joinville <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> São Carlos</span>
+                            <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
+                        </li>
                     </ul>
                 </div>
                 <div class="roster-card">
@@ -563,29 +640,6 @@
                 <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th><th>Grupo E</th><th>Grupo F</th></tr></thead>
                 <tbody><tr><td>SÃO JOSÉ</td><td>CRICIÚMA</td><td>CAÇADOR</td><td>LAGES</td><td>ITAJAÍ</td><td>URUPEMA</td></tr><tr><td>TUBARÃO</td><td>GAROPABA</td><td>SÃO CARLOS</td><td>PALHOÇA</td><td>CANOINHAS</td><td>CHAPECÓ</td></tr><tr><td>FLN - CONTINENTE</td><td>JARAGUÁ - CENTRO</td><td>JARAGUÁ - RAU</td><td>XANXERÊ</td><td>FLN - CENTRO</td><td>ARARANGUÁ</td></tr><tr><td>GASPAR</td><td>S.M.O.</td><td class="highlight-jve">JOINVILLE</td><td></td><td></td><td></td></tr></tbody></table>
             </div>
-            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
-            <div class="bracket-wrapper">
-                <div class="bracket-container">
-                    <div class="bracket-column">
-                        <div class="bracket-round-title">Semifinal</div>
-                        <div class="bracket-match">
-                            <div class="bracket-team">Venc 32 <span class="bracket-score">-</span></div>
-                            <div class="bracket-team">Venc 33 <span class="bracket-score">-</span></div>
-                        </div>
-                        <div class="bracket-match">
-                            <div class="bracket-team">Venc 34 <span class="bracket-score">-</span></div>
-                            <div class="bracket-team">Venc 35 <span class="bracket-score">-</span></div>
-                        </div>
-                    </div>
-                    <div class="bracket-column" style="justify-content: center;">
-                        <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
-                        <div class="bracket-match final-match">
-                            <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
-                            <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- FUTSAL FEMININO -->
@@ -594,9 +648,17 @@
             <div class="info-grid">
                 <div class="matchup-card">
                     <h3><i class="fas fa-clock"></i> Enfrentamentos (Fase de Grupos)</h3>
-                    <ul>
-                        <li>14:30: Jaraguá - RAU <i class="fas fa-times"></i> Joinville</li>
-                        <li>16:10: Xanxerê <i class="fas fa-times"></i> Joinville</li>
+                    <ul style="list-style: none; padding: 0;">
+                        <li class="match-item" onclick="abrirModalPartida('Jaraguá - RAU', 'Joinville', '14:30', 'Fase de Grupos')">
+                            <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 14:30</span>
+                            <span>Jaraguá - RAU <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> Joinville</span>
+                            <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
+                        </li>
+                        <li class="match-item" onclick="abrirModalPartida('Xanxerê', 'Joinville', '16:10', 'Fase de Grupos')">
+                            <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 16:10</span>
+                            <span>Xanxerê <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> Joinville</span>
+                            <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
+                        </li>
                     </ul>
                 </div>
                 <div class="roster-card">
@@ -643,29 +705,6 @@
                 <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th></tr></thead>
                 <tbody><tr><td>FLN - CONTINENTE</td><td>URUPEMA</td><td>S.M.O.</td><td>XANXERÊ</td></tr><tr><td>CHAPECÓ</td><td>LAGES</td><td>ARARANGUÁ</td><td>JARAGUÁ - RAU</td></tr><tr><td>FLN - CENTRO</td><td>GASPAR</td><td>ITAJAÍ</td><td class="highlight-jve">JOINVILLE</td></tr><tr><td>SÃO JOSÉ</td><td></td><td></td><td></td></tr></tbody></table>
             </div>
-            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
-            <div class="bracket-wrapper">
-                <div class="bracket-container">
-                    <div class="bracket-column">
-                        <div class="bracket-round-title">Semifinal</div>
-                        <div class="bracket-match">
-                            <div class="bracket-team">Venc 16 <span class="bracket-score">-</span></div>
-                            <div class="bracket-team">Venc 17 <span class="bracket-score">-</span></div>
-                        </div>
-                        <div class="bracket-match">
-                            <div class="bracket-team">Venc 18 <span class="bracket-score">-</span></div>
-                            <div class="bracket-team">Venc 19 <span class="bracket-score">-</span></div>
-                        </div>
-                    </div>
-                    <div class="bracket-column" style="justify-content: center;">
-                        <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
-                        <div class="bracket-match final-match">
-                            <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
-                            <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- VÔLEI MISTO -->
@@ -674,10 +713,22 @@
             <div class="info-grid">
                 <div class="matchup-card">
                     <h3><i class="fas fa-clock"></i> Enfrentamentos (Fase de Grupos)</h3>
-                    <ul>
-                        <li>12:00: Jaraguá - Centro <i class="fas fa-times"></i> Joinville</li>
-                        <li>14:30: Joinville <i class="fas fa-times"></i> São José</li>
-                        <li>16:30: Garopaba <i class="fas fa-times"></i> Joinville</li>
+                    <ul style="list-style: none; padding: 0;">
+                        <li class="match-item" onclick="abrirModalPartida('Jaraguá - Centro', 'Joinville', '12:00', 'Fase de Grupos')">
+                            <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 12:00</span>
+                            <span>Jaraguá - Centro <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> Joinville</span>
+                            <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
+                        </li>
+                        <li class="match-item" onclick="abrirModalPartida('Joinville', 'São José', '14:30', 'Fase de Grupos')">
+                            <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 14:30</span>
+                            <span>Joinville <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> São José</span>
+                            <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
+                        </li>
+                        <li class="match-item" onclick="abrirModalPartida('Garopaba', 'Joinville', '16:30', 'Fase de Grupos')">
+                            <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 16:30</span>
+                            <span>Garopaba <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> Joinville</span>
+                            <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
+                        </li>
                     </ul>
                 </div>
                 <div class="roster-card">
@@ -702,29 +753,6 @@
                 <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th><th>Grupo E</th><th>Grupo F</th></tr></thead>
                 <tbody><tr><td>S.L.O.</td><td>JARAGUÁ - CENTRO</td><td>LAGES</td><td>GASPAR</td><td>FLN - CONTINENTE</td><td>JARAGUÁ - RAU</td></tr><tr><td>SÃO CARLOS</td><td class="highlight-jve">JOINVILLE</td><td>S.M.O.</td><td>PALHOÇA</td><td>TUBARÃO</td><td>XANXERÊ</td></tr><tr><td>ARARANGUÁ</td><td>SÃO JOSÉ</td><td>CAÇADOR</td><td>CHAPECÓ</td><td>CANOINHAS</td><td>FLN - CENTRO</td></tr><tr><td>CRICIÚMA</td><td>GAROPABA</td><td>ITAJAÍ</td><td></td><td></td><td></td></tr></tbody></table>
             </div>
-            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
-            <div class="bracket-wrapper">
-                <div class="bracket-container">
-                    <div class="bracket-column">
-                        <div class="bracket-round-title">Semifinal</div>
-                        <div class="bracket-match">
-                            <div class="bracket-team">Venc 32 <span class="bracket-score">-</span></div>
-                            <div class="bracket-team">Venc 33 <span class="bracket-score">-</span></div>
-                        </div>
-                        <div class="bracket-match">
-                            <div class="bracket-team">Venc 34 <span class="bracket-score">-</span></div>
-                            <div class="bracket-team">Venc 35 <span class="bracket-score">-</span></div>
-                        </div>
-                    </div>
-                    <div class="bracket-column" style="justify-content: center;">
-                        <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
-                        <div class="bracket-match final-match">
-                            <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
-                            <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- BASQUETE MASC -->
@@ -733,9 +761,17 @@
             <div class="info-grid">
                 <div class="matchup-card">
                     <h3><i class="fas fa-clock"></i> Enfrentamentos (Fase de Grupos)</h3>
-                    <ul>
-                        <li>12:00: Canoinhas <i class="fas fa-times"></i> Joinville</li>
-                        <li>13:00: Joinville <i class="fas fa-times"></i> Garopaba</li>
+                    <ul style="list-style: none; padding: 0;">
+                        <li class="match-item" onclick="abrirModalPartida('Canoinhas', 'Joinville', '12:00', 'Fase de Grupos')">
+                            <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 12:00</span>
+                            <span>Canoinhas <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> Joinville</span>
+                            <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
+                        </li>
+                        <li class="match-item" onclick="abrirModalPartida('Joinville', 'Garopaba', '13:00', 'Fase de Grupos')">
+                            <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 13:00</span>
+                            <span>Joinville <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> Garopaba</span>
+                            <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
+                        </li>
                     </ul>
                 </div>
                 <div class="roster-card">
@@ -753,29 +789,6 @@
                 <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th></tr></thead>
                 <tbody><tr><td>LAGES</td><td>S.L.O.</td><td>CANOINHAS</td><td>SÃO JOSÉ</td></tr><tr><td>CHAPECÓ</td><td>JARAGUÁ - RAU</td><td class="highlight-jve">JOINVILLE</td><td>CRICIÚMA</td></tr><tr><td>FLN - CENTRO</td><td>FLN - CONTINENTE</td><td>GAROPABA</td><td>GASPAR</td></tr></tbody></table>
             </div>
-            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
-            <div class="bracket-wrapper">
-                <div class="bracket-container">
-                    <div class="bracket-column">
-                        <div class="bracket-round-title">Semifinal</div>
-                        <div class="bracket-match">
-                            <div class="bracket-team">Venc 13 <span class="bracket-score">-</span></div>
-                            <div class="bracket-team">Venc 14 <span class="bracket-score">-</span></div>
-                        </div>
-                        <div class="bracket-match">
-                            <div class="bracket-team">Venc 15 <span class="bracket-score">-</span></div>
-                            <div class="bracket-team">Venc 16 <span class="bracket-score">-</span></div>
-                        </div>
-                    </div>
-                    <div class="bracket-column" style="justify-content: center;">
-                        <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
-                        <div class="bracket-match final-match">
-                            <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
-                            <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- BASQUETE FEM -->
@@ -784,9 +797,17 @@
             <div class="info-grid">
                 <div class="matchup-card">
                     <h3><i class="fas fa-clock"></i> Enfrentamentos (Fase de Grupos)</h3>
-                    <ul>
-                        <li>11:45: São José <i class="fas fa-times"></i> Joinville</li>
-                        <li>12:15: Joinville <i class="fas fa-times"></i> FLN - Centro</li>
+                    <ul style="list-style: none; padding: 0;">
+                        <li class="match-item" onclick="abrirModalPartida('São José', 'Joinville', '11:45', 'Fase de Grupos')">
+                            <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 11:45</span>
+                            <span>São José <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> Joinville</span>
+                            <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
+                        </li>
+                        <li class="match-item" onclick="abrirModalPartida('Joinville', 'FLN - Centro', '12:15', 'Fase de Grupos')">
+                            <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 12:15</span>
+                            <span>Joinville <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> FLN - Centro</span>
+                            <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
+                        </li>
                     </ul>
                 </div>
                 <div class="roster-card">
@@ -803,18 +824,6 @@
             <div class="table-responsive">
                 <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th></tr></thead>
                 <tbody><tr><td>CHAPECÓ</td><td>SÃO JOSÉ</td></tr><tr><td>CRICIÚMA</td><td class="highlight-jve">JOINVILLE</td></tr><tr><td>GASPAR</td><td>FLN - CENTRO</td></tr></tbody></table>
-            </div>
-            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
-            <div class="bracket-wrapper">
-                <div class="bracket-container">
-                    <div class="bracket-column" style="justify-content: center;">
-                        <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
-                        <div class="bracket-match final-match">
-                            <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
-                            <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -843,26 +852,6 @@
                     <li>14:00: Rafael De Avila Pereira (FLN-Continente 1) <i class="fas fa-times"></i> Dhomini <span class="player-pos">(Masc)</span></li>
                     <li>15:15: Douglas <i class="fas fa-times"></i> Dhomini <span class="player-pos">(Masc)</span></li>
                 </ul>
-            </div>
-
-            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Fase Final</h3>
-            <div class="bracket-wrapper">
-                <div class="bracket-container">
-                    <div class="bracket-column">
-                        <div class="bracket-round-title">Oitavas e Quartas</div>
-                        <div class="bracket-match">
-                            <div class="bracket-team">Fases Eliminatórias <span class="bracket-score">-</span></div>
-                            <div class="bracket-team">A Definir <span class="bracket-score">-</span></div>
-                        </div>
-                    </div>
-                    <div class="bracket-column" style="justify-content: center;">
-                        <div class="bracket-round-title" style="color: var(--secondary);">Grande Final</div>
-                        <div class="bracket-match final-match">
-                            <div class="bracket-team">Vencedor Semi 1 <span class="bracket-score">-</span></div>
-                            <div class="bracket-team">Vencedor Semi 2 <span class="bracket-score">-</span></div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -899,34 +888,72 @@
     <footer style="text-align: center; margin-top: 20px; padding: 20px;"><p>ACEJI - A.A.A.CULTURAL E ESPORTIVA | IFSC JOINVILLE &copy; 2026</p></footer>
 </div>
 
-<!-- Modal para Visualização da Foto -->
-<div id="modalFotoAtleta" class="modal-foto" onclick="fecharFotoModal()">
-    <div class="modal-foto-content" onclick="event.stopPropagation()">
+<!-- Modal para Visualização da Foto da Atleta -->
+<div id="modalFotoAtleta" class="modal-overlay" onclick="fecharFotoModal()">
+    <div class="modal-content-box" onclick="event.stopPropagation()">
         <span class="close-modal" onclick="fecharFotoModal()">&times;</span>
         <img id="imgModalAtleta" src="" alt="Foto da Atleta">
-        <!-- Nome e Número unificados na mesma linha -->
-        <h3 id="nomeModalAtleta" class="modal-foto-nome" style="color: #000; font-weight: bold; margin-top: 15px; text-align: center; width: 100%;"></h3>
+        <h3 id="nomeModalAtleta" style="color: #000; font-weight: bold; margin-top: 15px; text-align: center; width: 100%;"></h3>
+    </div>
+</div>
+
+<!-- Modal para Detalhes da Partida -->
+<div id="modalPartidaEstatisticas" class="modal-overlay" onclick="fecharModalPartida()">
+    <div class="modal-content-box" onclick="event.stopPropagation()" style="padding-top: 30px;">
+        <span class="close-modal" onclick="fecharModalPartida()">&times;</span>
+        
+        <div class="match-status">Programado</div>
+        
+        <div class="match-score-board">
+            <div id="partidaTimeA" style="flex:1; text-align: right; font-size: 1.1rem;">Time A</div>
+            <div style="padding: 0 15px; color: #555; font-size: 1.4rem;">
+                <span>-</span> <i class="fas fa-times" style="font-size: 1rem; color: var(--primary); margin: 0 5px;"></i> <span>-</span>
+            </div>
+            <div id="partidaTimeB" style="flex:1; text-align: left; font-size: 1.1rem;">Time B</div>
+        </div>
+        
+        <p style="margin: 0; color: #666; font-size: 1rem;">
+            <i class="fas fa-clock"></i> <span id="partidaHorario"></span> - <span id="partidaFase"></span>
+        </p>
+        
+        <!-- Linha do Tempo / Eventos do Jogo -->
+        <div class="match-timeline">
+            <h4 style="margin-top: 0; margin-bottom: 10px; color: var(--primary);"><i class="fas fa-list-ul"></i> Eventos da Partida</h4>
+            <p style="text-align: center; color: #888; font-style: italic; font-size: 0.9rem;">
+                A partida ainda não iniciou. Detalhes como gols, cartões e estatísticas estarão disponíveis durante ou após o jogo.
+            </p>
+        </div>
     </div>
 </div>
 
 <script>
-    // Função para abrir o Modal com a foto da atleta
+    // ----- Script para a Foto da Atleta -----
     function abrirFotoModal(srcImagem, nome, numero) {
         document.getElementById('imgModalAtleta').src = srcImagem;
-        
-        // Junta o nome e o número no mesmo texto
         let textoNomeNumero = nome;
         if (numero) {
             textoNomeNumero += (numero === 'Téc') ? ' (Técnico)' : ' - Nº ' + numero;
         }
-        
         document.getElementById('nomeModalAtleta').innerText = textoNomeNumero;
         document.getElementById('modalFotoAtleta').style.display = 'flex';
     }
 
-    // Função para fechar o Modal
     function fecharFotoModal() {
         document.getElementById('modalFotoAtleta').style.display = 'none';
+    }
+
+    // ----- Script para os Detalhes da Partida -----
+    function abrirModalPartida(timeA, timeB, horario, fase) {
+        document.getElementById('partidaTimeA').innerText = timeA;
+        document.getElementById('partidaTimeB').innerText = timeB;
+        document.getElementById('partidaHorario').innerText = horario;
+        document.getElementById('partidaFase').innerText = fase;
+        
+        document.getElementById('modalPartidaEstatisticas').style.display = 'flex';
+    }
+
+    function fecharModalPartida() {
+        document.getElementById('modalPartidaEstatisticas').style.display = 'none';
     }
 </script>
 
