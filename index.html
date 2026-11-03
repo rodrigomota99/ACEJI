@@ -411,7 +411,7 @@
 
 
         <!-- ============================== SECÃO JIFSC ============================== -->
-        <style>
+        <<style>
     /* Ajustes CRÍTICOS para Mobile e Cores */
     @media (max-width: 768px) {
         .matchup-card ul li { font-size: 0.95rem !important; white-space: normal !important; word-break: normal !important; line-height: 1.5 !important; padding: 12px 5px !important; display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center !important; }
@@ -1109,100 +1109,13 @@
     }
 
     // ----- Script para os Detalhes da Partida -----
-    <!-- Modal para Detalhes da Partida -->
-<div id="modalPartidaEstatisticas" class="modal-overlay" onclick="fecharModalPartida()">
-    <div class="modal-content-box" onclick="event.stopPropagation()" style="padding-top: 30px;">
-        <span class="close-modal" onclick="fecharModalPartida()">&times;</span>
-        
-        <div id="statusPartida" class="match-status">Programado</div>
-        
-        <div class="match-score-board">
-            <div id="partidaTimeA" style="flex:1; text-align: right; font-size: 1.1rem; color: #fff;">Time A</div>
-            <div style="padding: 0 15px; color: var(--secondary); font-size: 1.8rem; display: flex; align-items: center; gap: 10px;">
-                <span id="placarA">-</span> <i class="fas fa-times" style="font-size: 1rem; color: #888;"></i> <span id="placarB">-</span>
-            </div>
-            <div id="partidaTimeB" style="flex:1; text-align: left; font-size: 1.1rem; color: #fff;">Time B</div>
-        </div>
-        
-        <p style="margin: 0; color: #bbb; font-size: 1rem;">
-            <i class="fas fa-clock"></i> <span id="partidaHorario"></span> - <span id="partidaFase"></span>
-        </p>
-        
-        <div class="match-timeline">
-            <h4 style="margin-top: 0; margin-bottom: 10px; color: var(--primary);"><i class="fas fa-list-ul"></i> Eventos da Partida</h4>
-            <p id="eventosPartida" style="text-align: center; color: #aaa; font-size: 0.95rem; margin: 0;">
-                A partida ainda não iniciou.
-            </p>
-        </div>
-    </div>
-</div>
-
-<script>
-    // 🔴 COLE O LINK DA SUA PLANILHA (TSV) AQUI DENTRO DAS ASPAS:
-    const LINK_PLANILHA = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSulX2uly_4QDj89AvGfGOB607ybqfdpRAzed65nHPpbVZFUdGkx36wxlgqWxO8DghyGkwFwaxMd-nt/pub?output=tsv';
-
-    // ----- Script para a Foto da Atleta -----
-    function abrirFotoModal(srcImagem, nome, numero) {
-        document.getElementById('imgModalAtleta').src = srcImagem;
-        let textoNomeNumero = nome;
-        if (numero) {
-            textoNomeNumero += (numero === 'Téc') ? ' (Técnico)' : ' - Nº ' + numero;
-        }
-        document.getElementById('nomeModalAtleta').innerText = textoNomeNumero;
-        document.getElementById('modalFotoAtleta').style.display = 'flex';
-    }
-
-    function fecharFotoModal() {
-        document.getElementById('modalFotoAtleta').style.display = 'none';
-    }
-
-    // ----- Script para os Detalhes da Partida (Tempo Real) -----
-    async function abrirModalPartida(idJogo, timeA, timeB, horario, fase) {
-        // Preenche os nomes e zera os dados enquanto carrega
+    function abrirModalPartida(timeA, timeB, horario, fase) {
         document.getElementById('partidaTimeA').innerText = timeA;
         document.getElementById('partidaTimeB').innerText = timeB;
         document.getElementById('partidaHorario').innerText = horario;
         document.getElementById('partidaFase').innerText = fase;
-        document.getElementById('placarA').innerText = '-';
-        document.getElementById('placarB').innerText = '-';
-        document.getElementById('statusPartida').innerText = 'CARREGANDO...';
-        document.getElementById('eventosPartida').innerText = 'Buscando informações ao vivo...';
-
-        // Abre o modal
+        
         document.getElementById('modalPartidaEstatisticas').style.display = 'flex';
-
-        // Se o link foi colocado, busca os dados
-        if(LINK_PLANILHA.includes('http')) {
-            try {
-                const response = await fetch(LINK_PLANILHA);
-                const data = await response.text();
-                const linhas = data.split('\n');
-                let encontrou = false;
-                
-                for(let i = 1; i < linhas.length; i++) {
-                    const colunas = linhas[i].split('\t'); // Separa as colunas do TSV
-                    
-                    if(colunas[0] && colunas[0].trim() === idJogo) {
-                        document.getElementById('placarA').innerText = colunas[1] || '0';
-                        document.getElementById('placarB').innerText = colunas[2] || '0';
-                        document.getElementById('statusPartida').innerText = colunas[3] || 'EM ANDAMENTO';
-                        document.getElementById('eventosPartida').innerHTML = colunas[4] || 'Nenhum evento registrado.';
-                        encontrou = true;
-                        break;
-                    }
-                }
-                
-                if(!encontrou) {
-                    document.getElementById('statusPartida').innerText = 'PROGRAMADO';
-                    document.getElementById('eventosPartida').innerText = 'Aguardando início do jogo...';
-                }
-            } catch (e) {
-                document.getElementById('eventosPartida').innerText = 'Sem sinal de internet para buscar o placar ao vivo.';
-            }
-        } else {
-            document.getElementById('statusPartida').innerText = 'PROGRAMADO';
-            document.getElementById('eventosPartida').innerText = 'Aguardando início do jogo...';
-        }
     }
 
     function fecharModalPartida() {
