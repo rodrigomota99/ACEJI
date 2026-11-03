@@ -411,7 +411,7 @@
 
 
         <!-- ============================== SECÃO JIFSC ============================== -->
-        <<style>
+        <style>
     /* Ajustes CRÍTICOS para Mobile e Cores */
     @media (max-width: 768px) {
         .matchup-card ul li { font-size: 0.95rem !important; white-space: normal !important; word-break: normal !important; line-height: 1.5 !important; padding: 12px 5px !important; display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center !important; }
@@ -434,26 +434,25 @@
     .match-item { 
         cursor: pointer; 
         transition: all 0.2s ease; 
-        border: 1px solid #444; /* Borda ajustada para tema escuro */
+        border: 1px solid #444; 
         border-radius: 8px; 
         margin-bottom: 10px; 
         padding: 10px; 
-        background-color: #2a2a2a; /* Fundo escuro base */
-        color: #fff; /* Força cor do texto branca */
+        background-color: #2a2a2a; 
+        color: #fff; 
         display: flex; 
         flex-direction: column; 
         align-items: center; 
         text-align: center; 
     }
-    .match-item span { color: inherit; } /* Garante que os spans herdem a cor do pai */
+    .match-item span { color: inherit; } 
     
-    /* Correção do Hover nos Cards de Confronto */
     .match-item:hover { 
-        background-color: #3a3a3a; /* Apenas clareia levemente o fundo escuro */
+        background-color: #3a3a3a; 
         border-color: var(--primary); 
         box-shadow: 0 4px 8px rgba(0,0,0,0.3); 
         transform: translateY(-2px); 
-        color: #fff; /* Mantém o texto branco no hover */
+        color: #fff; 
     }
     
     .match-details-hint { 
@@ -470,13 +469,12 @@
         color: white; 
     }
 
-    /* Estilos dos Modais (Foto e Partida) */
+    /* Estilos dos Modais */
     .modal-overlay { display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; backdrop-filter: blur(5px); }
     
-    /* Modal de Partida: Fundo escuro para combinar com o tema */
     .modal-content-box { 
-        background-color: #222; /* Fundo escuro do modal */
-        color: #fff; /* Texto branco no modal */
+        background-color: #222; 
+        color: #fff; 
         padding: 20px; 
         border-radius: 10px; 
         text-align: center; 
@@ -490,20 +488,19 @@
     .close-modal { position: absolute; top: 10px; right: 15px; color: #888; font-size: 30px; font-weight: bold; cursor: pointer; transition: color 0.2s; }
     .close-modal:hover { color: var(--primary); }
 
-    /* Painel da Partida (Interno do Modal) */
-    .match-score-board { display: flex; justify-content: space-between; align-items: center; font-size: 1.3rem; font-weight: bold; margin: 20px 0; color: #fff; /* Forçado para branco */ }
+    /* Painel da Partida */
+    .match-score-board { display: flex; justify-content: space-between; align-items: center; font-size: 1.3rem; font-weight: bold; margin: 20px 0; color: #fff; }
     .match-status { font-size: 0.85rem; color: #fff; background: var(--secondary); padding: 4px 10px; border-radius: 4px; display: inline-block; text-transform: uppercase; letter-spacing: 1px; }
     .match-timeline { text-align: left; margin-top: 15px; padding-top: 15px; border-top: 1px solid #444; font-size: 0.95rem; color: #ddd; background: #2a2a2a; border-radius: 8px; padding: 15px; }
 
-    /* Estilos do Chaveamento (Bracket) - Adaptados para Tema Escuro */
+    /* Estilos do Chaveamento (Bracket) */
     .bracket-wrapper { overflow-x: auto; margin-top: 15px; padding-bottom: 10px; }
     .bracket-container { display: flex; min-width: 700px; justify-content: space-between; gap: 15px; }
     .bracket-column { display: flex; flex-direction: column; justify-content: space-around; flex: 1; }
     .bracket-round-title { text-align: center; font-weight: bold; margin-bottom: 10px; color: var(--primary); font-size: 1rem; }
     
-    /* Cores das chaves corrigidas para não sumirem no fundo claro, forçando cores escuras */
     .bracket-match { 
-        background: #f8f9fa; /* Fundo claro da caixinha */
+        background: #f8f9fa; 
         border: 1px solid #ccc; 
         border-radius: 6px; 
         margin-bottom: 10px; 
@@ -517,10 +514,10 @@
         border-bottom: 1px solid #ddd; 
         font-size: 0.9rem; 
         font-weight: 500; 
-        color: #333 !important; /* Força cor preta/escura na letra para contrastar com fundo branco da chave */
+        color: #333 !important; 
     }
     .bracket-team:last-child { border-bottom: none; }
-    .bracket-score { font-weight: bold; color: var(--secondary) !important; } /* Força a cor secundária (Amarelo) no placar */
+    .bracket-score { font-weight: bold; color: var(--secondary) !important; }
     .final-match { border: 2px solid var(--secondary); background: #fffcf0; }
     
     /* Tabelas Gerais */
@@ -558,17 +555,20 @@
                 <div class="matchup-card">
                     <h3><i class="fas fa-clock"></i> Enfrentamentos (Fase de Grupos)</h3>
                     <ul style="list-style: none; padding: 0;">
-                        <li class="match-item" onclick="abrirModalPartida('Jaraguá - RAU', 'Joinville', '12:50', 'Fase de Grupos')">
+                        <!-- ADICIONADO ID: futm1 -->
+                        <li class="match-item" onclick="abrirModalPartida('futm1', 'Jaraguá - RAU', 'Joinville', '12:50', 'Fase de Grupos')">
                             <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 12:50</span>
                             <span>Jaraguá - RAU <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> Joinville</span>
                             <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
                         </li>
-                        <li class="match-item" onclick="abrirModalPartida('Caçador', 'Joinville', '15:30', 'Fase de Grupos')">
+                        <!-- ADICIONADO ID: futm2 -->
+                        <li class="match-item" onclick="abrirModalPartida('futm2', 'Caçador', 'Joinville', '15:30', 'Fase de Grupos')">
                             <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 15:30</span>
                             <span>Caçador <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> Joinville</span>
                             <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
                         </li>
-                        <li class="match-item" onclick="abrirModalPartida('Joinville', 'São Carlos', '17:50', 'Fase de Grupos')">
+                        <!-- ADICIONADO ID: futm3 -->
+                        <li class="match-item" onclick="abrirModalPartida('futm3', 'Joinville', 'São Carlos', '17:50', 'Fase de Grupos')">
                             <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 17:50</span>
                             <span>Joinville <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> São Carlos</span>
                             <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
@@ -592,14 +592,12 @@
                 </div>
             </div>
 
-            <!-- TABELA GERAL (TODOS OS GRUPOS) -->
             <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos (Geral)</h3>
             <div class="table-responsive">
                 <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th><th>Grupo E</th><th>Grupo F</th></tr></thead>
                 <tbody><tr><td>SÃO JOSÉ</td><td>CRICIÚMA</td><td>CAÇADOR</td><td>LAGES</td><td>ITAJAÍ</td><td>URUPEMA</td></tr><tr><td>TUBARÃO</td><td>GAROPABA</td><td>SÃO CARLOS</td><td>PALHOÇA</td><td>CANOINHAS</td><td>CHAPECÓ</td></tr><tr><td>FLN - CONTINENTE</td><td>JARAGUÁ - CENTRO</td><td>JARAGUÁ - RAU</td><td>XANXERÊ</td><td>FLN - CENTRO</td><td>ARARANGUÁ</td></tr><tr><td>GASPAR</td><td>S.M.O.</td><td class="highlight-jve">JOINVILLE</td><td></td><td></td><td></td></tr></tbody></table>
             </div>
 
-            <!-- TABELA DE CLASSIFICAÇÃO DETALHADA - GRUPO DO JOINVILLE -->
             <h3 class="group-header-title" style="margin-top: 20px; font-size: 1.2rem;"><i class="fas fa-list-ol"></i> Classificação - Grupo C</h3>
             <div class="table-responsive">
                 <table class="jifsc-table">
@@ -613,7 +611,6 @@
                 </table>
             </div>
 
-            <!-- CHAVEAMENTO -->
             <h3 class="group-header-title" style="margin-top: 20px; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Cruzamento Olímpico</h3>
             <div class="bracket-wrapper">
                 <div class="bracket-container">
@@ -644,12 +641,14 @@
                 <div class="matchup-card">
                     <h3><i class="fas fa-clock"></i> Enfrentamentos (Fase de Grupos)</h3>
                     <ul style="list-style: none; padding: 0;">
-                        <li class="match-item" onclick="abrirModalPartida('Jaraguá - RAU', 'Joinville', '14:30', 'Fase de Grupos')">
+                        <!-- ADICIONADO ID: futf1 -->
+                        <li class="match-item" onclick="abrirModalPartida('futf1', 'Jaraguá - RAU', 'Joinville', '14:30', 'Fase de Grupos')">
                             <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 14:30</span>
                             <span>Jaraguá - RAU <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> Joinville</span>
                             <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
                         </li>
-                        <li class="match-item" onclick="abrirModalPartida('Xanxerê', 'Joinville', '16:10', 'Fase de Grupos')">
+                        <!-- ADICIONADO ID: futf2 -->
+                        <li class="match-item" onclick="abrirModalPartida('futf2', 'Xanxerê', 'Joinville', '16:10', 'Fase de Grupos')">
                             <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 16:10</span>
                             <span>Xanxerê <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> Joinville</span>
                             <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
@@ -696,14 +695,12 @@
                 </div>
             </div>
 
-            <!-- TABELA GERAL (TODOS OS GRUPOS) -->
             <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos (Geral)</h3>
             <div class="table-responsive">
                 <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th></tr></thead>
                 <tbody><tr><td>FLN - CONTINENTE</td><td>URUPEMA</td><td>S.M.O.</td><td>XANXERÊ</td></tr><tr><td>CHAPECÓ</td><td>LAGES</td><td>ARARANGUÁ</td><td>JARAGUÁ - RAU</td></tr><tr><td>FLN - CENTRO</td><td>GASPAR</td><td>ITAJAÍ</td><td class="highlight-jve">JOINVILLE</td></tr><tr><td>SÃO JOSÉ</td><td></td><td></td><td></td></tr></tbody></table>
             </div>
 
-            <!-- TABELA DE CLASSIFICAÇÃO DETALHADA - GRUPO DO JOINVILLE -->
             <h3 class="group-header-title" style="margin-top: 20px; font-size: 1.2rem;"><i class="fas fa-list-ol"></i> Classificação - Grupo D</h3>
             <div class="table-responsive">
                 <table class="jifsc-table">
@@ -716,7 +713,6 @@
                 </table>
             </div>
 
-            <!-- CHAVEAMENTO -->
             <h3 class="group-header-title" style="margin-top: 20px; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Cruzamento Olímpico</h3>
             <div class="bracket-wrapper">
                 <div class="bracket-container">
@@ -747,17 +743,20 @@
                 <div class="matchup-card">
                     <h3><i class="fas fa-clock"></i> Enfrentamentos (Fase de Grupos)</h3>
                     <ul style="list-style: none; padding: 0;">
-                        <li class="match-item" onclick="abrirModalPartida('Jaraguá - Centro', 'Joinville', '12:00', 'Fase de Grupos')">
+                        <!-- ADICIONADO ID: vol1 -->
+                        <li class="match-item" onclick="abrirModalPartida('vol1', 'Jaraguá - Centro', 'Joinville', '12:00', 'Fase de Grupos')">
                             <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 12:00</span>
                             <span>Jaraguá - Centro <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> Joinville</span>
                             <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
                         </li>
-                        <li class="match-item" onclick="abrirModalPartida('Joinville', 'São José', '14:30', 'Fase de Grupos')">
+                        <!-- ADICIONADO ID: vol2 -->
+                        <li class="match-item" onclick="abrirModalPartida('vol2', 'Joinville', 'São José', '14:30', 'Fase de Grupos')">
                             <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 14:30</span>
                             <span>Joinville <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> São José</span>
                             <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
                         </li>
-                        <li class="match-item" onclick="abrirModalPartida('Garopaba', 'Joinville', '16:30', 'Fase de Grupos')">
+                        <!-- ADICIONADO ID: vol3 -->
+                        <li class="match-item" onclick="abrirModalPartida('vol3', 'Garopaba', 'Joinville', '16:30', 'Fase de Grupos')">
                             <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 16:30</span>
                             <span>Garopaba <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> Joinville</span>
                             <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
@@ -782,14 +781,12 @@
                 </div>
             </div>
 
-            <!-- TABELA GERAL (TODOS OS GRUPOS) -->
             <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos (Geral)</h3>
             <div class="table-responsive">
                 <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th><th>Grupo E</th><th>Grupo F</th></tr></thead>
                 <tbody><tr><td>S.L.O.</td><td>JARAGUÁ - CENTRO</td><td>LAGES</td><td>GASPAR</td><td>FLN - CONTINENTE</td><td>JARAGUÁ - RAU</td></tr><tr><td>SÃO CARLOS</td><td class="highlight-jve">JOINVILLE</td><td>S.M.O.</td><td>PALHOÇA</td><td>TUBARÃO</td><td>XANXERÊ</td></tr><tr><td>ARARANGUÁ</td><td>SÃO JOSÉ</td><td>CAÇADOR</td><td>CHAPECÓ</td><td>CANOINHAS</td><td>FLN - CENTRO</td></tr><tr><td>CRICIÚMA</td><td>GAROPABA</td><td>ITAJAÍ</td><td></td><td></td><td></td></tr></tbody></table>
             </div>
 
-            <!-- TABELA DE CLASSIFICAÇÃO DETALHADA - GRUPO DO JOINVILLE -->
             <h3 class="group-header-title" style="margin-top: 20px; font-size: 1.2rem;"><i class="fas fa-list-ol"></i> Classificação - Grupo B</h3>
             <div class="table-responsive">
                 <table class="jifsc-table">
@@ -803,7 +800,6 @@
                 </table>
             </div>
 
-            <!-- CHAVEAMENTO -->
             <h3 class="group-header-title" style="margin-top: 20px; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Cruzamento Olímpico</h3>
             <div class="bracket-wrapper">
                 <div class="bracket-container">
@@ -834,12 +830,14 @@
                 <div class="matchup-card">
                     <h3><i class="fas fa-clock"></i> Enfrentamentos (Fase de Grupos)</h3>
                     <ul style="list-style: none; padding: 0;">
-                        <li class="match-item" onclick="abrirModalPartida('Canoinhas', 'Joinville', '12:00', 'Fase de Grupos')">
+                        <!-- ADICIONADO ID: basqm1 -->
+                        <li class="match-item" onclick="abrirModalPartida('basqm1', 'Canoinhas', 'Joinville', '12:00', 'Fase de Grupos')">
                             <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 12:00</span>
                             <span>Canoinhas <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> Joinville</span>
                             <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
                         </li>
-                        <li class="match-item" onclick="abrirModalPartida('Joinville', 'Garopaba', '13:00', 'Fase de Grupos')">
+                        <!-- ADICIONADO ID: basqm2 -->
+                        <li class="match-item" onclick="abrirModalPartida('basqm2', 'Joinville', 'Garopaba', '13:00', 'Fase de Grupos')">
                             <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 13:00</span>
                             <span>Joinville <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> Garopaba</span>
                             <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
@@ -857,14 +855,12 @@
                 </div>
             </div>
 
-            <!-- TABELA GERAL (TODOS OS GRUPOS) -->
             <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos (Geral)</h3>
             <div class="table-responsive">
                 <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th></tr></thead>
                 <tbody><tr><td>LAGES</td><td>S.L.O.</td><td>CANOINHAS</td><td>SÃO JOSÉ</td></tr><tr><td>CHAPECÓ</td><td>JARAGUÁ - RAU</td><td class="highlight-jve">JOINVILLE</td><td>CRICIÚMA</td></tr><tr><td>FLN - CENTRO</td><td>FLN - CONTINENTE</td><td>GAROPABA</td><td>GASPAR</td></tr></tbody></table>
             </div>
 
-            <!-- TABELA DE CLASSIFICAÇÃO DETALHADA - GRUPO DO JOINVILLE -->
             <h3 class="group-header-title" style="margin-top: 20px; font-size: 1.2rem;"><i class="fas fa-list-ol"></i> Classificação - Grupo C</h3>
             <div class="table-responsive">
                 <table class="jifsc-table">
@@ -877,7 +873,6 @@
                 </table>
             </div>
 
-            <!-- CHAVEAMENTO -->
             <h3 class="group-header-title" style="margin-top: 20px; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Cruzamento Olímpico</h3>
             <div class="bracket-wrapper">
                 <div class="bracket-container">
@@ -908,12 +903,14 @@
                 <div class="matchup-card">
                     <h3><i class="fas fa-clock"></i> Enfrentamentos (Fase de Grupos)</h3>
                     <ul style="list-style: none; padding: 0;">
-                        <li class="match-item" onclick="abrirModalPartida('São José', 'Joinville', '11:45', 'Fase de Grupos')">
+                        <!-- ADICIONADO ID: basqf1 -->
+                        <li class="match-item" onclick="abrirModalPartida('basqf1', 'São José', 'Joinville', '11:45', 'Fase de Grupos')">
                             <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 11:45</span>
                             <span>São José <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> Joinville</span>
                             <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
                         </li>
-                        <li class="match-item" onclick="abrirModalPartida('Joinville', 'FLN - Centro', '12:15', 'Fase de Grupos')">
+                        <!-- ADICIONADO ID: basqf2 -->
+                        <li class="match-item" onclick="abrirModalPartida('basqf2', 'Joinville', 'FLN - Centro', '12:15', 'Fase de Grupos')">
                             <span style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-clock"></i> 12:15</span>
                             <span>Joinville <i class="fas fa-times" style="color:var(--primary); margin:0 5px;"></i> FLN - Centro</span>
                             <span class="match-details-hint"><i class="fas fa-info-circle"></i> Clique para detalhes</span>
@@ -931,14 +928,12 @@
                 </div>
             </div>
 
-            <!-- TABELA GERAL (TODOS OS GRUPOS) -->
             <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos (Geral)</h3>
             <div class="table-responsive">
                 <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th></tr></thead>
                 <tbody><tr><td>CHAPECÓ</td><td>SÃO JOSÉ</td></tr><tr><td>CRICIÚMA</td><td class="highlight-jve">JOINVILLE</td></tr><tr><td>GASPAR</td><td>FLN - CENTRO</td></tr></tbody></table>
             </div>
 
-            <!-- TABELA DE CLASSIFICAÇÃO DETALHADA - GRUPO DO JOINVILLE -->
             <h3 class="group-header-title" style="margin-top: 20px; font-size: 1.2rem;"><i class="fas fa-list-ol"></i> Classificação - Grupo B</h3>
             <div class="table-responsive">
                 <table class="jifsc-table">
@@ -951,7 +946,6 @@
                 </table>
             </div>
 
-            <!-- CHAVEAMENTO -->
             <h3 class="group-header-title" style="margin-top: 20px; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Cruzamento Olímpico</h3>
             <div class="bracket-wrapper">
                 <div class="bracket-container">
@@ -1000,7 +994,6 @@
                 </ul>
             </div>
 
-            <!-- CHAVEAMENTO -->
             <h3 class="group-header-title" style="margin-top: 20px; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> Chaveamento - Cruzamento Olímpico</h3>
             <div class="bracket-wrapper">
                 <div class="bracket-container">
@@ -1063,17 +1056,17 @@
     </div>
 </div>
 
-<!-- Modal para Detalhes da Partida -->
+<!-- Modal para Detalhes da Partida (TEMPO REAL) -->
 <div id="modalPartidaEstatisticas" class="modal-overlay" onclick="fecharModalPartida()">
     <div class="modal-content-box" onclick="event.stopPropagation()" style="padding-top: 30px;">
         <span class="close-modal" onclick="fecharModalPartida()">&times;</span>
         
-        <div class="match-status">Programado</div>
+        <div id="statusPartida" class="match-status">Programado</div>
         
         <div class="match-score-board">
             <div id="partidaTimeA" style="flex:1; text-align: right; font-size: 1.1rem; color: #fff;">Time A</div>
-            <div style="padding: 0 15px; color: #aaa; font-size: 1.4rem;">
-                <span>-</span> <i class="fas fa-times" style="font-size: 1rem; color: var(--primary); margin: 0 5px;"></i> <span>-</span>
+            <div style="padding: 0 15px; color: var(--secondary); font-size: 1.8rem; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <span id="placarA">-</span> <i class="fas fa-times" style="font-size: 1rem; color: #888;"></i> <span id="placarB">-</span>
             </div>
             <div id="partidaTimeB" style="flex:1; text-align: left; font-size: 1.1rem; color: #fff;">Time B</div>
         </div>
@@ -1085,14 +1078,20 @@
         <!-- Linha do Tempo / Eventos do Jogo -->
         <div class="match-timeline">
             <h4 style="margin-top: 0; margin-bottom: 10px; color: var(--primary);"><i class="fas fa-list-ul"></i> Eventos da Partida</h4>
-            <p style="text-align: center; color: #aaa; font-style: italic; font-size: 0.9rem;">
-                A partida ainda não iniciou. Detalhes como gols, cartões e estatísticas estarão disponíveis durante ou após o jogo.
+            <p id="eventosPartida" style="text-align: center; color: #aaa; font-size: 0.95rem; margin: 0;">
+                A partida ainda não iniciou.
             </p>
         </div>
     </div>
 </div>
 
 <script>
+    // =========================================================================
+    // COLE O LINK DA SUA PLANILHA (TSV) ABAIXO DENTRO DAS ASPAS:
+    // Exemplo: const LINK_PLANILHA = 'https://docs.google.com/spreadsheets/d/e/2PACX-xxxxxx/pub?output=tsv';
+    // =========================================================================
+    const LINK_PLANILHA = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSulX2uly_4QDj89AvGfGOB607ybqfdpRAzed65nHPpbVZFUdGkx36wxlgqWxO8DghyGkwFwaxMd-nt/pub?output=tsv';
+
     // ----- Script para a Foto da Atleta -----
     function abrirFotoModal(srcImagem, nome, numero) {
         document.getElementById('imgModalAtleta').src = srcImagem;
@@ -1108,157 +1107,61 @@
         document.getElementById('modalFotoAtleta').style.display = 'none';
     }
 
-    // ----- Script para os Detalhes da Partida -----
-    function abrirModalPartida(timeA, timeB, horario, fase) {
+    // ----- Script para os Detalhes da Partida (Google Sheets) -----
+    async function abrirModalPartida(idJogo, timeA, timeB, horario, fase) {
+        // Preenche com valores base enquanto busca na planilha
         document.getElementById('partidaTimeA').innerText = timeA;
         document.getElementById('partidaTimeB').innerText = timeB;
         document.getElementById('partidaHorario').innerText = horario;
         document.getElementById('partidaFase').innerText = fase;
-        
+        document.getElementById('placarA').innerText = '-';
+        document.getElementById('placarB').innerText = '-';
+        document.getElementById('statusPartida').innerText = 'CARREGANDO...';
+        document.getElementById('eventosPartida').innerText = 'Buscando informações ao vivo...';
+
         document.getElementById('modalPartidaEstatisticas').style.display = 'flex';
+
+        // Se o link foi colocado, vai buscar
+        if(LINK_PLANILHA.includes('http')) {
+            try {
+                // Previne cache do navegador colocando um parâmetro de data aleatório
+                const urlSemCache = LINK_PLANILHA + '&_=' + new Date().getTime(); 
+                const response = await fetch(urlSemCache);
+                const data = await response.text();
+                const linhas = data.split('\n');
+                let encontrou = false;
+                
+                for(let i = 1; i < linhas.length; i++) {
+                    const colunas = linhas[i].split('\t'); // Separa as colunas pelo TAB (TSV)
+                    
+                    if(colunas[0] && colunas[0].trim() === idJogo) {
+                        document.getElementById('placarA').innerText = colunas[1] || '0';
+                        document.getElementById('placarB').innerText = colunas[2] || '0';
+                        document.getElementById('statusPartida').innerText = colunas[3] || 'EM ANDAMENTO';
+                        document.getElementById('eventosPartida').innerHTML = colunas[4] || 'Nenhum evento registrado.';
+                        encontrou = true;
+                        break;
+                    }
+                }
+                
+                if(!encontrou) {
+                    document.getElementById('statusPartida').innerText = 'PROGRAMADO';
+                    document.getElementById('eventosPartida').innerText = 'Aguardando início do jogo...';
+                }
+            } catch (e) {
+                document.getElementById('statusPartida').innerText = 'PROGRAMADO';
+                document.getElementById('eventosPartida').innerText = 'Partida não iniciada ou erro na busca dos dados.';
+            }
+        } else {
+            document.getElementById('statusPartida').innerText = 'PROGRAMADO';
+            document.getElementById('eventosPartida').innerText = 'Aguardando início do jogo...';
+        }
     }
 
     function fecharModalPartida() {
         document.getElementById('modalPartidaEstatisticas').style.display = 'none';
     }
 </script>
-
-        <!-- ============================== LOJA DE PRODUTOS ============================== -->
-        <div id="shop-section">
-            <header>
-                <button class="btn-back-menu" onclick="showMenu()"><i class="fas fa-arrow-left"></i> Menu</button>
-                <div class="logo-container" onclick="showMenu()">
-                    <div class="logo-img"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/Imagens-Site-Uniforme/Escudo.png" alt="Logo ACEJI"></div>
-                    <div class="logo-aceji">PRODUTOS OFICIAIS</div>
-                </div>
-            </header>
-            
-            <div class="form-container" id="form-content">
-                <form id="uniformOrderForm">
-                    <h2 class="section-title">Dados Pessoais</h2>
-                    <div class="form-group"><label>Nome Completo *</label><input type="text" id="name" required></div>
-                    <div class="form-group"><label>E-mail *</label><input type="email" id="email" required></div>
-                    <div class="form-group"><label>Telefone *</label><input type="tel" id="phone" required></div>
-                    
-                    <h2 class="section-title">Uniforme de Linha</h2>
-                    <div class="product-grid">
-                        <div class="product-card">
-                            <div class="product-image-container" id="container-linha">
-                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%201%20Frente.png" class="product-image" id="image-linha" onclick="openModalCurrentImage('linha')">
-                                <div class="zoom-icon" onclick="openModalCurrentImage('linha')"><i class="fas fa-search-plus"></i></div>
-                                <div class="flip-icon" onclick="flipImage('linha')"><i class="fas fa-sync-alt"></i></div>
-                            </div>
-                            <div class="flip-navigation">
-                                <button type="button" class="flip-btn" onclick="showFront('linha')"><i class="fas fa-arrow-left"></i> Frente</button>
-                                <button type="button" class="flip-btn" onclick="showBack('linha')">Verso <i class="fas fa-arrow-right"></i></button>
-                            </div>
-                            <div class="product-title">Camisa de Linha</div>
-                            <div class="product-price">R$ 65,00</div>
-                            <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_linha" class="quantity" min="0" value="0">
-                        </div>
-                    </div>
-                    
-                    <h2 class="section-title">Uniforme de Goleiro/Líbero</h2>
-                    <div class="product-grid">
-                        <div class="product-card">
-                            <div class="product-image-container" id="container-rosa">
-                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Uniforme%20Rosa%20Frente.png" class="product-image" id="image-rosa" onclick="openModalCurrentImage('rosa')">
-                                <div class="zoom-icon" onclick="openModalCurrentImage('rosa')"><i class="fas fa-search-plus"></i></div>
-                                <div class="flip-icon" onclick="flipImage('rosa')"><i class="fas fa-sync-alt"></i></div>
-                            </div>
-                            <div class="flip-navigation">
-                                <button type="button" class="flip-btn" onclick="showFront('rosa')"><i class="fas fa-arrow-left"></i> Frente</button>
-                                <button type="button" class="flip-btn" onclick="showBack('rosa')">Verso <i class="fas fa-arrow-right"></i></button>
-                            </div>
-                            <div class="product-title">Goleiro Rosa</div>
-                            <div class="product-price">R$ 65,00</div>
-                            <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_goleiro_rosa" class="quantity" min="0" value="0">
-                        </div>
-                    </div>
-
-                    <h2 class="section-title">Acessórios</h2>
-                    <div class="product-grid">
-                        <div class="product-card">
-                            <div class="product-image-container">
-                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/Caneca%20novo.png" class="product-image" id="image-caneca" onclick="openModalCurrentImage('caneca')">
-                                <div class="zoom-icon" onclick="openModalCurrentImage('caneca')"><i class="fas fa-search-plus"></i></div>
-                            </div>
-                            <div class="product-title">Caneca Oficial</div>
-                            <div class="product-price">R$ 45,00</div>
-                            <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_caneca" class="quantity" min="0" value="0">
-                        </div>
-                        <div class="product-card">
-                            <div class="product-image-container">
-                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/FRENTE.png" class="product-image" id="image-tirante" onclick="openModalCurrentImage('tirante')">
-                                <div class="zoom-icon" onclick="openModalCurrentImage('tirante')"><i class="fas fa-search-plus"></i></div>
-                            </div>
-                            <div class="product-title">Tirante</div>
-                            <div class="product-price">R$ 10,00</div>
-                            <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_tirante" class="quantity" min="0" value="0">
-                        </div>
-                        <div class="product-card">
-                            <div class="product-image-container">
-                                <img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/caneca%20e%20tirante%20novo.png" class="product-image" id="image-combo" onclick="openModalCurrentImage('combo')">
-                                <div class="zoom-icon" onclick="openModalCurrentImage('combo')"><i class="fas fa-search-plus"></i></div>
-                            </div>
-                            <div class="product-title">Combo (Caneca + Tirante)</div>
-                            <div class="product-price">R$ 50,00</div>
-                            <label style="text-align: center;">Quantidade:</label><input type="number" id="qty_combo" class="quantity" min="0" value="0">
-                        </div>
-                    </div>
-                    
-                    <h2 class="section-title">Tamanhos e Observações</h2>
-                    <div class="form-group"><label>Tamanhos necessários (especificar)</label><textarea id="sizes" rows="3"></textarea></div>
-                    <div class="form-group"><label>Observações:</label><textarea id="notes" rows="3"></textarea></div>
-                    
-                    <h2 class="section-title">Opções de Pagamento</h2>
-                    <div class="payment-options">
-                        <div class="payment-option selected" id="option-full" onclick="selectPaymentOption('full')">
-                            <h3>PIX Integral (100%)</h3><div class="payment-option-value" id="full-payment-value">R$ 0,00</div><p style="font-size: 0.9rem; margin-top:5px; color: var(--text);">Pagamento único.</p>
-                        </div>
-                        <div class="payment-option" id="option-half" onclick="selectPaymentOption('half')">
-                            <h3>PIX Parcelado (50%)</h3><div class="payment-option-value" id="half-payment-value">R$ 0,00</div><p style="font-size: 0.9rem; margin-top:5px; color: var(--text);">50% agora, 50% na entrega.</p>
-                        </div>
-                        <div class="payment-option" id="option-credit" onclick="selectPaymentOption('credit')">
-                            <h3>Cartão de Crédito</h3><div class="payment-option-value" id="credit-payment-value">R$ 0,00</div><p style="font-size: 0.9rem; margin-top:5px; color: var(--text);">Link pelo WhatsApp.</p>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn-submit">Ir para Pagamento</button>
-                </form>
-            </div>
-            
-            <div class="payment-page" id="payment-section">
-                <h2 style="color:var(--primary); margin-bottom:20px;" id="payment-title">Pagamento via PIX</h2>
-                <div style="background: rgba(50, 188, 173, 0.1); padding:15px; border-left:4px solid var(--pix); text-align:left; margin-bottom:20px;">
-                    <p><strong>Total: <span id="payment-total">R$ 0,00</span></strong></p>
-                    <p id="msg-pay-now"><strong>Pagar Agora: <span id="payment-now">R$ 0,00</span></strong></p>
-                    <p id="msg-half" style="display:none; margin-top:10px;">Restante a pagar na entrega: <span id="remaining-amount">R$ 0,00</span></p>
-                    <p id="msg-credit" style="display:none; margin-top:10px; color: var(--accent);"><strong>Atenção:</strong> Solicite o link no WhatsApp.</p>
-                </div>
-                <div id="pix-details-area">
-                    <div class="pix-container">
-                        <div class="qrcode-image"><img src="https://raw.githubusercontent.com/rodrigomota99/ACEJI/refs/heads/main/QR%20CODE%20LUIS.jpeg" alt="QR Code"></div>
-                        <div style="background:var(--bg-page); padding:10px; border:1px dashed var(--pix); margin-top:15px;">
-                            <p style="font-weight:bold; word-break:break-all;" id="pix-key">atleticaaceji@gmail.com</p>
-                            <button onclick="copyPixKey()" style="background:var(--pix); color:white; border:none; padding:5px 10px; margin-top:10px; cursor:pointer; border-radius:4px;">Copiar Chave</button>
-                        </div>
-                    </div>
-                </div>
-                <button class="btn-submit" style="background-color:var(--success);" id="btn-confirm-payment" onclick="confirmPayment()">Confirmar Pagamento</button>
-                <button onclick="backToForm()" style="background:none; border:none; color:var(--text); margin-top:15px; cursor:pointer; text-decoration:underline;">Voltar e corrigir dados</button>
-            </div>
-            
-            <div class="confirmation-page" id="confirmation-section">
-                <div style="font-size:80px; color:var(--success); margin-bottom:20px;"><i class="fas fa-check-circle"></i></div>
-                <h2 style="color:var(--primary);">Pedido Realizado!</h2>
-                <div style="background: rgba(46, 204, 113, 0.1); padding:20px; border-radius:8px; margin:20px 0;">
-                    <p>O WhatsApp da atlética abrirá automaticamente com seu pedido.</p>
-                    <p><strong>Por favor, envie a mensagem e anexe o comprovante.</strong></p>
-                </div>
-                <button class="btn-submit" onclick="showMenu()">Voltar ao Menu Principal</button>
-            </div>
-            <footer style="text-align: center; margin-top: 20px; padding: 20px;"><p>ACEJI - A.A.A.CULTURAL E ESPORTIVA | IFSC JOINVILLE &copy; 2026</p></footer>
-        </div>
 
         <!-- ============================== EVENTOS / CALENDÁRIO ============================== -->
         <div id="events-section">
