@@ -411,50 +411,123 @@
 
 
         <!-- ============================== SECÃO JIFSC ============================== -->
-        <style>
-    /* Ajustes CRÍTICOS para Mobile - Evitar cortes de nomes e quebras estranhas */
+        <<style>
+    /* Ajustes CRÍTICOS para Mobile e Cores */
     @media (max-width: 768px) {
         .matchup-card ul li { font-size: 0.95rem !important; white-space: normal !important; word-break: normal !important; line-height: 1.5 !important; padding: 12px 5px !important; display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center !important; }
         .matchup-card ul li i.fa-times { margin: 8px 0 !important; font-size: 1.2rem !important; color: var(--primary) !important; }
         .roster-card ul { display: grid !important; grid-template-columns: 1fr !important; gap: 10px !important; }
         .roster-card li { white-space: normal !important; overflow: visible !important; padding: 8px 15px !important; }
+        /* Permite scroll horizontal em tabelas e chaves no celular */
+        .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 20px; }
+        .bracket-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 15px; }
     }
 
     /* Estilos das Fotos dos Atletas */
     .player-avatar { width: 50px; min-width: 50px; height: 70px; border-radius: 6px; object-fit: cover; margin-right: 12px; transition: transform 0.3s ease; cursor: pointer; border: 2px solid var(--primary); }
     .player-avatar:hover { transform: scale(1.6); z-index: 10; position: relative; box-shadow: 0 6px 15px rgba(0,0,0,0.6); }
     .roster-card li.has-avatar { display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
-    .roster-card li.has-avatar:hover { background-color: rgba(0,0,0,0.05); border-radius: 5px; }
+    .roster-card li.has-avatar:hover { background-color: rgba(255,255,255,0.1); border-radius: 5px; }
     .roster-card li.has-avatar > div { display: flex; align-items: center; white-space: normal; }
 
     /* Estilos dos Confrontos Interativos (Cards) */
-    .match-item { cursor: pointer; transition: all 0.2s ease; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; padding: 10px; background-color: #fcfcfc; display: flex; flex-direction: column; align-items: center; text-align: center; }
-    .match-item:hover { background-color: #fff; border-color: var(--primary); box-shadow: 0 4px 8px rgba(0,0,0,0.1); transform: translateY(-2px); }
-    .match-details-hint { font-size: 0.8rem; color: #888; margin-top: 8px; background: #eee; padding: 4px 10px; border-radius: 20px; }
-    .match-item:hover .match-details-hint { background: var(--primary); color: white; }
+    .match-item { 
+        cursor: pointer; 
+        transition: all 0.2s ease; 
+        border: 1px solid #444; /* Borda ajustada para tema escuro */
+        border-radius: 8px; 
+        margin-bottom: 10px; 
+        padding: 10px; 
+        background-color: #2a2a2a; /* Fundo escuro base */
+        color: #fff; /* Força cor do texto branca */
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        text-align: center; 
+    }
+    .match-item span { color: inherit; } /* Garante que os spans herdem a cor do pai */
+    
+    /* Correção do Hover nos Cards de Confronto */
+    .match-item:hover { 
+        background-color: #3a3a3a; /* Apenas clareia levemente o fundo escuro */
+        border-color: var(--primary); 
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3); 
+        transform: translateY(-2px); 
+        color: #fff; /* Mantém o texto branco no hover */
+    }
+    
+    .match-details-hint { 
+        font-size: 0.8rem; 
+        color: #ddd; 
+        margin-top: 8px; 
+        background: #444; 
+        padding: 4px 10px; 
+        border-radius: 20px; 
+        transition: all 0.2s;
+    }
+    .match-item:hover .match-details-hint { 
+        background: var(--primary); 
+        color: white; 
+    }
 
     /* Estilos dos Modais (Foto e Partida) */
     .modal-overlay { display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; backdrop-filter: blur(5px); }
-    .modal-content-box { background-color: var(--light); padding: 20px; border-radius: 10px; text-align: center; max-width: 90%; width: 350px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    
+    /* Modal de Partida: Fundo escuro para combinar com o tema */
+    .modal-content-box { 
+        background-color: #222; /* Fundo escuro do modal */
+        color: #fff; /* Texto branco no modal */
+        padding: 20px; 
+        border-radius: 10px; 
+        text-align: center; 
+        max-width: 90%; 
+        width: 350px; 
+        position: relative; 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        border: 1px solid #444;
+    }
     .modal-content-box img { width: 100%; height: auto; border-radius: 8px; border: 3px solid var(--primary); }
     .close-modal { position: absolute; top: 10px; right: 15px; color: #888; font-size: 30px; font-weight: bold; cursor: pointer; transition: color 0.2s; }
     .close-modal:hover { color: var(--primary); }
 
-    /* Painel da Partida */
-    .match-score-board { display: flex; justify-content: space-between; align-items: center; font-size: 1.3rem; font-weight: bold; margin: 20px 0; color: #333; }
+    /* Painel da Partida (Interno do Modal) */
+    .match-score-board { display: flex; justify-content: space-between; align-items: center; font-size: 1.3rem; font-weight: bold; margin: 20px 0; color: #fff; /* Forçado para branco */ }
     .match-status { font-size: 0.85rem; color: #fff; background: var(--secondary); padding: 4px 10px; border-radius: 4px; display: inline-block; text-transform: uppercase; letter-spacing: 1px; }
-    .match-timeline { text-align: left; margin-top: 15px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 0.95rem; color: #444; background: #f9f9f9; border-radius: 8px; padding: 15px; }
+    .match-timeline { text-align: left; margin-top: 15px; padding-top: 15px; border-top: 1px solid #444; font-size: 0.95rem; color: #ddd; background: #2a2a2a; border-radius: 8px; padding: 15px; }
 
-    /* Estilos do Chaveamento (Bracket) Restaurados */
+    /* Estilos do Chaveamento (Bracket) - Adaptados para Tema Escuro */
     .bracket-wrapper { overflow-x: auto; margin-top: 15px; padding-bottom: 10px; }
     .bracket-container { display: flex; min-width: 700px; justify-content: space-between; gap: 15px; }
     .bracket-column { display: flex; flex-direction: column; justify-content: space-around; flex: 1; }
     .bracket-round-title { text-align: center; font-weight: bold; margin-bottom: 10px; color: var(--primary); font-size: 1rem; }
-    .bracket-match { background: #f8f9fa; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 10px; padding: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .bracket-team { display: flex; justify-content: space-between; padding: 6px 8px; border-bottom: 1px solid #eee; font-size: 0.9rem; font-weight: 500; }
+    
+    /* Cores das chaves corrigidas para não sumirem no fundo claro, forçando cores escuras */
+    .bracket-match { 
+        background: #f8f9fa; /* Fundo claro da caixinha */
+        border: 1px solid #ccc; 
+        border-radius: 6px; 
+        margin-bottom: 10px; 
+        padding: 5px; 
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+    }
+    .bracket-team { 
+        display: flex; 
+        justify-content: space-between; 
+        padding: 6px 8px; 
+        border-bottom: 1px solid #ddd; 
+        font-size: 0.9rem; 
+        font-weight: 500; 
+        color: #333 !important; /* Força cor preta/escura na letra para contrastar com fundo branco da chave */
+    }
     .bracket-team:last-child { border-bottom: none; }
-    .bracket-score { font-weight: bold; color: var(--secondary); }
+    .bracket-score { font-weight: bold; color: var(--secondary) !important; } /* Força a cor secundária (Amarelo) no placar */
     .final-match { border: 2px solid var(--secondary); background: #fffcf0; }
+    
+    /* Tabelas Gerais */
+    .table-responsive { width: 100%; overflow-x: auto; }
+    .jifsc-table { width: 100%; min-width: 500px; border-collapse: collapse; margin-bottom: 20px; }
+    .jifsc-table th, .jifsc-table td { padding: 8px; text-align: center; border: 1px solid #444; }
+    .highlight-jve { background-color: rgba(46, 204, 113, 0.2); font-weight: bold; color: var(--primary); }
 </style>
 
 <!-- ============================== SECÃO JIFSC ============================== -->
@@ -519,7 +592,14 @@
                 </div>
             </div>
 
-            <!-- TABELA DE CLASSIFICAÇÃO - GRUPO DO JOINVILLE -->
+            <!-- TABELA GERAL (TODOS OS GRUPOS) -->
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos (Geral)</h3>
+            <div class="table-responsive">
+                <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th><th>Grupo E</th><th>Grupo F</th></tr></thead>
+                <tbody><tr><td>SÃO JOSÉ</td><td>CRICIÚMA</td><td>CAÇADOR</td><td>LAGES</td><td>ITAJAÍ</td><td>URUPEMA</td></tr><tr><td>TUBARÃO</td><td>GAROPABA</td><td>SÃO CARLOS</td><td>PALHOÇA</td><td>CANOINHAS</td><td>CHAPECÓ</td></tr><tr><td>FLN - CONTINENTE</td><td>JARAGUÁ - CENTRO</td><td>JARAGUÁ - RAU</td><td>XANXERÊ</td><td>FLN - CENTRO</td><td>ARARANGUÁ</td></tr><tr><td>GASPAR</td><td>S.M.O.</td><td class="highlight-jve">JOINVILLE</td><td></td><td></td><td></td></tr></tbody></table>
+            </div>
+
+            <!-- TABELA DE CLASSIFICAÇÃO DETALHADA - GRUPO DO JOINVILLE -->
             <h3 class="group-header-title" style="margin-top: 20px; font-size: 1.2rem;"><i class="fas fa-list-ol"></i> Classificação - Grupo C</h3>
             <div class="table-responsive">
                 <table class="jifsc-table">
@@ -616,7 +696,14 @@
                 </div>
             </div>
 
-            <!-- TABELA DE CLASSIFICAÇÃO - GRUPO DO JOINVILLE -->
+            <!-- TABELA GERAL (TODOS OS GRUPOS) -->
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos (Geral)</h3>
+            <div class="table-responsive">
+                <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th></tr></thead>
+                <tbody><tr><td>FLN - CONTINENTE</td><td>URUPEMA</td><td>S.M.O.</td><td>XANXERÊ</td></tr><tr><td>CHAPECÓ</td><td>LAGES</td><td>ARARANGUÁ</td><td>JARAGUÁ - RAU</td></tr><tr><td>FLN - CENTRO</td><td>GASPAR</td><td>ITAJAÍ</td><td class="highlight-jve">JOINVILLE</td></tr><tr><td>SÃO JOSÉ</td><td></td><td></td><td></td></tr></tbody></table>
+            </div>
+
+            <!-- TABELA DE CLASSIFICAÇÃO DETALHADA - GRUPO DO JOINVILLE -->
             <h3 class="group-header-title" style="margin-top: 20px; font-size: 1.2rem;"><i class="fas fa-list-ol"></i> Classificação - Grupo D</h3>
             <div class="table-responsive">
                 <table class="jifsc-table">
@@ -695,7 +782,14 @@
                 </div>
             </div>
 
-            <!-- TABELA DE CLASSIFICAÇÃO - GRUPO DO JOINVILLE -->
+            <!-- TABELA GERAL (TODOS OS GRUPOS) -->
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos (Geral)</h3>
+            <div class="table-responsive">
+                <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th><th>Grupo E</th><th>Grupo F</th></tr></thead>
+                <tbody><tr><td>S.L.O.</td><td>JARAGUÁ - CENTRO</td><td>LAGES</td><td>GASPAR</td><td>FLN - CONTINENTE</td><td>JARAGUÁ - RAU</td></tr><tr><td>SÃO CARLOS</td><td class="highlight-jve">JOINVILLE</td><td>S.M.O.</td><td>PALHOÇA</td><td>TUBARÃO</td><td>XANXERÊ</td></tr><tr><td>ARARANGUÁ</td><td>SÃO JOSÉ</td><td>CAÇADOR</td><td>CHAPECÓ</td><td>CANOINHAS</td><td>FLN - CENTRO</td></tr><tr><td>CRICIÚMA</td><td>GAROPABA</td><td>ITAJAÍ</td><td></td><td></td><td></td></tr></tbody></table>
+            </div>
+
+            <!-- TABELA DE CLASSIFICAÇÃO DETALHADA - GRUPO DO JOINVILLE -->
             <h3 class="group-header-title" style="margin-top: 20px; font-size: 1.2rem;"><i class="fas fa-list-ol"></i> Classificação - Grupo B</h3>
             <div class="table-responsive">
                 <table class="jifsc-table">
@@ -763,7 +857,14 @@
                 </div>
             </div>
 
-            <!-- TABELA DE CLASSIFICAÇÃO - GRUPO DO JOINVILLE -->
+            <!-- TABELA GERAL (TODOS OS GRUPOS) -->
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos (Geral)</h3>
+            <div class="table-responsive">
+                <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th><th>Grupo C</th><th>Grupo D</th></tr></thead>
+                <tbody><tr><td>LAGES</td><td>S.L.O.</td><td>CANOINHAS</td><td>SÃO JOSÉ</td></tr><tr><td>CHAPECÓ</td><td>JARAGUÁ - RAU</td><td class="highlight-jve">JOINVILLE</td><td>CRICIÚMA</td></tr><tr><td>FLN - CENTRO</td><td>FLN - CONTINENTE</td><td>GAROPABA</td><td>GASPAR</td></tr></tbody></table>
+            </div>
+
+            <!-- TABELA DE CLASSIFICAÇÃO DETALHADA - GRUPO DO JOINVILLE -->
             <h3 class="group-header-title" style="margin-top: 20px; font-size: 1.2rem;"><i class="fas fa-list-ol"></i> Classificação - Grupo C</h3>
             <div class="table-responsive">
                 <table class="jifsc-table">
@@ -830,7 +931,14 @@
                 </div>
             </div>
 
-            <!-- TABELA DE CLASSIFICAÇÃO - GRUPO DO JOINVILLE -->
+            <!-- TABELA GERAL (TODOS OS GRUPOS) -->
+            <h3 class="group-header-title" style="margin-top: 0; font-size: 1.2rem;"><i class="fas fa-table"></i> Tabela de Grupos (Geral)</h3>
+            <div class="table-responsive">
+                <table class="jifsc-table"><thead><tr><th>Grupo A</th><th>Grupo B</th></tr></thead>
+                <tbody><tr><td>CHAPECÓ</td><td>SÃO JOSÉ</td></tr><tr><td>CRICIÚMA</td><td class="highlight-jve">JOINVILLE</td></tr><tr><td>GASPAR</td><td>FLN - CENTRO</td></tr></tbody></table>
+            </div>
+
+            <!-- TABELA DE CLASSIFICAÇÃO DETALHADA - GRUPO DO JOINVILLE -->
             <h3 class="group-header-title" style="margin-top: 20px; font-size: 1.2rem;"><i class="fas fa-list-ol"></i> Classificação - Grupo B</h3>
             <div class="table-responsive">
                 <table class="jifsc-table">
@@ -951,7 +1059,7 @@
     <div class="modal-content-box" onclick="event.stopPropagation()">
         <span class="close-modal" onclick="fecharFotoModal()">&times;</span>
         <img id="imgModalAtleta" src="" alt="Foto da Atleta">
-        <h3 id="nomeModalAtleta" style="color: #000; font-weight: bold; margin-top: 15px; text-align: center; width: 100%;"></h3>
+        <h3 id="nomeModalAtleta" style="color: #fff; font-weight: bold; margin-top: 15px; text-align: center; width: 100%;"></h3>
     </div>
 </div>
 
@@ -963,21 +1071,21 @@
         <div class="match-status">Programado</div>
         
         <div class="match-score-board">
-            <div id="partidaTimeA" style="flex:1; text-align: right; font-size: 1.1rem;">Time A</div>
-            <div style="padding: 0 15px; color: #555; font-size: 1.4rem;">
+            <div id="partidaTimeA" style="flex:1; text-align: right; font-size: 1.1rem; color: #fff;">Time A</div>
+            <div style="padding: 0 15px; color: #aaa; font-size: 1.4rem;">
                 <span>-</span> <i class="fas fa-times" style="font-size: 1rem; color: var(--primary); margin: 0 5px;"></i> <span>-</span>
             </div>
-            <div id="partidaTimeB" style="flex:1; text-align: left; font-size: 1.1rem;">Time B</div>
+            <div id="partidaTimeB" style="flex:1; text-align: left; font-size: 1.1rem; color: #fff;">Time B</div>
         </div>
         
-        <p style="margin: 0; color: #666; font-size: 1rem;">
+        <p style="margin: 0; color: #bbb; font-size: 1rem;">
             <i class="fas fa-clock"></i> <span id="partidaHorario"></span> - <span id="partidaFase"></span>
         </p>
         
         <!-- Linha do Tempo / Eventos do Jogo -->
         <div class="match-timeline">
             <h4 style="margin-top: 0; margin-bottom: 10px; color: var(--primary);"><i class="fas fa-list-ul"></i> Eventos da Partida</h4>
-            <p style="text-align: center; color: #888; font-style: italic; font-size: 0.9rem;">
+            <p style="text-align: center; color: #aaa; font-style: italic; font-size: 0.9rem;">
                 A partida ainda não iniciou. Detalhes como gols, cartões e estatísticas estarão disponíveis durante ou após o jogo.
             </p>
         </div>
